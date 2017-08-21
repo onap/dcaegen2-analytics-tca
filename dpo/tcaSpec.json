@@ -1,0 +1,223 @@
+{
+	"self": {
+		"name": "cdap.tca.hi.lo.app",
+		"version": "1.0.2",
+		"description": "cdap tca hi lo application",
+		"component_type": "cdap"
+	},
+	"streams": {
+		"subscribes": [{
+				"config_key": "tca_handle_in",
+				"format": "Common Event Format Definition",
+				"version": "25.0.0",
+				"type": "message router"
+			}
+		],
+		"publishes": [{
+				"config_key": "tca_handle_out",
+				"format": "TCA Alert Definition",
+				"version": "1.0.0",
+				"type": "message router"
+			}
+		]
+	},
+	"services": {
+		"calls": [],
+		"provides": []
+	},
+	"auxilary": {
+		"streamname": "TCASubscriberOutputStream",
+		"artifact_name": "dcae-analytics-tca",
+		"artifact_version": "1.1.0",
+		"programs": [{
+				"program_type": "flows",
+				"program_id": "TCAVESCollectorFlow"
+			}, {
+				"program_type": "workers",
+				"program_id": "TCADMaaPMRSubscriberWorker"
+			}, {
+				"program_type": "workers",
+				"program_id": "TCADMaaPMRPublisherWorker"
+			}
+		],
+		"namespace": "cdap_tca_hi_lo"
+	},
+	"artifacts": [{
+			"uri": "${nexusproxy}/repository/dcae-dev-raw/jar_files/dcae-analytics-tca-1.1.0.jar",
+			"type": "jar"
+		}
+	],
+	"parameters": {
+		"app_config": [{
+				"name": "appName",
+				"description": "",
+				"value": "dcae-tca"
+			}, {
+				"name": "appDescription",
+				"description": "",
+				"value": "DCAE Analytics Threshold Crossing Alert Application"
+			}, {
+				"name": "tcaSubscriberOutputStreamName",
+				"description": "",
+				"value": "TCASubscriberOutputStream"
+			}, {
+				"name": "thresholdCalculatorFlowletInstances",
+				"description": "",
+				"value": 2
+			}, {
+				"name": "tcaVESMessageStatusTableName",
+				"description": "",
+				"value": "TCAVESMessageStatusTable"
+			}, {
+				"name": "tcaVESMessageStatusTableTTLSeconds",
+				"description": "",
+				"value": 86400
+			}, {
+				"name": "tcaVESAlertsTableName",
+				"description": "",
+				"value": "TCAVESAlertsTable"
+			}, {
+				"name": "tcaVESAlertsTableTTLSeconds",
+				"description": "",
+				"value": 1728000
+			}
+		],
+		"app_preferences": [{
+				"name": "subscriberContentType",
+				"description": "",
+				"value": "application/json"
+			}, {
+				"name": "subscriberConsumerId",
+				"description": "",
+				"value": "c12"
+			}, {
+				"name": "subscriberConsumerGroup",
+				"description": "",
+				"value": "OpenDCAE-c12"
+			}, {
+				"name": "subscriberTimeoutMS",
+				"description": "",
+				"value": -1
+			}, {
+				"name": "subscriberMessageLimit",
+				"description": "",
+				"value": -1
+			}, {
+				"name": "subscriberPollingInterval",
+				"description": "",
+				"value": 20000
+			}, {
+				"name": "publisherContentType",
+				"description": "",
+				"value": "application/json"
+			}, {
+				"name": "publisherMaxBatchSize",
+				"description": "",
+				"value": 10
+			}, {
+				"name": "publisherMaxRecoveryQueueSize",
+				"description": "",
+				"value": 100000
+			}, {
+				"name": "publisherPollingInterval",
+				"description": "",
+				"value": 20000
+			}, {
+				"name": "tca_policy",
+				"description": "",
+				"value":
+				"'{\"domain\":\"measurementsForVfScaling\",\"metricsPerFunctionalRole\":[{\"functionalRole\":\"vFirewall\",\"policyScope\":\"resource=vFirewall;type=configuration\",\"policyName\":\"configuration.dcae.microservice.tca.xml\",\"policyVersion\":\"v0.0.1\",\"thresholds\":[{\"closedLoopControlName\":\"CL-FRWL-LOW-TRAFFIC-SIG-d925ed73-8231-4d02-9545-db4e101f88f8\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicUsageArray[*].bytesIn\",\"thresholdValue\":4000,\"direction\":\"LESS_OR_EQUAL\",\"severity\":\"MAJOR\"},{\"closedLoopControlName\":\"CL-FRWL-HIGH-TRAFFIC-SIG-EA36FE84-9342-5E13-A656-EC5F21309A09\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicUsageArray[*].bytesIn\",\"thresholdValue\":20000,\"direction\":\"GREATER_OR_EQUAL\",\"severity\":\"CRITICAL\"}]},{\"functionalRole\":\"vLoadBalancer\",\"policyScope\":\"resource=vLoadBalancer;type=configuration\",\"policyName\":\"configuration.dcae.microservice.tca.xml\",\"policyVersion\":\"v0.0.1\",\"thresholds\":[{\"closedLoopControlName\":\"CL-LBAL-LOW-TRAFFIC-SIG-FB480F95-A453-6F24-B767-FD703241AB1A\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicUsageArray[*].packetsIn\",\"thresholdValue\":500,\"direction\":\"LESS_OR_EQUAL\",\"severity\":\"MAJOR\"},{\"closedLoopControlName\":\"CL-LBAL-LOW-TRAFFIC-SIG-0C5920A6-B564-8035-C878-0E814352BC2B\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicUsageArray[*].packetsIn\",\"thresholdValue\":5000,\"direction\":\"GREATER_OR_EQUAL\",\"severity\":\"CRITICAL\"}]}]}'"
+			}
+		],
+		"program_preferences": [],
+
+		"policy_parameters": [{
+				"name": "domain",
+				"description": "",
+				"type": "string",
+				"value": "measurementsForVfScaling",
+				"constraints":
+				[{
+						"equal": "measurementsForVfScaling"
+					}
+				]
+			}, {
+				"name": "metricsPerFunctionalRole",
+				"description": "",
+				"type": "list",
+				"entry_schema":
+				[{
+						"name": "functionalRole",
+						"description": "Function of the event source e.g., eNodeB, MME, PCRF",
+						"type": "string",
+						"value": ""
+					}, {
+						"name": "policyScope",
+						"description": "Policy Scope associated with this event.For example-resource=vFirewall;type=configuration",
+						"type": "string",
+						"value": ""
+					}, {
+						"name": "policyName",
+						"description": "Policy name/ID for this event",
+						"type": "string",
+						"value": "configuration.dcae.microservice.tca.xml"
+					}, {
+						"name": "policyVersion",
+						"description": "Policy Version",
+						"type": "string",
+						"value": "v0.0.1"
+					}, {
+						"name": "thresholds",
+						"description": "",
+						"type": "list",
+						"entry_schema":
+						[{
+								"name": "closedLoopControlName",
+								"description": "A UNIQUE string identifying the Closed Loop ID this event is for.",
+								"type": "string",
+								"value": ""
+							}, {
+								"name": "version",
+								"description": "Version for the closed loop message",
+								"type": "string",
+								"value": ""
+							}, {
+								"name": "fieldPath",
+								"description": "",
+								"type": "string",
+								"value": ""
+							}, {
+								"name": "thresholdValue",
+								"description": "",
+								"type": "number",
+								"value": ""
+							}, {
+								"name": "direction",
+								"description": "",
+								"type": "string",
+								"value": "",
+								"constraints":
+								[{
+										"valid_value":
+										["LESS", "LESS_OR_EQUAL", "GREATER", "GREATER_OR_EQUAL"]
+									}
+								]
+							}, {
+								"name": "severity",
+								"description": "event severity or priority",
+								"value": "",
+								"type": "string",
+								"constraints":
+								[{
+										"valid_value":
+										["CRITICAL", "MAJOR", "MINOR", "WARNING", "NORMAL"]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

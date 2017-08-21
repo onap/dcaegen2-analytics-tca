@@ -1,0 +1,94 @@
+{
+  "metadata": {
+    "spec-version": "1.3"
+  },
+  "configuration-groups": [
+    {
+      "label": "DMaaP MR Sink Configuration",
+      "properties": [
+        {
+          "widget-type": "textbox",
+          "label": "Reference Name",
+          "name": "referenceName",
+          "widget-attributes": {
+            "default": "DMaaPMRSink"
+          }
+        },
+        {
+          "widget-type": "textbox",
+          "label": "Host Name",
+          "name": "hostName"
+        },
+        {
+          "widget-type": "number",
+          "label": "Host Port number",
+          "name": "portNumber"
+        },
+        {
+          "widget-type": "textbox",
+          "label": "Topic Name",
+          "name": "topicName"
+        },
+        {
+          "widget-type": "textbox",
+          "label": "Protocol",
+          "name": "protocol",
+          "widget-attributes": {
+            "default": "https"
+          }
+        },
+        {
+          "widget-type": "textbox",
+          "label": "User Name",
+          "name": "userName"
+        },
+        {
+          "widget-type": "textbox",
+          "label": "User Password",
+          "name": "userPassword"
+        },
+        {
+          "widget-type": "textbox",
+          "label": "Content Type'",
+          "name": "contentType",
+          "widget-attributes": {
+            "default": "application/json"
+          }
+        },
+        {
+          "widget-type": "string",
+          "label": "Message Column Name",
+          "name": "messageColumnName",
+          "widget-attributes": {
+            "default": "message"
+          }
+        },
+        {
+          "widget-type": "string",
+          "label": "Max Batch Size",
+          "name": "maxBatchSize",
+          "widget-attributes": {
+            "default": "50"
+          }
+        },
+        {
+          "widget-type": "string",
+          "label": "Max Recovery Queue Size",
+          "name": "maxRecoveryQueueSize"
+        }
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "name": "schema",
+      "widget-type": "schema",
+      "widget-attributes": {
+        "schema-types": [
+          "string"
+        ],
+        "schema-default-type": "string"
+      }
+    }
+  ]
+}

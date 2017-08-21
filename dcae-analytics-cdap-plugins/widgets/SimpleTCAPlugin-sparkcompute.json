@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "spec-version": "1.0"
+  },
+  "configuration-groups": [
+    {
+      "label": "Simple TCA Transform Properties",
+      "properties": [
+        {
+          "widget-type": "textbox",
+          "label": "InputSchema field name that contains CEF Message",
+          "name": "vesMessageFieldName"
+        },
+        {
+          "widget-type": "textbox",
+          "label": "TCA Policy JSON string",
+          "name": "policyJson"
+        },
+        {
+          "widget-type": "textbox",
+          "label": "OutputSchema field name that will contain alert message",
+          "name": "alertFieldName"
+        },
+        {
+          "widget-type": "textbox",
+          "label": "OutputSchema field name that will contain the TCA message type",
+          "name": "messageTypeFieldName"
+        },
+        {
+          "widget-type": "textbox",
+          "label": "Enable Alert Output Format in CEF format",
+          "name": "enableAlertCEFFormat",
+          "widget-attributes": {
+            "default": "false"
+          }
+        }
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "name": "schema",
+      "label": "schema",
+      "widget-type": "schema",
+      "widget-attributes": {
+        "schema-types": [
+          "string"
+        ],
+        "schema-default-type": "string",
+        "property-watch": "format"
+      }
+    }
+  ]
+}

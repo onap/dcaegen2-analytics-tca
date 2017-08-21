@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ ===============================LICENSE_START======================================
+  ~  dcae-analytics
+  ~ ================================================================================
+  ~    Copyright © 2017 AT&T Intellectual Property. All rights reserved.
+  ~ ================================================================================
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~          http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  ~  ============================LICENSE_END===========================================
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>dcae-analytics</artifactId>
+        <groupId>org.openecomp.dcae.apod.analytics</groupId>
+        <version>2.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>dcae-analytics-cdap-plugins</artifactId>
+    <packaging>jar</packaging>
+
+    <!-- THIS MODULE CONTAINS CDAP CODE FOR PLUGINS -->
+    <name>DCAE Analytics CDAP Plugins</name>
+    <description>DCAE Analytics CDAP Plugins to build CDAP Pipelines</description>
+
+    <properties>
+        <main.basedir>${project.parent.basedir}</main.basedir>
+        <main.basedir.plugins>${project.basedir}</main.basedir.plugins>
+        <widgets.dir>widgets</widgets.dir>
+        <docs.dir>docs</docs.dir>
+        <app.parents>
+            system:cdap-etl-batch[4.0.0,4.1.0-SNAPSHOT),system:cdap-etl-realtime[4.0.0,4.1.0-SNAPSHOT),system:cdap-data-pipeline[4.0.0,4.1.0-SNAPSHOT),system:cdap-data-streams[4.0.0,4.1.0-SNAPSHOT)
+        </app.parents>
+    </properties>
+
+    <dependencies>
+
+        <!-- DCAE DEPENDENCIES -->
+        <dependency>
+            <groupId>org.openecomp.dcae.apod.analytics</groupId>
+            <artifactId>dcae-analytics-cdap-common</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openecomp.dcae.apod.analytics</groupId>
+            <artifactId>dcae-analytics-tca</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+        </dependency>
+
+
+        <!-- CDAP -->
+        <dependency>
+            <groupId>co.cask.cdap</groupId>
+            <artifactId>cdap-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>co.cask.cdap</groupId>
+            <artifactId>cdap-etl-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>co.cask.cdap</groupId>
+            <artifactId>cdap-etl-api-spark</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>co.cask.cdap</groupId>
+            <artifactId>cdap-etl-realtime</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>co.cask.cdap</groupId>
+            <artifactId>cdap-data-pipeline</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>co.cask.cdap</groupId>
+            <artifactId>cdap-data-streams</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming_2.10</artifactId>
+        </dependency>
+
+        <!-- CASK -->
+        <dependency>
+            <groupId>co.cask.http</groupId>
+            <artifactId>netty-http</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>co.cask.common</groupId>
+            <artifactId>common-http</artifactId>
+        </dependency>
+
+        <!-- HADOOP -->
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-mapreduce-client-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-common</artifactId>
+        </dependency>
+
+        <!-- SPARK -->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-core_2.10</artifactId>
+        </dependency>
+
+        <!-- LOGGING -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+
+        <!-- FIND BUGS -->
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>${findbugs.jsr305.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>annotations</artifactId>
+            <version>${findbugs.annotations.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- TEST DEPENDENCIES -->
+        <dependency>
+            <groupId>org.openecomp.dcae.apod.analytics</groupId>
+            <artifactId>dcae-analytics-test</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>co.cask.cdap</groupId>
+            <artifactId>hydrator-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>co.cask.cdap</groupId>
+            <artifactId>cdap-unit-test</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>org.apache.httpcomponents</artifactId>
+                    <groupId>httpcore</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+    </dependencies>
+
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <configuration>
+                    <instructions>
+                        <!-- List of packages that are scanned for plugins -->
+                        <_exportcontents>
+                            org.openecomp.dcae.apod.analytics.dmaap.domain.response.*,
+                            org.openecomp.dcae.apod.analytics.dmaap.domain.config.*;
+                            org.openecomp.dcae.apod.analytics.dmaap.service.subscriber.*;
+                            org.openecomp.dcae.apod.analytics.dmaap.service.*;
+                            org.openecomp.dcae.apod.analytics.cdap.common.settings.*;
+                            org.openecomp.dcae.apod.analytics.cdap.plugins.common.*;
+                            org.openecomp.dcae.apod.analytics.cdap.plugins.batch.sink.dmaap.*;
+                            org.openecomp.dcae.apod.analytics.cdap.plugins.domain.config.dmaap.*;
+                            org.openecomp.dcae.apod.analytics.cdap.plugins.domain.config.filter.*;
+                            org.openecomp.dcae.apod.analytics.cdap.plugins.domain.config.tca.*;
+                            org.openecomp.dcae.apod.analytics.cdap.plugins.sparkcompute.tca.*;
+                            org.openecomp.dcae.apod.analytics.cdap.plugins.streaming.dmaap.*;
+                            org.openecomp.dcae.apod.analytics.cdap.plugins.transform.filter.*;
+                            com.google.common.base.*;
+                            com.google.inject.*;
+                            org.apache.http.*;
+                            org.aopalliance.*;
+                            javax.inject.*;
+                            org.apache.commons.*
+                        </_exportcontents>
+                    </instructions>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <!-- Create the config file for artifact which can be used to deploy the artifact.
+                         Sets the parents field to system:cdap-etl-batch and system:cdap-etl-realtime with whatever
+                         version range is set in the app.parents property.
+                         also sets a widget and doc property for each file contained in the widgets and docs directories. -->
+                    <execution>
+                        <id>create-artifact-config</id>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <target>
+                                <script language="javascript"> <![CDATA[
+                  // for some reason, project.basedir evaluates to null if we just get the property here.
+                  // so we set main.basedir to project.basedir in the pom properties, then main.basedir is used here
+                  // where it evaluates correctly for whatever reason
+                  var baseDir = project.getProperty("main.basedir.plugins");
+                  var targetDir = project.getProperty("project.build.directory");
+                  var artifactId = project.getProperty("project.artifactId");
+                  var version = project.getProperty("project.version");
+
+                  var cfgFile = new java.io.File(targetDir, artifactId + "-" + version + ".json");
+                  if (!cfgFile.exists()) {
+                    cfgFile.createNewFile();
+                  }
+
+                  var parents = project.getProperty("app.parents").split(",");
+                  var config = {
+                    "parents": [ ],
+                    "properties": {}
+                  }
+                  for (i = 0; i < parents.length; i+=2) {
+                    // because name1[lo,hi],name2[lo,hi] gets split into "name1[lo", "hi]", "name2[lo", "hi]"
+                    // so we have to combine them again
+                    config.parents.push(parents[i] + "," + parents[i+1]);
+                  }
+
+                  // look in widgets directory for widget config for each plugin
+                  var widgetsDir = new java.io.File(baseDir, project.getProperty("widgets.dir"));
+                  if (widgetsDir.isDirectory()) {
+                    var widgetsFiles = widgetsDir.listFiles();
+                    for (i = 0; i < widgetsFiles.length; i++) {
+                      var widgetsFile = widgetsFiles[i];
+                      if (widgetsFile.isFile()) {
+                        var propertyName = "widgets." + widgetsFile.getName();
+                        // if the filename ends with .json
+                        if (propertyName.indexOf(".json", propertyName.length - 5) !== -1) {
+                          // strip the .json
+                          propertyName = propertyName.slice(0, -5);
+                          var contents = new java.lang.String(java.nio.file.Files.readAllBytes(widgetsFile.toPath()), java.nio.charset.StandardCharsets.UTF_8);
+                          var contentsAsJson = JSON.parse(contents);
+                          config.properties[propertyName] = JSON.stringify(contentsAsJson);
+                        }
+                      }
+                    }
+                  }
+
+                  // look in the docs directory for docs for each plugin
+                  var docsDir = new java.io.File(baseDir, project.getProperty("docs.dir"));
+                  if (docsDir.isDirectory()) {
+                    var docFiles = docsDir.listFiles();
+                    for (i = 0; i < docFiles.length; i++) {
+                      var docFile = docFiles[i];
+                      if (docFile.isFile()) {
+                        var propertyName = "doc." + docFile.getName();
+                        // if the filename ends with .md
+                        if (propertyName.indexOf(".md", propertyName.length - 3) !== -1) {
+                          // strip the extension
+                          propertyName = propertyName.slice(0, -3);
+                          var contents = new java.lang.String(java.nio.file.Files.readAllBytes(docFile.toPath()), java.nio.charset.StandardCharsets.UTF_8);
+                          config.properties[propertyName] = contents + "";
+                        }
+                      }
+                    }
+                  }
+
+                  var fw = new java.io.BufferedWriter(new java.io.FileWriter(cfgFile.getAbsoluteFile()));
+                  fw.write(JSON.stringify(config, null, 2));
+                  fw.close();
+                ]]></script>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+
+</project>

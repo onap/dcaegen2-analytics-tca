@@ -1,0 +1,14 @@
+{
+    "self": {
+        "name": "Common Event Format Definition",
+        "version": "25.0.0",
+        "description": "Common Event Format Definition"
+ 
+    },
+    "dataformatversion": "1.0.0",
+    "reference": {
+        "name": "Common Event Format",
+        "format": "JSON",
+        "version": "25.0.0"
+   }
+}

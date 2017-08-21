@@ -1,0 +1,37 @@
+{
+  "event": {
+    "measurementsForVfScalingFields": {
+      "measurementInterval": 10,
+      "measurementsForVfScalingVersion": 1.1,
+      "vNicUsageArray": [
+        {
+          "bytesIn": 6086,
+          "multicastPacketsIn": 0,
+          "multicastPacketsOut": 0,
+          "unicastPacketsIn": 0,
+          "broadcastPacketsOut": 0,
+          "packetsOut": 42,
+          "bytesOut": 7156,
+          "packetsIn": 93,
+          "broadcastPacketsIn": 0,
+          "vNicIdentifier": "eth0",
+          "unicastPacketsOut": 0
+        }
+      ]
+    },
+    "commonEventHeader": {
+      "reportingEntityName": "vpp-test",
+      "startEpochMicrosec": 1477070210290442,
+      "eventId": "375",
+      "lastEpochMicrosec": 1477070220290442,
+      "priority": "Normal",
+      "sequence": 375,
+      "sourceName": "Dummy VM name - No Metadata available",
+      "domain": "measurementsForVfScaling",
+      "functionalRole": "vFirewall",
+      "reportingEntityId": "No UUID available",
+      "version": 1.1,
+      "sourceId": "Dummy VM UUID - No Metadata available"
+    }
+  }
+}

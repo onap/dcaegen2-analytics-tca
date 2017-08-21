@@ -1,0 +1,17 @@
+unset http_proxy; unset https_proxy
+
+dcae_cli data_format add --update tcaInput.json
+dcae_cli data_format add --update tcaOutput.json
+dcae_cli component add --update tcaSpec.json
+dcae_cli component run --dmaap-file dmaap.json --force --additional-user USER cdap.tca.hi.lo.app
+
+# publish
+dcae_cli data_format publish "TCA Alert Definition"
+
+# to un-deploy
+dcae_cli component undeploy cdap.tca.hi.lo.app
+
+# to inspect
+dcae_cli component show cdap.tca.hi.lo.app
+dcae_cli component list
+dcae_cli component list --deployed

@@ -1,0 +1,42 @@
+{
+  "hp.tag": "hp.collectorStream.20161014.0000000004",
+  "event": {
+    "measurementsForVfScalingFields": {
+      "memoryConfigured": 1,
+      "requestRate": 1,
+      "measurementInterval": 10,
+      "meanRequestLatency": 1,
+      "concurrentSessions": 1,
+      "measurementFieldsVersion": 1,
+      "vNicUsageArray": [
+        {
+          "multicastPacketsIn": 1,
+          "bytesIn": 597,
+          "unicastPacketsIn": 9,
+          "multicastPacketsOut": 1,
+          "broadcastPacketsOut": 1,
+          "bytesOut": 0,
+          "broadcastPacketsIn": 1,
+          "vNicIdentifier": "GigabitEthernet0/4/0",
+          "unicastPacketsOut": 0
+        }
+      ],
+      "memoryUsed": 1,
+      "configuredEntities": 1
+    },
+    "commonEventHeader": {
+      "reportingEntityName": "Dummy VM name - No Metadata available",
+      "startEpochMicrosec": 1476456641231767,
+      "lastEpochMicrosec": 1476456641231767,
+      "eventId": "1",
+      "priority": "Normal",
+      "sourceName": "Dummy VM name - No Metadata available",
+      "sequence": 1,
+      "functionalRole": "vFirewall",
+      "domain": "measurementsForVfScaling",
+      "reportingEntityId": "Dummy VM UUID - No Metadata available",
+      "version": 1,
+      "sourceId": "Dummy VM UUID - No Metadata available"
+    }
+  }
+}

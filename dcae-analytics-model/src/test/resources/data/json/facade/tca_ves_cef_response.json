@@ -1,0 +1,18 @@
+{
+  "closedLoopControlName": "CL-FRWL-LOW-TRAFFIC-SIG-d925ed73-8231-4d02-9545-db4e101f88f8",
+  "version": "1.0.2",
+  "requestID": "0138afac-b032-4e4b-bd30-88260f444888",
+  "closedLoopAlarmStart": 1478189220547,
+  "closedLoopEventClient": "tca.instance00001",
+  "target_type": "VNF",
+  "target": "generic-vnf.vnf-id",
+  "AAI": {
+    "generic-vnf.vnf-id" : "vpp-test(?)",
+    "vserver.vserver-name": "dfw1lb01lb01"
+  },
+  "from": "DCAE",
+  "policyScope": "resource=vFirewall;type=configuration",
+  "policyName": "configuration.dcae.microservice.tca.xml",
+  "policyVersion": "v0.0.1",
+  "closedLoopEventStatus": "ONSET"
+}

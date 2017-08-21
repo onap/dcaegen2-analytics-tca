@@ -1,0 +1,63 @@
+{
+    "self": {
+        "name": "TCA Alert Definition",
+        "version": "1.0.0",
+        "description": "The format of the output event from TCA"
+    },
+    "dataformatversion": "1.0.0",
+    "jsonschema": {
+        "name": "TCA Alert",
+        "version": "1.0.0",
+        "properties": {
+          "closedLoopControlame": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "requestID": {
+            "type": "string"
+          },
+          "closedLoopAlarmStart": {
+            "type": "string"
+          },
+          "closedLoopEventClient": {
+            "type": "string"
+          },
+          "target_type": {
+            "type": "string",
+            "enum": [ "VNF", "VM" ]
+          },
+          "target": {
+            "type": "string",
+            "enum": [ "generic-vnf.vnf-id", "vserver.vserver-name" ]
+          },
+          "AAI": {"anyOf": [
+            {"generic-vnf.vnf-id": {
+              "type": "string"
+            }}, 
+            {"vserver.vserver-name" : {
+              "type": "string"
+            }}]
+          },
+          "from": {
+            "type": "string",
+            "enum": [ "DCAE" ]
+          },
+          "policyScope": {
+            "type": "string"
+          },
+          "policyName": {
+            "type": "string"
+          },
+          "policyVersion": {
+            "type": "string"
+          },
+          "closedLoopEventStatus": {
+            "type": "string",
+            "enum": [ "ONSET" ]
+          }
+
+        }
+   }
+}

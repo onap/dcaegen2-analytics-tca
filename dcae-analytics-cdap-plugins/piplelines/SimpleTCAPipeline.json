@@ -1,0 +1,847 @@
+{
+  "artifact": {
+    "name": "cdap-data-streams",
+    "version": "4.0.0",
+    "scope": "SYSTEM",
+    "label": "Data Pipeline - Realtime"
+  },
+  "__ui__": {
+    "nodes": [
+      {
+        "plugin": {
+          "label": "DMaaPMRSink",
+          "artifact": {
+            "name": "dcae-analytics-cdap-plugins",
+            "version": "3.0-SNAPSHOT",
+            "scope": "USER"
+          },
+          "name": "DMaaPMRSink",
+          "properties": {
+            "referenceName": "DMaaPMRSink",
+            "hostName": "zldcmtc1njmsrt00.homer.com",
+            "portNumber": "3905",
+            "topicName": "com.dcae.dmaap.FTL.DcaeTestVESPub",
+            "protocol": "https",
+            "userName": "USER",
+            "userPassword": "PASSWORD",
+            "contentType": "application/json",
+            "messageColumnName": "alert",
+            "maxBatchSize": "50"
+          }
+        },
+        "icon": "fa-plug",
+        "description": "A batch sink Plugin that publishes messages to DMaaP MR Topic.",
+        "type": "batchsink",
+        "warning": true,
+        "_uiPosition": {
+          "top": "230.9921875px",
+          "left": "1212px"
+        },
+        "name": "DMaaPMRSink",
+        "errorCount": 0,
+        "_backendProperties": {
+          "portNumber": {
+            "name": "portNumber",
+            "description": "DMaaP Message Router Host Port number. Defaults to Port 80",
+            "type": "int",
+            "required": false,
+            "macroSupported": true
+          },
+          "protocol": {
+            "name": "protocol",
+            "description": "DMaaP Message Router HTTP Protocol e.g. HTTP or HTTPS. Defaults to HTTPS",
+            "type": "string",
+            "required": false,
+            "macroSupported": true
+          },
+          "userPassword": {
+            "name": "userPassword",
+            "description": "DMaaP Message Router User Password used for AAF Authentication. Defaults to no authentication",
+            "type": "string",
+            "required": false,
+            "macroSupported": true
+          },
+          "userName": {
+            "name": "userName",
+            "description": "DMaaP Message Router User Name used for AAF Authentication. Defaults to no authentication",
+            "type": "string",
+            "required": false,
+            "macroSupported": true
+          },
+          "hostName": {
+            "name": "hostName",
+            "description": "DMaaP Message Router HostName",
+            "type": "string",
+            "required": true,
+            "macroSupported": true
+          },
+          "messageColumnName": {
+            "name": "messageColumnName",
+            "description": "Column name of input schema which contains the message that needs to be written to DMaaP MR Topic",
+            "type": "string",
+            "required": true,
+            "macroSupported": true
+          },
+          "contentType": {
+            "name": "contentType",
+            "description": "DMaaP Message Router Content Type. Defaults to 'application/json'",
+            "type": "string",
+            "required": false,
+            "macroSupported": true
+          },
+          "maxRecoveryQueueSize": {
+            "name": "maxRecoveryQueueSize",
+            "description": "DMaaP MR Publisher Recovery Queue Size. Default to 1000K messages which can be buffered in memory in case DMaaP MR Publisher is temporarily unavailable",
+            "type": "int",
+            "required": false,
+            "macroSupported": true
+          },
+          "referenceName": {
+            "name": "referenceName",
+            "description": "This will be used to uniquely identify this source/sink for lineage, annotating metadata, etc.",
+            "type": "string",
+            "required": true,
+            "macroSupported": true
+          },
+          "topicName": {
+            "name": "topicName",
+            "description": "DMaaP Message Router Topic Name",
+            "type": "string",
+            "required": true,
+            "macroSupported": true
+          },
+          "maxBatchSize": {
+            "name": "maxBatchSize",
+            "description": "DMaaP MR Publisher Max Batch Size. Defaults to no Batch",
+            "type": "int",
+            "required": false,
+            "macroSupported": true
+          }
+        },
+        "implicitSchema": null,
+        "outputSchemaProperty": null,
+        "selected": false,
+        "inputSchema": [
+          {
+            "name": "JavaScript2",
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":\"string\"},{\"name\":\"tcaMessageType\",\"type\":\"string\"}]}"
+          }
+        ],
+        "outputSchema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":\"string\"},{\"name\":\"tacMessageType\",\"type\":\"string\"}]}"
+      },
+      {
+        "plugin": {
+          "label": "DMaaPMRSource",
+          "artifact": {
+            "name": "dcae-analytics-cdap-plugins",
+            "version": "3.0-SNAPSHOT",
+            "scope": "USER"
+          },
+          "name": "DMaaPMRSource",
+          "properties": {
+            "referenceName": "DMaaPMRSource",
+            "hostName": "zldcmtc1njmsrt00.homer.com",
+            "portNumber": "3905",
+            "topicName": "com.dcae.dmaap.FTL.DcaeTestVESSub",
+            "pollingInterval": "20000",
+            "protocol": "https",
+            "userName": "USER",
+            "userPassword": "PASSWORD",
+            "contentType": "application/json",
+            "consumerId": "C1",
+            "consumerGroup": "OpenDCAE-G1"
+          }
+        },
+        "icon": "fa-plug",
+        "description": "Fetches DMaaP MR Messages at regular intervals",
+        "type": "streamingsource",
+        "warning": true,
+        "_uiPosition": {
+          "top": "230.9921875px",
+          "left": "318px"
+        },
+        "name": "DMaaPMRSource",
+        "errorCount": 0,
+        "_backendProperties": {
+          "portNumber": {
+            "name": "portNumber",
+            "description": "DMaaP Message Router Host Port number. Defaults to Port 80",
+            "type": "int",
+            "required": false,
+            "macroSupported": true
+          },
+          "protocol": {
+            "name": "protocol",
+            "description": "DMaaP Message Router HTTP Protocol e.g. HTTP or HTTPS. Defaults to HTTPS",
+            "type": "string",
+            "required": false,
+            "macroSupported": true
+          },
+          "timeoutMS": {
+            "name": "timeoutMS",
+            "description": "DMaaP Message Router Subscriber Timeout in MS. Defaults to no timeout",
+            "type": "int",
+            "required": false,
+            "macroSupported": true
+          },
+          "consumerGroup": {
+            "name": "consumerGroup",
+            "description": "DMaaP Message Router Subscriber Consumer Group. Defaults to some randomly created user Group",
+            "type": "string",
+            "required": false,
+            "macroSupported": true
+          },
+          "userPassword": {
+            "name": "userPassword",
+            "description": "DMaaP Message Router User Password used for AAF Authentication. Defaults to no authentication",
+            "type": "string",
+            "required": false,
+            "macroSupported": true
+          },
+          "userName": {
+            "name": "userName",
+            "description": "DMaaP Message Router User Name used for AAF Authentication. Defaults to no authentication",
+            "type": "string",
+            "required": false,
+            "macroSupported": true
+          },
+          "hostName": {
+            "name": "hostName",
+            "description": "DMaaP Message Router HostName",
+            "type": "string",
+            "required": true,
+            "macroSupported": true
+          },
+          "pollingInterval": {
+            "name": "pollingInterval",
+            "description": "DMaaP MR Polling Interval in MS",
+            "type": "int",
+            "required": true,
+            "macroSupported": true
+          },
+          "contentType": {
+            "name": "contentType",
+            "description": "DMaaP Message Router Content Type. Defaults to 'application/json'",
+            "type": "string",
+            "required": false,
+            "macroSupported": true
+          },
+          "referenceName": {
+            "name": "referenceName",
+            "description": "This will be used to uniquely identify this source/sink for lineage, annotating metadata, etc.",
+            "type": "string",
+            "required": true,
+            "macroSupported": true
+          },
+          "topicName": {
+            "name": "topicName",
+            "description": "DMaaP Message Router Topic Name",
+            "type": "string",
+            "required": true,
+            "macroSupported": true
+          },
+          "messageLimit": {
+            "name": "messageLimit",
+            "description": "DMaaP Message Router Subscriber Message Limit. Defaults to no message limit",
+            "type": "int",
+            "required": false,
+            "macroSupported": true
+          },
+          "consumerId": {
+            "name": "consumerId",
+            "description": "DMaaP Message Router Subscriber Consumer ID. Defaults to some randomly created userID",
+            "type": "string",
+            "required": false,
+            "macroSupported": true
+          }
+        },
+        "implicitSchema": {
+          "ts": "long",
+          "responseCode": "int",
+          "responseMessage": "string",
+          "message": "string"
+        },
+        "outputSchemaProperty": null,
+        "outputSchema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}]}",
+        "selected": false
+      },
+      {
+        "plugin": {
+          "label": "JsonPathFilter",
+          "artifact": {
+            "name": "dcae-analytics-cdap-plugins",
+            "version": "3.0-SNAPSHOT",
+            "scope": "USER"
+          },
+          "name": "JsonPathFilter",
+          "properties": {
+            "referenceName": "JsonPathFilter",
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}]}",
+            "jsonFilterMappings": "$.event.commonEventHeader.domain:measurementsForVfScaling,$.event.commonEventHeader.functionalRole:vLoadBalancer;vFirewall",
+            "incomingJsonFieldName": "message",
+            "outputSchemaFieldName": "filterMatched"
+          }
+        },
+        "icon": "fa-plug",
+        "description": "Filters incoming schema field based of given json path expected values",
+        "type": "transform",
+        "warning": true,
+        "_uiPosition": {
+          "top": "230.9921875px",
+          "left": "474px"
+        },
+        "name": "JsonPathFilter",
+        "errorCount": 0,
+        "_backendProperties": {
+          "schema": {
+            "name": "schema",
+            "description": "Output Schema",
+            "type": "string",
+            "required": true,
+            "macroSupported": false
+          },
+          "incomingJsonFieldName": {
+            "name": "incomingJsonFieldName",
+            "description": "Input schema field name that contain JSON used for filtering",
+            "type": "string",
+            "required": true,
+            "macroSupported": false
+          },
+          "outputSchemaFieldName": {
+            "name": "outputSchemaFieldName",
+            "description": "Name of the nullable boolean schema field name that will contain result of the filter matching",
+            "type": "string",
+            "required": true,
+            "macroSupported": false
+          },
+          "jsonFilterMappings": {
+            "name": "jsonFilterMappings",
+            "description": "Filters incoming JSON based on given filter mappings - in terms of JSON path and expected values.Right hand side contains JSON path. Left hand side contains semicolon (';') separated expected values for that JSON Path. If all provided JSON Path mappings and corresponding values matches - output schema field will be marked as true",
+            "type": "string",
+            "required": true,
+            "macroSupported": false
+          },
+          "referenceName": {
+            "name": "referenceName",
+            "description": "This will be used to uniquely identify this source/sink for lineage, annotating metadata, etc.",
+            "type": "string",
+            "required": true,
+            "macroSupported": true
+          }
+        },
+        "implicitSchema": null,
+        "outputSchemaProperty": "schema",
+        "watchProperty": "format",
+        "outputSchema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}]}",
+        "selected": false,
+        "inputSchema": [
+          {
+            "name": "DMaaPMRSource",
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}]}"
+          }
+        ]
+      },
+      {
+        "plugin": {
+          "label": "JavaScriptJsonPathFilter",
+          "artifact": {
+            "name": "core-plugins",
+            "version": "1.5.0",
+            "scope": "SYSTEM"
+          },
+          "name": "JavaScript",
+          "properties": {
+            "script": "function transform(input, emitter, context) {\n  \n  var filterMatched = input.filterMatched;\n  var log = context.getLogger();\n  var metrics = context.getMetrics();\n  \n  log.debug('Received filterMatched: ' + filterMatched);\n  \n  // if matched filter push message for TCA\n  if(filterMatched) {\n    \n    log.debug('Json Filter matched - pushing to TCA');\n    metrics.count('js.tca.pushed', 1);\n    emitter.emit(input);\n    \n   \n   // if matched unsuccessfull - no need to do TCA\n  } else {\n    \n    log.debug('Json Filter unmatched - dropping message');\n    metrics.count('js.tca.dropped', 1); \n\n  }\n  \n  \n}",
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}]}"
+          }
+        },
+        "icon": "icon-javascript",
+        "description": "Executes user-provided JavaScript that transforms one record into zero or more records.",
+        "type": "transform",
+        "warning": true,
+        "_uiPosition": {
+          "top": "230.9921875px",
+          "left": "642px"
+        },
+        "name": "JavaScriptJsonPathFilter",
+        "errorCount": 0,
+        "_backendProperties": {
+          "schema": {
+            "name": "schema",
+            "description": "The schema of output objects. If no schema is given, it is assumed that the output schema is the same as the input schema.",
+            "type": "string",
+            "required": false,
+            "macroSupported": false
+          },
+          "script": {
+            "name": "script",
+            "description": "JavaScript defining how to transform input record into zero or more records. The script must implement a function called 'transform', which takes as input a JSON object (representing the input record) emitter object, which can be used to emit records and error messagesand a context object (which contains CDAP metrics, logger and lookup)For example:\n'function transform(input, emitter, context) {\n  if(context.getLookup('blacklist').lookup(input.id) != null) {\n     emitter.emitError({\"errorCode\":31, \"errorMsg\":\"blacklisted id\", \"invalidRecord\": input}); \n  } else {\n     if(input.count < 0) {\n       context.getMetrics().count(\"negative.count\", 1);\n       context.getLogger().debug(\"Received record with negative count\");\n     }\n  input.count = input.count * 1024;\n  emitter.emit(input);   } \n}'\nwill emit an error if the input id is present in blacklist table, else scale the 'count' field by 1024",
+            "type": "string",
+            "required": true,
+            "macroSupported": false
+          },
+          "lookup": {
+            "name": "lookup",
+            "description": "Lookup tables to use during transform. Currently supports KeyValueTable.",
+            "type": "string",
+            "required": false,
+            "macroSupported": false
+          }
+        },
+        "implicitSchema": null,
+        "outputSchemaProperty": "schema",
+        "outputSchema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}]}",
+        "selected": false,
+        "inputSchema": [
+          {
+            "name": "JsonPathFilter",
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}]}"
+          }
+        ],
+        "errorDatasetName": ""
+      },
+      {
+        "plugin": {
+          "label": "SimpleTCAPlugin",
+          "artifact": {
+            "name": "dcae-analytics-cdap-plugins",
+            "version": "3.0-SNAPSHOT",
+            "scope": "USER"
+          },
+          "name": "SimpleTCAPlugin",
+          "properties": {
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":[\"string\",\"null\"]},{\"name\":\"tcaMessageType\",\"type\":\"string\"}]}",
+            "policyJson": "{\"domain\":\"measurementsForVfScaling\",\"metricsPerFunctionalRole\":[{\"functionalRole\":\"vFirewall\",\"policyScope\":\"resource=vFirewall;type=configuration\",\"policyName\":\"configuration.dcae.microservice.tca.xml\",\"policyVersion\":\"v0.0.1\",\"thresholds\":[{\"closedLoopControlName\":\"CL-FRWL-LOW-TRAFFIC-SIG-d925ed73-8231-4d02-9545-db4e101f88f8\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicUsageArray[*].bytesIn\",\"thresholdValue\":4000,\"direction\":\"LESS_OR_EQUAL\",\"severity\":\"MAJOR\"},{\"closedLoopControlName\":\"CL-FRWL-HIGH-TRAFFIC-SIG-EA36FE84-9342-5E13-A656-EC5F21309A09\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicUsageArray[*].bytesIn\",\"thresholdValue\":20000,\"direction\":\"GREATER_OR_EQUAL\",\"severity\":\"CRITICAL\"}]},{\"functionalRole\":\"vLoadBalancer\",\"policyScope\":\"resource=vLoadBalancer;type=configuration\",\"policyName\":\"configuration.dcae.microservice.tca.xml\",\"policyVersion\":\"v0.0.1\",\"thresholds\":[{\"closedLoopControlName\":\"CL-LBAL-LOW-TRAFFIC-SIG-FB480F95-A453-6F24-B767-FD703241AB1A\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicUsageArray[*].packetsIn\",\"thresholdValue\":500,\"direction\":\"LESS_OR_EQUAL\",\"severity\":\"MAJOR\"},{\"closedLoopControlName\":\"CL-LBAL-LOW-TRAFFIC-SIG-0C5920A6-B564-8035-C878-0E814352BC2B\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicUsageArray[*].packetsIn\",\"thresholdValue\":5000,\"direction\":\"GREATER_OR_EQUAL\",\"severity\":\"CRITICAL\"}]}]}",
+            "vesMessageFieldName": "message",
+            "alertFieldName": "alert",
+            "messageTypeFieldName": "tcaMessageType",
+            "referenceName": "SimpleTCAPlugin",
+            "enableAlertCEFFormat": "false"
+          }
+        },
+        "icon": "fa-plug",
+        "description": "Used to create TCA (Threshold Crossing Alert) based on given Policy",
+        "type": "sparkcompute",
+        "warning": true,
+        "_uiPosition": {
+          "top": "230.9921875px",
+          "left": "824px"
+        },
+        "name": "SimpleTCAPlugin",
+        "errorCount": 0,
+        "_backendProperties": {
+          "schema": {
+            "name": "schema",
+            "description": "Specifies the output schema",
+            "type": "string",
+            "required": true,
+            "macroSupported": false
+          },
+          "policyJson": {
+            "name": "policyJson",
+            "description": "Policy JSON that need to be applied to VES Message",
+            "type": "string",
+            "required": true,
+            "macroSupported": true
+          },
+          "vesMessageFieldName": {
+            "name": "vesMessageFieldName",
+            "description": "Field name containing VES Message",
+            "type": "string",
+            "required": true,
+            "macroSupported": true
+          },
+          "referenceName": {
+            "name": "referenceName",
+            "description": "This will be used to uniquely identify this source/sink for lineage, annotating metadata, etc.",
+            "type": "string",
+            "required": true,
+            "macroSupported": true
+          },
+          "messageTypeFieldName": {
+            "name": "messageTypeFieldName",
+            "description": "Name of the output field that will contain message type: INAPPLICABLE, COMPLIANT, NON_COMPLIANT",
+            "type": "string",
+            "required": true,
+            "macroSupported": true
+          },
+          "alertFieldName": {
+            "name": "alertFieldName",
+            "description": "Name of the output field that will contain the alert",
+            "type": "string",
+            "required": true,
+            "macroSupported": true
+          },
+          "enableAlertCEFFormat": {
+            "name": "enableAlertCEFFormat",
+            "description": "Enable Alert Output Format in CEF format",
+            "type": "string",
+            "required": false,
+            "macroSupported": true
+          }
+        },
+        "implicitSchema": null,
+        "outputSchemaProperty": "schema",
+        "watchProperty": "format",
+        "outputSchema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":[\"string\",\"null\"]},{\"name\":\"tcaMessageType\",\"type\":\"string\"}]}",
+        "selected": false,
+        "inputSchema": [
+          {
+            "name": "JavaScriptJsonPathFilter",
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}]}"
+          }
+        ]
+      },
+      {
+        "plugin": {
+          "label": "TCAMessageStatusTable",
+          "artifact": {
+            "name": "core-plugins",
+            "version": "1.5.0",
+            "scope": "SYSTEM"
+          },
+          "name": "Table",
+          "properties": {
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":[\"string\",\"null\"]},{\"name\":\"tcaMessageType\",\"type\":\"string\"}]}",
+            "name": "TCAMessageStatusTable",
+            "schema.row.field": "ts"
+          }
+        },
+        "icon": "icon-table",
+        "description": "Writes records to a Table with one record field mapping to the Table rowkey, and all other record fields mapping to Table columns.",
+        "type": "batchsink",
+        "warning": true,
+        "_uiPosition": {
+          "top": "416.9921875px",
+          "left": "956px"
+        },
+        "name": "TCAMessageStatusTable",
+        "errorCount": 0,
+        "_backendProperties": {
+          "schema": {
+            "name": "schema",
+            "description": "schema of the table as a JSON Object. If the table does not already exist, one will be created with this schema, which will allow the table to be explored through Hive. If no schema is given, the table created will not be explorable.",
+            "type": "string",
+            "required": false,
+            "macroSupported": false
+          },
+          "name": {
+            "name": "name",
+            "description": "Name of the dataset. If the dataset does not already exist, one will be created.",
+            "type": "string",
+            "required": true,
+            "macroSupported": true
+          },
+          "schema.row.field": {
+            "name": "schema.row.field",
+            "description": "The name of the record field that should be used as the row key when writing to the table.",
+            "type": "string",
+            "required": true,
+            "macroSupported": false
+          }
+        },
+        "implicitSchema": null,
+        "outputSchemaProperty": "schema",
+        "outputSchema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":[\"string\",\"null\"]},{\"name\":\"tcaMessageType\",\"type\":\"string\"}]}",
+        "selected": false,
+        "inputSchema": [
+          {
+            "name": "SimpleTCAPlugin",
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":[\"string\",\"null\"]},{\"name\":\"tcaMessageType\",\"type\":\"string\"}]}"
+          }
+        ]
+      },
+      {
+        "plugin": {
+          "label": "JavaScript2",
+          "artifact": {
+            "name": "core-plugins",
+            "version": "1.5.0",
+            "scope": "SYSTEM"
+          },
+          "name": "JavaScript",
+          "properties": {
+            "script": "function transform(input, emitter, context) {\n  \n  var alert = input.alert;\n  var log = context.getLogger();\n  var metrics = context.getMetrics();\n  \n  log.debug('Received alert: ' + alert)\n  \n  \n  // if alert is null then drop the message\n  if(alert == null) {\n    \n    log.debug('No Alert Found - Dropping incoming record');\n    metrics.count('js.alerts.dropped', 1);\n  \n    \n  // if alert is not null push message to next plugin\n  } else {\n    \n    log.debug('Found Alert - Pushing record to next Plugin');\n    metrics.count('js.alerts.pushed', 1);\n  \n    emitter.emit(input);\n\n  }\n  \n}",
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":\"string\"},{\"name\":\"tcaMessageType\",\"type\":\"string\"}]}"
+          }
+        },
+        "icon": "icon-javascript",
+        "description": "Executes user-provided JavaScript that transforms one record into zero or more records.",
+        "type": "transform",
+        "warning": true,
+        "_uiPosition": {
+          "top": "230.9921875px",
+          "left": "1030px"
+        },
+        "name": "JavaScript2",
+        "errorCount": 0,
+        "_backendProperties": {
+          "schema": {
+            "name": "schema",
+            "description": "The schema of output objects. If no schema is given, it is assumed that the output schema is the same as the input schema.",
+            "type": "string",
+            "required": false,
+            "macroSupported": false
+          },
+          "script": {
+            "name": "script",
+            "description": "JavaScript defining how to transform input record into zero or more records. The script must implement a function called 'transform', which takes as input a JSON object (representing the input record) emitter object, which can be used to emit records and error messagesand a context object (which contains CDAP metrics, logger and lookup)For example:\n'function transform(input, emitter, context) {\n  if(context.getLookup('blacklist').lookup(input.id) != null) {\n     emitter.emitError({\"errorCode\":31, \"errorMsg\":\"blacklisted id\", \"invalidRecord\": input}); \n  } else {\n     if(input.count < 0) {\n       context.getMetrics().count(\"negative.count\", 1);\n       context.getLogger().debug(\"Received record with negative count\");\n     }\n  input.count = input.count * 1024;\n  emitter.emit(input);   } \n}'\nwill emit an error if the input id is present in blacklist table, else scale the 'count' field by 1024",
+            "type": "string",
+            "required": true,
+            "macroSupported": false
+          },
+          "lookup": {
+            "name": "lookup",
+            "description": "Lookup tables to use during transform. Currently supports KeyValueTable.",
+            "type": "string",
+            "required": false,
+            "macroSupported": false
+          }
+        },
+        "implicitSchema": null,
+        "outputSchemaProperty": "schema",
+        "outputSchema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":\"string\"},{\"name\":\"tcaMessageType\",\"type\":\"string\"}]}",
+        "selected": false,
+        "inputSchema": [
+          {
+            "name": "SimpleTCAPlugin",
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":[\"string\",\"null\"]},{\"name\":\"tcaMessageType\",\"type\":\"string\"}]}"
+          }
+        ],
+        "errorDatasetName": ""
+      }
+    ],
+    "draftId": "26c03fab-253e-42f3-94e8-575dc1501036"
+  },
+  "description": "",
+  "name": "SimpleTCAPluginFullPipeLine",
+  "config": {
+    "resources": {
+      "memoryMB": 1024,
+      "virtualCores": 1
+    },
+    "driverResources": {
+      "memoryMB": 1024,
+      "virtualCores": 1
+    },
+    "connections": [
+      {
+        "from": "DMaaPMRSource",
+        "to": "JsonPathFilter"
+      },
+      {
+        "from": "JsonPathFilter",
+        "to": "JavaScriptJsonPathFilter"
+      },
+      {
+        "from": "JavaScriptJsonPathFilter",
+        "to": "SimpleTCAPlugin"
+      },
+      {
+        "from": "SimpleTCAPlugin",
+        "to": "TCAMessageStatusTable"
+      },
+      {
+        "from": "SimpleTCAPlugin",
+        "to": "JavaScript2"
+      },
+      {
+        "from": "JavaScript2",
+        "to": "DMaaPMRSink"
+      }
+    ],
+    "comments": [],
+    "postActions": [],
+    "stages": [
+      {
+        "name": "DMaaPMRSource",
+        "plugin": {
+          "name": "DMaaPMRSource",
+          "type": "streamingsource",
+          "label": "DMaaPMRSource",
+          "artifact": {
+            "name": "dcae-analytics-cdap-plugins",
+            "version": "3.0-SNAPSHOT",
+            "scope": "USER"
+          },
+          "properties": {
+            "referenceName": "DMaaPMRSource",
+            "hostName": "zldcmtc1njmsrt00.homer.com",
+            "portNumber": "3905",
+            "topicName": "com.dcae.dmaap.FTL.DcaeTestVESSub",
+            "pollingInterval": "20000",
+            "protocol": "https",
+            "userName": "USER",
+            "userPassword": "PASSWORD",
+            "contentType": "application/json",
+            "consumerId": "C1",
+            "consumerGroup": "OpenDCAE-G1"
+          }
+        },
+        "outputSchema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}]}"
+      },
+      {
+        "name": "JsonPathFilter",
+        "plugin": {
+          "name": "JsonPathFilter",
+          "type": "transform",
+          "label": "JsonPathFilter",
+          "artifact": {
+            "name": "dcae-analytics-cdap-plugins",
+            "version": "3.0-SNAPSHOT",
+            "scope": "USER"
+          },
+          "properties": {
+            "referenceName": "JsonPathFilter",
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}]}",
+            "jsonFilterMappings": "$.event.commonEventHeader.domain:measurementsForVfScaling,$.event.commonEventHeader.functionalRole:vLoadBalancer;vFirewall",
+            "incomingJsonFieldName": "message",
+            "outputSchemaFieldName": "filterMatched"
+          }
+        },
+        "outputSchema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}]}",
+        "inputSchema": [
+          {
+            "name": "DMaaPMRSource",
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}]}"
+          }
+        ]
+      },
+      {
+        "name": "JavaScriptJsonPathFilter",
+        "plugin": {
+          "name": "JavaScript",
+          "type": "transform",
+          "label": "JavaScriptJsonPathFilter",
+          "artifact": {
+            "name": "core-plugins",
+            "version": "1.5.0",
+            "scope": "SYSTEM"
+          },
+          "properties": {
+            "script": "function transform(input, emitter, context) {\n  \n  var filterMatched = input.filterMatched;\n  var log = context.getLogger();\n  var metrics = context.getMetrics();\n  \n  log.debug('Received filterMatched: ' + filterMatched);\n  \n  // if matched filter push message for TCA\n  if(filterMatched) {\n    \n    log.debug('Json Filter matched - pushing to TCA');\n    metrics.count('js.tca.pushed', 1);\n    emitter.emit(input);\n    \n   \n   // if matched unsuccessfull - no need to do TCA\n  } else {\n    \n    log.debug('Json Filter unmatched - dropping message');\n    metrics.count('js.tca.dropped', 1); \n\n  }\n  \n  \n}",
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}]}"
+          }
+        },
+        "outputSchema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}]}",
+        "inputSchema": [
+          {
+            "name": "JsonPathFilter",
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}]}"
+          }
+        ]
+      },
+      {
+        "name": "SimpleTCAPlugin",
+        "plugin": {
+          "name": "SimpleTCAPlugin",
+          "type": "sparkcompute",
+          "label": "SimpleTCAPlugin",
+          "artifact": {
+            "name": "dcae-analytics-cdap-plugins",
+            "version": "3.0-SNAPSHOT",
+            "scope": "USER"
+          },
+          "properties": {
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":[\"string\",\"null\"]},{\"name\":\"tcaMessageType\",\"type\":\"string\"}]}",
+            "policyJson": "{\"domain\":\"measurementsForVfScaling\",\"metricsPerFunctionalRole\":[{\"functionalRole\":\"vFirewall\",\"policyScope\":\"resource=vFirewall;type=configuration\",\"policyName\":\"configuration.dcae.microservice.tca.xml\",\"policyVersion\":\"v0.0.1\",\"thresholds\":[{\"closedLoopControlName\":\"CL-FRWL-LOW-TRAFFIC-SIG-d925ed73-8231-4d02-9545-db4e101f88f8\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicUsageArray[*].bytesIn\",\"thresholdValue\":4000,\"direction\":\"LESS_OR_EQUAL\",\"severity\":\"MAJOR\"},{\"closedLoopControlName\":\"CL-FRWL-HIGH-TRAFFIC-SIG-EA36FE84-9342-5E13-A656-EC5F21309A09\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicUsageArray[*].bytesIn\",\"thresholdValue\":20000,\"direction\":\"GREATER_OR_EQUAL\",\"severity\":\"CRITICAL\"}]},{\"functionalRole\":\"vLoadBalancer\",\"policyScope\":\"resource=vLoadBalancer;type=configuration\",\"policyName\":\"configuration.dcae.microservice.tca.xml\",\"policyVersion\":\"v0.0.1\",\"thresholds\":[{\"closedLoopControlName\":\"CL-LBAL-LOW-TRAFFIC-SIG-FB480F95-A453-6F24-B767-FD703241AB1A\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicUsageArray[*].packetsIn\",\"thresholdValue\":500,\"direction\":\"LESS_OR_EQUAL\",\"severity\":\"MAJOR\"},{\"closedLoopControlName\":\"CL-LBAL-LOW-TRAFFIC-SIG-0C5920A6-B564-8035-C878-0E814352BC2B\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicUsageArray[*].packetsIn\",\"thresholdValue\":5000,\"direction\":\"GREATER_OR_EQUAL\",\"severity\":\"CRITICAL\"}]}]}",
+            "vesMessageFieldName": "message",
+            "alertFieldName": "alert",
+            "messageTypeFieldName": "tcaMessageType",
+            "referenceName": "SimpleTCAPlugin",
+            "enableAlertCEFFormat": "false"
+          }
+        },
+        "outputSchema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":[\"string\",\"null\"]},{\"name\":\"tcaMessageType\",\"type\":\"string\"}]}",
+        "inputSchema": [
+          {
+            "name": "JavaScriptJsonPathFilter",
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}]}"
+          }
+        ]
+      },
+      {
+        "name": "TCAMessageStatusTable",
+        "plugin": {
+          "name": "Table",
+          "type": "batchsink",
+          "label": "TCAMessageStatusTable",
+          "artifact": {
+            "name": "core-plugins",
+            "version": "1.5.0",
+            "scope": "SYSTEM"
+          },
+          "properties": {
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":[\"string\",\"null\"]},{\"name\":\"tcaMessageType\",\"type\":\"string\"}]}",
+            "name": "TCAMessageStatusTable",
+            "schema.row.field": "ts"
+          }
+        },
+        "outputSchema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":[\"string\",\"null\"]},{\"name\":\"tcaMessageType\",\"type\":\"string\"}]}",
+        "inputSchema": [
+          {
+            "name": "SimpleTCAPlugin",
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":[\"string\",\"null\"]},{\"name\":\"tcaMessageType\",\"type\":\"string\"}]}"
+          }
+        ]
+      },
+      {
+        "name": "JavaScript2",
+        "plugin": {
+          "name": "JavaScript",
+          "type": "transform",
+          "label": "JavaScript2",
+          "artifact": {
+            "name": "core-plugins",
+            "version": "1.5.0",
+            "scope": "SYSTEM"
+          },
+          "properties": {
+            "script": "function transform(input, emitter, context) {\n  \n  var alert = input.alert;\n  var log = context.getLogger();\n  var metrics = context.getMetrics();\n  \n  log.debug('Received alert: ' + alert)\n  \n  \n  // if alert is null then drop the message\n  if(alert == null) {\n    \n    log.debug('No Alert Found - Dropping incoming record');\n    metrics.count('js.alerts.dropped', 1);\n  \n    \n  // if alert is not null push message to next plugin\n  } else {\n    \n    log.debug('Found Alert - Pushing record to next Plugin');\n    metrics.count('js.alerts.pushed', 1);\n  \n    emitter.emit(input);\n\n  }\n  \n}",
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":\"string\"},{\"name\":\"tcaMessageType\",\"type\":\"string\"}]}"
+          }
+        },
+        "outputSchema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":\"string\"},{\"name\":\"tcaMessageType\",\"type\":\"string\"}]}",
+        "inputSchema": [
+          {
+            "name": "SimpleTCAPlugin",
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":[\"string\",\"null\"]},{\"name\":\"tcaMessageType\",\"type\":\"string\"}]}"
+          }
+        ]
+      },
+      {
+        "name": "DMaaPMRSink",
+        "plugin": {
+          "name": "DMaaPMRSink",
+          "type": "batchsink",
+          "label": "DMaaPMRSink",
+          "artifact": {
+            "name": "dcae-analytics-cdap-plugins",
+            "version": "3.0-SNAPSHOT",
+            "scope": "USER"
+          },
+          "properties": {
+            "referenceName": "DMaaPMRSink",
+            "hostName": "zldcmtc1njmsrt00.homer.com",
+            "portNumber": "3905",
+            "topicName": "com.dcae.dmaap.FTL.DcaeTestVESPub",
+            "protocol": "https",
+            "userName": "USER",
+            "userPassword": "PASSWORD",
+            "contentType": "application/json",
+            "messageColumnName": "alert",
+            "maxBatchSize": "50"
+          }
+        },
+        "outputSchema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":\"string\"},{\"name\":\"tacMessageType\",\"type\":\"string\"}]}",
+        "inputSchema": [
+          {
+            "name": "JavaScript2",
+            "schema": "{\"type\":\"record\",\"name\":\"etlSchemaBody\",\"fields\":[{\"name\":\"ts\",\"type\":\"long\"},{\"name\":\"filterMatched\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"responseCode\",\"type\":\"int\"},{\"name\":\"responseMessage\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"},{\"name\":\"alert\",\"type\":\"string\"},{\"name\":\"tcaMessageType\",\"type\":\"string\"}]}"
+          }
+        ]
+      }
+    ],
+    "batchInterval": "60s"
+  }
+}

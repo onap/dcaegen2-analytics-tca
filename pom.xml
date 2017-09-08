@@ -30,7 +30,7 @@
     <version>2.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>DCAE Analytics Framework</name>
+    <name>dcaegen2-analytics-tca</name>
     <description>Application Framework for DCAE Analytics</description>
 
     <licenses>

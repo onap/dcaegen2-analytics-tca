@@ -156,7 +156,7 @@
         <jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec
         </jacoco.ut.execution.data.file>
         <dependency.locations.enabled>false</dependency.locations.enabled>
-        <nexusproxy>https://nexus.openecomp.org</nexusproxy>
+        <nexusproxy>https://nexus.onap.org</nexusproxy>
 
     </properties>
 

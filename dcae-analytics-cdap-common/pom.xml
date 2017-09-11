@@ -27,7 +27,7 @@
 
     <parent>
         <artifactId>dcae-analytics</artifactId>
-        <groupId>org.openecomp.dcae.apod.analytics</groupId>
+        <groupId>org.onap.dcaegen2.analytics.tca</groupId>
         <version>2.0.0-SNAPSHOT</version>
     </parent>
 
@@ -47,7 +47,7 @@
 
         <!-- DCAE DEPENDENCIES -->
         <dependency>
-            <groupId>org.openecomp.dcae.apod.analytics</groupId>
+            <groupId>org.onap.dcaegen2.analytics.tca</groupId>
             <artifactId>dcae-analytics-tca</artifactId>
             <version>2.0.0-SNAPSHOT</version>
         </dependency>
@@ -101,7 +101,7 @@
 
         <!-- TEST DEPENDENCIES -->
         <dependency>
-            <groupId>org.openecomp.dcae.apod.analytics</groupId>
+            <groupId>org.onap.dcaegen2.analytics.tca</groupId>
             <artifactId>dcae-analytics-test</artifactId>
             <version>2.0.0-SNAPSHOT</version>
             <scope>test</scope>

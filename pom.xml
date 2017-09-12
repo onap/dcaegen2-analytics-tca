@@ -73,7 +73,7 @@
   		</snapshotRepository>
   		<site>
   			<id>ecomp-site</id>
-  			<url>dav:${nexusproxy}/content/sites/site/org/onap/dcae/apod/analytics/${project.artifactId}/${project.version}/</url>
+  			<url>dav:${nexusproxy}/content/sites/site/org/onap/dcaegen2/analytics/tca/${project.artifactId}/${project.version}/</url>
   		</site>
     </distributionManagement>
 

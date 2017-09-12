@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a437d4f_b3f26e98",
+        "filename": "version.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2017-09-12T02:59:26Z",
+      "side": 1,
+      "message": "should this be 1.1.x as TCA already existed under dcae?",
+      "revId": "2595337d765a32f8d3cf32fcdb49ad182271af2a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}

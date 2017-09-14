@@ -89,6 +89,7 @@
         <!-- PLUGINS VERSIONS -->
         <compiler.plugin.version>3.3</compiler.plugin.version>
         <surefire.plugin.version>2.19.1</surefire.plugin.version>
+        <failsafe.plugin.version>2.19.1</failsafe.plugin.version>
         <bundle.plugin.version>2.5.4</bundle.plugin.version>
         <autorun.plugin.version>1.7</autorun.plugin.version>
         <eclipe.plugin.version>2.10</eclipe.plugin.version>
@@ -676,6 +677,28 @@
                     </dependencies>
                 </plugin>
 
+                <!-- FAIL SAFE PLUGIN FOR INTEGRATION TEST -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${failsafe.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>integration-tests</id>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                            <configuration>
+                                <skipTests>${skip.integration.tests}</skipTests>
+                                <!-- Sets the VM argument line used when integration tests are run. -->
+                                <!--suppress MavenModelInspection -->
+                                <argLine>${failsafeArgLine}</argLine>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
                 <!-- FIND BUGS (STATIC CODE ANALYSIS) PLUGIN -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -892,9 +915,13 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
+                <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -923,7 +950,6 @@
 
         </plugins>
     </build>
-
 
     <reporting>
         <plugins>

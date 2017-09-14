@@ -60,23 +60,6 @@
 		</pluginRepository>
 	</pluginRepositories>
 
-    <distributionManagement>
-    	<repository>
-  			<id>ecomp-releases</id>
-  			<name>OpenECOMP Release Repository</name>
-  			<url>${nexusproxy}/content/repositories/releases</url>
-  		</repository>
-  		<snapshotRepository>
-  			<id>ecomp-snapshots</id>
-  			<name>OpenECOMP Snapshot Repository</name>
-  			<url>${nexusproxy}/content/repositories/snapshots</url>
-  		</snapshotRepository>
-  		<site>
-  			<id>ecomp-site</id>
-  			<url>dav:${nexusproxy}/content/sites/site/org/onap/dcaegen2/analytics/tca/${project.artifactId}/${project.version}/</url>
-  		</site>
-    </distributionManagement>
-
     <properties>
 
         <!-- PROJECT SETTINGS-->
@@ -88,7 +71,7 @@
         <surefire.redirectTestOutputToFile>true</surefire.redirectTestOutputToFile>
 
         <!-- PROJECT DEPENDENCIES -->
-        <cdap.version>4.0.0</cdap.version>
+        <cdap.version>4.1.2</cdap.version>
         <cask.common.version>0.7.1</cask.common.version>
         <hadoop.version>2.3.0</hadoop.version>
         <spark.version>1.6.1</spark.version>
@@ -100,8 +83,6 @@
         <guice.version>3.0</guice.version>
         <slf4j.version>1.7.5</slf4j.version>
         <logback.version>1.0.9</logback.version>
-        <findbugs.jsr305.version>2.0.1</findbugs.jsr305.version>
-        <findbugs.annotations.version>3.0.0</findbugs.annotations.version>
         <lombok.version>1.16.10</lombok.version>
 
         <json.path.version>2.2.0</json.path.version>
@@ -120,29 +101,14 @@
 
         <!-- PLUGINS VERSIONS -->
         <compiler.plugin.version>3.3</compiler.plugin.version>
-        <surefire.plugin.version>2.19.1</surefire.plugin.version>
-        <failsafe.plugin.version>2.19.1</failsafe.plugin.version>
-        <bundle.plugin.version>2.5.4</bundle.plugin.version>
         <autorun.plugin.version>1.7</autorun.plugin.version>
         <eclipe.plugin.version>2.10</eclipe.plugin.version>
-        <findbugs.plugin.version>3.0.2</findbugs.plugin.version>
-        <cobertura.plugin.version>2.7</cobertura.plugin.version>
-        <pmd.plugin.version>3.5</pmd.plugin.version>
-        <surefire.report.plugin.version>2.19.1</surefire.report.plugin.version>
-        <checkstyle.plugin.version>2.16</checkstyle.plugin.version>
         <javadoc.plugin.version>2.10.4</javadoc.plugin.version>
         <source.plugin.version>2.4</source.plugin.version>
         <jar.plugin.version>2.4</jar.plugin.version>
-        <deploy.plugin.version>2.8</deploy.plugin.version>
-        <jacoco.plugin.version>0.7.7.201606060606</jacoco.plugin.version>
         <lombok.plugin.version>1.16.10.0</lombok.plugin.version>
         <jgitflow.plugin.version>1.0-m5.1</jgitflow.plugin.version>
-        <maven.site.plugin>3.5.1</maven.site.plugin>
-        <jxr.plugin.version>2.5</jxr.plugin.version>
         <project.info.reports.plugin.version>2.7</project.info.reports.plugin.version>
-        <blackduck.hub.version>2.0.0</blackduck.hub.version>
-        <sonar.plugin.version>3.2</sonar.plugin.version>
-        <license.plugin.version>1.12</license.plugin.version>
 
         <!--PLUGIN SETTINGS -->
         <compiler.source.version>1.7</compiler.source.version>
@@ -151,17 +117,11 @@
         <skip.unit.tests>false</skip.unit.tests>
         <integration.test.pattern>**/*IT.java</integration.test.pattern>
         <skip.integration.tests>true</skip.integration.tests>
-        <pmd.violation.buildfail>true</pmd.violation.buildfail>
-        <findbugs.failOnError>true</findbugs.failOnError>
-        <checkstyle.failOnViolation>true</checkstyle.failOnViolation>
-        <checkstyle.file.name>checkstyle.xml</checkstyle.file.name>
-        <checkstyle.suppression.file.name>suppressions.xml</checkstyle.suppression.file.name>
-        <jacoco.it.execution.data.file>${project.build.directory}/coverage-reports/jacoco-it.exec
-        </jacoco.it.execution.data.file>
-        <jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec
-        </jacoco.ut.execution.data.file>
         <dependency.locations.enabled>false</dependency.locations.enabled>
         <nexusproxy>https://nexus.onap.org</nexusproxy>
+        <snapshots.path>content/repositories/snapshots/</snapshots.path>
+  		<releases.path>content/repositories/releases/</releases.path>
+  		<site.path>content/sites/site/org/onap/dcaegen2/analytics/tca/${project.artifactId}/${project.version}</site.path>
 
     </properties>
 
@@ -426,20 +386,6 @@
                 <version>${commons.lang3.version}</version>
             </dependency>
 
-            <!-- FIND BUGS -->
-            <dependency>
-                <groupId>com.google.code.findbugs</groupId>
-                <artifactId>jsr305</artifactId>
-                <version>${findbugs.jsr305.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.google.code.findbugs</groupId>
-                <artifactId>annotations</artifactId>
-                <version>${findbugs.annotations.version}</version>
-                <scope>provided</scope>
-            </dependency>
-
             <!-- JACKSON JSON -->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -647,30 +593,6 @@
                     </executions>
                 </plugin>
 
-                <!-- MAVEN BUNDLE PLUGIN -->
-                <plugin>
-                    <groupId>org.apache.felix</groupId>
-                    <artifactId>maven-bundle-plugin</artifactId>
-                    <version>${bundle.plugin.version}</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <instructions>
-                            <Embed-Dependency>*;inline=false;scope=compile</Embed-Dependency>
-                            <Embed-Transitive>true</Embed-Transitive>
-                            <Embed-Directory>lib</Embed-Directory>
-                        </instructions>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>Bundling CDAP Jar</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>bundle</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-
                 <!-- MAVEN AUTO RUN PLUGIN -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -678,251 +600,25 @@
                     <version>${autorun.plugin.version}</version>
                 </plugin>
 
-                <!-- JACOCO CODE COVERAGE PLUGIN -->
-                <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>${jacoco.plugin.version}</version>
-                    <configuration>
-                        <excludes>
-                            <!-- Exclude all test classes for code coverage reports -->
-                            <exclude>**/test/**</exclude>
-                            <!-- Exclude all domain classes as they should only contain domain objects, no logic -->
-                            <exclude>**/domain/**</exclude>
-                            <!-- Exclude all facade classes as they should only contain facade objects, no logic -->
-                            <exclude>**/facade/**</exclude>
-                            <!-- Exclude mixin class for code coverage as they are just for json parsing hints -->
-                            <exclude>**/mixin/**</exclude>
-                            <!-- Exclude classes ending with "Constants" as they should only store static constants -->
-                            <exclude>**/*Constants.*</exclude>
-                            <!-- Exclude classes ending with "Module" as they are used for wiring beans by guice -->
-                            <exclude>**/*Module.*</exclude>
-                            <!-- Exclude classes ending with "Exception" as they are mostly wrapper over java
-                            exceptions -->
-                            <exclude>**/*Exception.*</exclude>
-                            <!-- Exclude classes ending with "Entity" as they should not contain any logic -->
-                            <exclude>**/*Entity.*</exclude>
-                        </excludes>
-                    </configuration>
-                    <executions>
-                        <!-- prepare jacoco agent before unit tests -->
-                        <execution>
-                            <id>pre-unit-test</id>
-                            <goals>
-                                <goal>prepare-agent</goal>
-                            </goals>
-                            <configuration>
-                                <destFile>${jacoco.ut.execution.data.file}</destFile>
-                                <propertyName>surefireArgLine</propertyName>
-                            </configuration>
-                        </execution>
-                        <!-- generate unit test coverage report -->
-                        <execution>
-                            <id>post-unit-test</id>
-                            <phase>test</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                            <configuration>
-                                <dataFile>${jacoco.ut.execution.data.file}</dataFile>
-                                <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
-                            </configuration>
-                        </execution>
-                        <!-- prepare jacoco agent before integration tests -->
-                        <execution>
-                            <id>pre-integration-test</id>
-                            <phase>pre-integration-test</phase>
-                            <goals>
-                                <goal>prepare-agent</goal>
-                            </goals>
-                            <configuration>
-                                <destFile>${jacoco.it.execution.data.file}</destFile>
-                                <propertyName>failsafeArgLine</propertyName>
-                            </configuration>
-                        </execution>
-                        <!-- generate integration test coverage report -->
-                        <execution>
-                            <id>post-integration-test</id>
-                            <phase>post-integration-test</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                            <configuration>
-                                <dataFile>${jacoco.it.execution.data.file}</dataFile>
-                                <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-
-
-                <!-- SUREFIRE TEST PLUGIN -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${surefire.plugin.version}</version>
-                    <configuration>
-                        <skipTests>${skip.unit.tests}</skipTests>
-                        <argLine>-Xmx2048m -Djava.awt.headless=true -XX:+UseConcMarkSweepGC
-                            -XX:OnOutOfMemoryError="kill -9 %p" -XX:+HeapDumpOnOutOfMemoryError
-                        </argLine>
-                        <redirectTestOutputToFile>${surefire.redirectTestOutputToFile}</redirectTestOutputToFile>
-                        <parallel>methods</parallel>
-                        <threadCount>8</threadCount>
-                        <forkCount>8</forkCount>
-                        <reuseForks>true</reuseForks>
-                        <reportFormat>xml</reportFormat>
-                        <trimStackTrace>false</trimStackTrace>
-                        <systemPropertyVariables>
-                            <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
-                            <logback.configurationFile>
-                                ${basedir}/src/test/resources/logback-test.xml
-                            </logback.configurationFile>
-                            <HADOOP_HOME>${project.build.directory}</HADOOP_HOME>
-                        </systemPropertyVariables>
-                        <includes>
-                            <include>${unit.test.pattern}</include>
-                        </includes>
-                        <excludes>
-                            <exclude>${integration.test.pattern}</exclude>
-                        </excludes>
-                        <!-- Sets the VM argument line used when unit tests are run. -->
-                        <argLine>${surefireArgLine}</argLine>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.apache.maven.surefire</groupId>
-                            <artifactId>surefire-junit47</artifactId>
-                            <version>${surefire.plugin.version}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-
-                <!-- FAIL SAFE PLUGIN FOR INTEGRATION TEST -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>${failsafe.plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>integration-tests</id>
-                            <goals>
-                                <goal>integration-test</goal>
-                                <goal>verify</goal>
-                            </goals>
-                            <configuration>
-                                <skipTests>${skip.integration.tests}</skipTests>
-                                <!-- Sets the VM argument line used when integration tests are run. -->
-                                <!--suppress MavenModelInspection -->
-                                <argLine>${failsafeArgLine}</argLine>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-
-
-                <!-- FIND BUGS (STATIC CODE ANALYSIS) PLUGIN -->
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>findbugs-maven-plugin</artifactId>
-                    <version>${findbugs.plugin.version}</version>
-                    <configuration>
-                        <effort>Max</effort>
-                        <threshold>Low</threshold>
-                        <xmlOutput>true</xmlOutput>
-                        <!-- BUILD FAIL ON FINDBUGS ERRORS -->
-                        <failOnError>${findbugs.failOnError}</failOnError>
-                        <excludeFilterFile>${main.basedir}/findbugs-exclude.xml</excludeFilterFile>
-                        <outputDirectory>${project.reporting.outputDirectory}/findbugs</outputDirectory>
-                        <findbugsXmlOutputDirectory>${project.reporting.outputDirectory}/findbugs
-                        </findbugsXmlOutputDirectory>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>analyze-compile</id>
-                            <phase>compile</phase>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <!-- PMD PLUGIN SETUP -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-pmd-plugin</artifactId>
-                    <version>${pmd.plugin.version}</version>
-                    <configuration>
-                        <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
-                        <targetJdk>${compiler.target.version}</targetJdk>
-                        <linkXRef>false</linkXRef>
-                        <excludes>
-                            <!-- IGNORE PMD & CPD ANALYTICS MODEL FACADE OBJECTS -->
-                            <exclude>**/model/facade/**/*.java</exclude>
-                        </excludes>
-                        <!-- BUILD FAIL ON PMD VIOLATION -->
-                        <failOnViolation>${pmd.violation.buildfail}</failOnViolation>
-                        <targetDirectory>${project.reporting.outputDirectory}/pmd</targetDirectory>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>pmd-check</id>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                            <configuration>
-                                <printFailingErrors>true</printFailingErrors>
-                                <excludeFromFailureFile>${main.basedir}/pmd-exclude.properties</excludeFromFailureFile>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>cpd-check</id>
-                            <goals>
-                                <goal>cpd-check</goal>
-                            </goals>
-                            <configuration>
-                                <printFailingErrors>true</printFailingErrors>
-                                <excludeFromFailureFile>${main.basedir}/cpd-exclude.properties</excludeFromFailureFile>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-
-
-                <!-- CHECKSTYLE PLUGIN -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>${checkstyle.plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>validate</id>
-                            <phase>validate</phase>
-                            <configuration>
-                                <configLocation>${checkstyle.file.name}</configLocation>
-                                <suppressionsLocation>${checkstyle.suppression.file.name}</suppressionsLocation>
-                                <encoding>UTF-8</encoding>
-                                <consoleOutput>true</consoleOutput>
-                                <!-- BUILD FAIL ON CHECKSTYLE VIOLATION -->
-                                <failOnViolation>${checkstyle.failOnViolation}</failOnViolation>
-                                <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                                <outputFile>${project.reporting.outputDirectory}/checkstyle</outputFile>
-                            </configuration>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <dependencies>
-                        <dependency>
-                            <groupId>com.puppycrawl.tools</groupId>
-                            <artifactId>checkstyle</artifactId>
-                            <version>6.19</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-
+ 				<plugin>
+ 					<artifactId>maven-assembly-plugin</artifactId>
+ 					<version>2.4.1</version>
+ 					<configuration>
+ 						<descriptors>
+ 							<descriptor>src/assembly/dep.xml</descriptor>
+ 						</descriptors>
+ 					</configuration>
+ 					<executions>
+ 						<execution>
+ 							<id>make-assembly</id> <!-- this is used for inheritance merges -->
+ 							<phase>package</phase> <!-- bind to the packaging phase -->
+ 							<goals>
+ 								<goal>single</goal>
+ 							</goals>
+ 						</execution>
+ 					</executions>
+ 				</plugin>
+ 
                 <!-- ECLIPSE PLUGIN -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -1010,90 +706,6 @@
                     </configuration>
                 </plugin>
 
-
-                <!-- BLACK DUCK LICENSE SCANNER -->
-                <!--
-                <plugin>
-                    <groupId>com.blackducksoftware.integration</groupId>
-                    <artifactId>hub-maven-plugin</artifactId>
-                    <version>${blackduck.hub.version}</version>
-                    <inherited>false</inherited>
-                    <configuration>
-                        <hubProjectName>${project.name}</hubProjectName>
-                        <outputDirectory>${project.basedir}</outputDirectory>
-                        <deployHubBdio>false</deployHubBdio>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>create-bdio-file</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>build-bom</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                -->
-
-                <!-- LICENSE PLUGIN -->
-                <!--
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>license-maven-plugin</artifactId>
-                    <version>${license.plugin.version}</version>
-                    <configuration>
-                        <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
-                        <processStartTag>============LICENSE_START=======================================================</processStartTag>
-                        <processEndTag>============LICENSE_END=========================================================</processEndTag>
-                        <sectionDelimiter>================================================================================</sectionDelimiter>
-                        <licenseName>apache_v2</licenseName>
-                        <inceptionYear>2017</inceptionYear>
-                        <organizationName>AT&amp;T Intellectual Property. All rights reserved.</organizationName>
-                        <projectName>dcae-analytics</projectName>
-                        <canUpdateCopyright>true</canUpdateCopyright>
-                        <canUpdateDescription>true</canUpdateDescription>
-                        <canUpdateLicense>true</canUpdateLicense>
-                        <emptyLineAfterHeader>true</emptyLineAfterHeader>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>first</id>
-                            <goals>
-                                <goal>update-file-header</goal>
-                            </goals>
-                            <phase>process-sources</phase>
-                        </execution>
-                    </executions>
-                </plugin>
-                -->
-
-                <!-- SONAR PLUGIN -->
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>sonar-maven-plugin</artifactId>
-                    <version>${sonar.plugin.version}</version>
-                </plugin>
-
-                <!-- DEPLOY PLUGIN -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>${deploy.plugin.version}</version>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>${maven.site.plugin}</version>
-                </plugin>
-
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jxr-plugin</artifactId>
-                    <version>${jxr.plugin.version}</version>
-                </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
@@ -1104,12 +716,27 @@
                     </configuration>
                 </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-report-plugin</artifactId>
-                    <version>${surefire.report.plugin.version}</version>
-                </plugin>
-
+				<plugin>
+ 					<groupId>org.codehaus.mojo</groupId>
+ 					<artifactId>exec-maven-plugin</artifactId>
+ 					<version>1.2.1</version>
+ 					<configuration>
+ 						<executable>${session.executionRootDirectory}/mvn-phase-script.sh</executable>
+ 						<environmentVariables>
+ 							<!-- make mvn properties as env for our script -->
+ 							<MVN_PROJECT_GROUPID>${project.groupId}</MVN_PROJECT_GROUPID>
+ 							<MVN_PROJECT_ARTIFACTID>${project.artifactId}</MVN_PROJECT_ARTIFACTID>
+ 							<MVN_PROJECT_VERSION>${project.version}</MVN_PROJECT_VERSION>
+ 							<MVN_NEXUSPROXY>${onap.nexus.url}</MVN_NEXUSPROXY>
+ 							<MVN_RAWREPO_BASEURL_UPLOAD>${onap.nexus.rawrepo.baseurl.upload}</MVN_RAWREPO_BASEURL_UPLOAD>
+ 							<MVN_RAWREPO_BASEURL_DOWNLOAD>${onap.nexus.rawrepo.baseurl.download}</MVN_RAWREPO_BASEURL_DOWNLOAD>
+ 							<MVN_RAWREPO_SERVERID>${onap.nexus.rawrepo.serverid}</MVN_RAWREPO_SERVERID>
+ 							<MVN_DOCKERREGISTRY_DAILY>${onap.nexus.dockerregistry.daily}</MVN_DOCKERREGISTRY_DAILY>
+ 							<MVN_DOCKERREGISTRY_RELEASE>${onap.nexus.dockerregistry.release}</MVN_DOCKERREGISTRY_RELEASE>
+ 						</environmentVariables>
+ 					</configuration>
+ 				</plugin>
+ 
             </plugins>
 
         </pluginManagement>
@@ -1128,30 +755,6 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <skipTests>true</skipTests>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-            </plugin>
-
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
             </plugin>
 
@@ -1161,32 +764,47 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-            </plugin>
-
-            <plugin>
                 <groupId>external.atlassian.jgitflow</groupId>
                 <artifactId>jgitflow-maven-plugin</artifactId>
             </plugin>
 
-            <!--
-            <plugin>
-                <groupId>com.blackducksoftware.integration</groupId>
-                <artifactId>hub-maven-plugin</artifactId>
-            </plugin>
-            -->
-
+ 			<plugin>
+ 				<artifactId>maven-assembly-plugin</artifactId>
+ 			</plugin>
+ 
+ 			<plugin>
+ 				<groupId>org.codehaus.mojo</groupId>
+ 				<artifactId>exec-maven-plugin</artifactId>
+ 				<executions>
+ 					<execution>
+ 						<id>deploy script</id>
+ 						<phase>deploy</phase>
+ 						<goals>
+ 							<goal>exec</goal>
+ 						</goals>
+ 						<configuration>
+ 							<arguments>
+ 								<argument>__</argument>
+ 								<argument>deploy</argument>
+ 							</arguments>
+ 						</configuration>
+ 					</execution>
+ 					<execution>
+ 						<id>install script</id>
+ 						<phase>install</phase>
+ 						<goals>
+ 							<goal>exec</goal>
+ 						</goals>
+ 						<configuration>
+ 							<arguments>
+ 								<argument>__</argument>
+ 								<argument>install</argument>
+ 							</arguments>
+ 						</configuration>
+ 					</execution>
+ 				</executions>
+ 			</plugin>
+ 
         </plugins>
     </build>
 
@@ -1195,41 +813,33 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <configuration>
-                    <configLocation>${checkstyle.file.name}</configLocation>
-                    <suppressionsLocation>${checkstyle.suppression.file.name}</suppressionsLocation>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.plugin.version}</version>
-                <configuration>
-                    <dataFile>${jacoco.ut.execution.data.file}</dataFile>
-                    <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jxr-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.6</version>
+ 				<reportSets>
+ 					<reportSet>
+ 						<reports>
+ 							<report>dependencies</report>
+ 							<report>license</report>
+ 						</reports>
+ 					</reportSet>
+ 				</reportSets>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-            </plugin>
+            
+			<plugin>
+ 				<groupId>org.apache.maven.plugins</groupId>
+ 				<artifactId>maven-javadoc-plugin</artifactId>
+ 				<configuration>
+ 					<failOnError>false</failOnError>
+ 					<doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+ 					<docletArtifact>
+ 						<groupId>org.umlgraph</groupId>
+ 						<artifactId>umlgraph</artifactId>
+ 						<version>5.6</version>
+ 					</docletArtifact>
+ 					<additionalparam>-views</additionalparam>
+ 					<useStandardDocletOptions>true</useStandardDocletOptions>
+ 				</configuration>
+ 			</plugin>
         </plugins>
     </reporting>
 

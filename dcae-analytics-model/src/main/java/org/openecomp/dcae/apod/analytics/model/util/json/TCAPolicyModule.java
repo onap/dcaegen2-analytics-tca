@@ -23,13 +23,17 @@ package org.openecomp.dcae.apod.analytics.model.util.json;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.BaseTCAPolicyModel;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ControlLoopEventStatus;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ControlLoopSchemaType;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Direction;
-import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerFunctionalRole;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerEventName;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.TCAPolicy;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Threshold;
 import org.openecomp.dcae.apod.analytics.model.util.json.mixin.policy.tca.BaseTCAPolicyModelMixin;
+import org.openecomp.dcae.apod.analytics.model.util.json.mixin.policy.tca.ControlLoopEventStatusMixin;
+import org.openecomp.dcae.apod.analytics.model.util.json.mixin.policy.tca.ControlLoopSchemaTypeMixin;
 import org.openecomp.dcae.apod.analytics.model.util.json.mixin.policy.tca.DirectionMixin;
-import org.openecomp.dcae.apod.analytics.model.util.json.mixin.policy.tca.MetricsPerFunctionalRoleMixin;
+import org.openecomp.dcae.apod.analytics.model.util.json.mixin.policy.tca.MetricsPerEventNameMixin;
 import org.openecomp.dcae.apod.analytics.model.util.json.mixin.policy.tca.TCAPolicyMixin;
 import org.openecomp.dcae.apod.analytics.model.util.json.mixin.policy.tca.ThresholdMixin;
 
@@ -48,14 +52,13 @@ public class TCAPolicyModule extends SimpleModule {
 
     @Override
     public void setupModule(final SetupContext setupContext) {
-
         setupContext.setMixInAnnotations(BaseTCAPolicyModel.class, BaseTCAPolicyModelMixin.class);
+        setupContext.setMixInAnnotations(ControlLoopSchemaType.class, ControlLoopSchemaTypeMixin.class);
         setupContext.setMixInAnnotations(Direction.class, DirectionMixin.class);
+        setupContext.setMixInAnnotations(ControlLoopEventStatus.class, ControlLoopEventStatusMixin.class);
         setupContext.setMixInAnnotations(TCAPolicy.class, TCAPolicyMixin.class);
-        setupContext.setMixInAnnotations(MetricsPerFunctionalRole.class, MetricsPerFunctionalRoleMixin.class);
+        setupContext.setMixInAnnotations(MetricsPerEventName.class, MetricsPerEventNameMixin.class);
         setupContext.setMixInAnnotations(Threshold.class, ThresholdMixin.class);
         setupContext.setMixInAnnotations(TCAPolicy.class, TCAPolicyMixin.class);
-
-
     }
 }

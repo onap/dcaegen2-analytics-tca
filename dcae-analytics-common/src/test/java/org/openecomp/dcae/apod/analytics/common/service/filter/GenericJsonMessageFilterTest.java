@@ -48,7 +48,7 @@ public class GenericJsonMessageFilterTest extends BaseAnalyticsCommonUnitTest {
         final JsonMessageFilterProcessorContext finalMessageProcessorContext =
                 processJsonMessageFilterChain(jsonMessage,
                         "domainFilter", "$.event.commonEventHeader.domain", "measurementsForVfScaling",
-                        "functionalRoleFilter", "$.event.commonEventHeader.functionalRole", "vFirewall");
+                        "eventNameFilter", "$.event.commonEventHeader.eventName", "Mfvs_eNodeB_RANKPI");
 
         assertJsonMessageAssertions(jsonMessage, finalMessageProcessorContext, true, true, 2);
 
@@ -59,8 +59,8 @@ public class GenericJsonMessageFilterTest extends BaseAnalyticsCommonUnitTest {
 
         final JsonMessageFilterProcessorContext finalMessageProcessorContext =
                 processJsonMessageFilterChain(jsonMessage,
-                        "domainFilter", "$.event.commonEventHeader.sequence", "375",
-                        "functionalRoleFilter", "$.event.commonEventHeader.functionalRole", "vFirewall");
+                        "domainFilter", "$.event.commonEventHeader.sequence", "0",
+                        "eventNameFilter", "$.event.commonEventHeader.eventName", "Mfvs_eNodeB_RANKPI");
 
         assertJsonMessageAssertions(jsonMessage, finalMessageProcessorContext, true, true, 2);
     }
@@ -71,7 +71,7 @@ public class GenericJsonMessageFilterTest extends BaseAnalyticsCommonUnitTest {
         final JsonMessageFilterProcessorContext finalMessageProcessorContext =
                 processJsonMessageFilterChain(jsonMessage,
                         "domainFilter", "$.event.commonEventHeader.domain", "xxxxxxxxxxx",
-                        "functionalRoleFilter", "$.event.commonEventHeader.functionalRole", "vFirewall");
+                        "functionalRoleFilter", "$.event.commonEventHeader.eventName", "vFirewall");
 
         assertJsonMessageAssertions(jsonMessage, finalMessageProcessorContext, false, false, 1);
     }
@@ -82,7 +82,7 @@ public class GenericJsonMessageFilterTest extends BaseAnalyticsCommonUnitTest {
         final JsonMessageFilterProcessorContext finalMessageProcessorContext =
                 processJsonMessageFilterChain(jsonMessage,
                         "domainFilter", "$.event.commonEventHeader.xxxxxxx", "measurementsForVfScaling",
-                        "functionalRoleFilter", "$.event.commonEventHeader.functionalRole", "vFirewall");
+                        "functionalRoleFilter", "$.event.commonEventHeader.eventName", "vFirewall");
 
         assertJsonMessageAssertions(jsonMessage, finalMessageProcessorContext, false, false, 1);
     }
@@ -93,7 +93,7 @@ public class GenericJsonMessageFilterTest extends BaseAnalyticsCommonUnitTest {
         final JsonMessageFilterProcessorContext finalMessageProcessorContext =
                 processJsonMessageFilterChain("",
                         "domainFilter", "$.event.commonEventHeader.domain", "measurementsForVfScaling",
-                        "functionalRoleFilter", "$.event.commonEventHeader.functionalRole", "vFirewall");
+                        "functionalRoleFilter", "$.event.commonEventHeader.eventName", "vFirewall");
 
         assertJsonMessageAssertions("", finalMessageProcessorContext, false, null, 1);
 
@@ -105,7 +105,7 @@ public class GenericJsonMessageFilterTest extends BaseAnalyticsCommonUnitTest {
         final JsonMessageFilterProcessorContext finalMessageProcessorContext =
                 processJsonMessageFilterChain("invalidJson",
                         "domainFilter", "$.event.commonEventHeader.domain", "measurementsForVfScaling",
-                        "functionalRoleFilter", "$.event.commonEventHeader.functionalRole", "vFirewall");
+                        "functionalRoleFilter", "$.event.commonEventHeader.eventName", "vFirewall");
 
         assertJsonMessageAssertions("invalidJson", finalMessageProcessorContext, false, null, 1);
 

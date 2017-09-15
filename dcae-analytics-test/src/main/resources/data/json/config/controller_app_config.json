@@ -1,0 +1,33 @@
+{
+  "appName":"dcae-tca",
+  "appDescription": "DCAE Analytics Threshold Crossing Alert Application",
+  "tcaVESMessageStatusTableName": "TCAVESMessageStatusTable",
+  "tcaVESMessageStatusTableTTLSeconds": 86400.0,
+  "tcaAlertsAbatementTableName": "TCAAlertsAbatementTable",
+  "tcaAlertsAbatementTableTTLSeconds": 1728000.0,
+  "tcaVESAlertsTableName": "TCAVESAlertsTable",
+  "tcaVESAlertsTableTTLSeconds": 1728000.0,
+  "thresholdCalculatorFlowletInstances": 2.0,
+  "tcaSubscriberOutputStreamName": "TCASubscriberOutputStream",
+  "services_calls": {},
+  "streams_publishes":{
+    "tca_handle_out":{
+      "type": "message_router",
+      "aaf_username": "USER",
+      "aaf_password":"PASSWORD",
+      "dmaap_info": {
+        "topic_url": "https://HOSTNAME:3905/events/com.att.dcae.dmaap.mtnje2.DcaeTestVESPub"
+      }
+    }
+  },
+  "streams_subscribes":{
+    "tca_handle_in":{
+      "type": "message_router",
+      "aaf_username": "USER",
+      "aaf_password":"PASSWORD",
+      "dmaap_info":{
+        "topic_url":"https://HOSTNAME:3905/events/com.att.dcae.dmaap.mtnje2.DcaeTestVESSub"
+      }
+    }
+  }
+}

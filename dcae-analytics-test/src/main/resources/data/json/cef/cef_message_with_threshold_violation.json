@@ -1,0 +1,76 @@
+{
+  "event": {
+    "commonEventHeader": {
+      "domain": "measurementsForVfScaling",
+      "eventId": "UC1-SCL01081-1492639920787",
+      "eventName": "Mfvs_eNodeB_RANKPI",
+      "lastEpochMicrosec": 1492639920787,
+      "nfNamingCode": "ENBE",
+      "priority": "Normal",
+      "reportingEntityId": "",
+      "reportingEntityName": "vtc2e7admn2",
+      "sequence": 0,
+      "sourceId": "SCL01081_9B_1",
+      "sourceName": "SCL01081",
+      "startEpochMicrosec": 1492639920787,
+      "version": 3.0
+    },
+    "measurementsForVfScalingFields": {
+      "additionalFields": [
+        {
+          "name": "software_version ",
+          "value": "version1"
+        },
+        {
+          "name": "vendor ",
+          "value": "Ericsson "
+        }
+      ],
+      "additionalMeasurements": [
+        {
+          "name": "OaaS_UC1_EricssonSleepingCell",
+          "arrayOfFields": [
+            {
+              "name": "PMRAATTCBRA",
+              "value": "1353"
+            },
+            {
+              "name": "PMRASUCCCBRA",
+              "value": "1351"
+            },
+            {
+              "name": "PMCELLDOWNTIMEAUTO",
+              "value": "0"
+            },
+            {
+              "name": "PMCELLDOWNTIMEMAN",
+              "value": "0"
+            },
+            {
+              "name": "PMRRCCONNESTABATT",
+              "value": "297"
+            },
+            {
+              "name": "PMRRCCONNESTABSUCC",
+              "value": "297"
+            }
+          ]
+        }
+      ],
+      "vNicPerformanceArray": [
+        {
+          "receivedBroadcastPacketsAccumulated" : 21000,
+          "receivedBroadcastPacketsDelta" : 5,
+          "receivedDiscardedPacketsAccumulated" : 12,
+          "receivedDiscardedPacketsDelta" : 2,
+          "receivedErrorPacketsAccumulated" : 2,
+          "receivedErrorPacketsDelta" : 1,
+          "valuesAreSuspect" : false,
+          "vNicIdentifier": "someVNicIdentifier"
+        }
+      ],
+      "measurementInterval": 900,
+      "measurementsForVfScalingVersion": 2.0
+    }
+  }
+}

@@ -63,12 +63,13 @@ public class TCAVESCollectorFlowTest extends BaseAnalyticsCDAPTCAUnitTest {
         assertThat("TCAVESCollector must contain all TCA VES flowlets", flowlets.keySet(),
                 containsInAnyOrder(CDAPComponentsConstants.TCA_FIXED_VES_MESSAGE_ROUTER_NAME_FLOWLET,
                         CDAPComponentsConstants.TCA_FIXED_VES_THRESHOLD_VIOLATION_CALCULATOR_NAME_FLOWLET,
+                        CDAPComponentsConstants.TCA_FIXED_VES_ALERTS_ABATEMENT_NAME_FLOWLET,
                         CDAPComponentsConstants.TCA_FIXED_VES_ALERTS_SINK_NAME_FLOWLET));
 
         final List<FlowletConnection> connections =
                 (List<FlowletConnection>) getPrivateFiledValue(configurer, "connections", ArrayList.class);
 
-        assertThat("There must be three connections in VES Collector Flow", connections.size(), is(3));
+        assertThat("There must be four connections in VES Collector Flow", connections.size(), is(4));
 
     }
 

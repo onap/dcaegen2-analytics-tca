@@ -51,8 +51,10 @@ import org.openecomp.dcae.apod.analytics.model.domain.cef.EventListener;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventSeverity;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.PerformanceCounter;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.ThresholdCrossingAlertFields;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ControlLoopEventStatus;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ControlLoopSchemaType;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Direction;
-import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerFunctionalRole;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerEventName;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.TCAPolicy;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Threshold;
 import org.openecomp.dcae.apod.analytics.model.facade.tca.AAI;
@@ -61,7 +63,7 @@ import org.openecomp.dcae.apod.analytics.model.util.AnalyticsModelIOUtils;
 import org.openecomp.dcae.apod.analytics.model.util.AnalyticsModelJsonUtils;
 import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFJsonProcessor;
 import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFPolicyDomainFilter;
-import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFPolicyFunctionalRoleFilter;
+import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFPolicyEventNameFilter;
 import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFPolicyThresholdsProcessor;
 import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFProcessorContext;
 import org.quartz.Job;
@@ -121,85 +123,85 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
     };
 
     /**
-     * {@link Function} that extracts {@link TCAPolicy#getMetricsPerFunctionalRole()} from {@link TCAPolicy}
+     * {@link Function} that extracts {@link TCAPolicy#getMetricsPerEventName()} from {@link TCAPolicy}
      *
-     * @return TCA Policy Metrics Per Functional Roles List
+     * @return TCA Policy Metrics Per Event Name list
      */
-    public static Function<TCAPolicy, List<MetricsPerFunctionalRole>> tcaPolicyMetricsExtractorFunction() {
-        return new Function<TCAPolicy, List<MetricsPerFunctionalRole>>() {
+    public static Function<TCAPolicy, List<MetricsPerEventName>> tcaPolicyMetricsExtractorFunction() {
+        return new Function<TCAPolicy, List<MetricsPerEventName>>() {
             @Nullable
             @Override
-            public List<MetricsPerFunctionalRole> apply(@Nonnull TCAPolicy tcaPolicy) {
-                return tcaPolicy.getMetricsPerFunctionalRole();
+            public List<MetricsPerEventName> apply(@Nonnull TCAPolicy tcaPolicy) {
+                return tcaPolicy.getMetricsPerEventName();
             }
         };
     }
 
     /**
-     * {@link Function} that extracts {@link MetricsPerFunctionalRole#getFunctionalRole()} from
-     * {@link MetricsPerFunctionalRole}
+     * {@link Function} that extracts {@link MetricsPerEventName#getEventName()} from
+     * {@link MetricsPerEventName}
      *
-     * @return Functional role or a Metrics Per Functional Role object
+     * @return Event Names or a Metrics Per Event Name object
      */
-    public static Function<MetricsPerFunctionalRole, String> tcaFunctionalRoleExtractorFunction() {
-        return new Function<MetricsPerFunctionalRole, String>() {
+    public static Function<MetricsPerEventName, String> tcaEventNameExtractorFunction() {
+        return new Function<MetricsPerEventName, String>() {
             @Override
-            public String apply(@Nonnull MetricsPerFunctionalRole metricsPerFunctionalRole) {
-                return metricsPerFunctionalRole.getFunctionalRole();
+            public String apply(@Nonnull MetricsPerEventName metricsPerEventName) {
+                return metricsPerEventName.getEventName();
             }
         };
     }
 
 
     /**
-     * Extracts {@link TCAPolicy} Functional Roles
+     * Extracts {@link TCAPolicy} Event Names
      *
      * @param tcaPolicy TCA Policy
-     * @return List of functional Roles in the tca Policy
+     * @return List of event names in the TCA Policy
      */
-    public static List<String> getPolicyFunctionalRoles(@Nonnull final TCAPolicy tcaPolicy) {
-        final List<MetricsPerFunctionalRole> metricsPerFunctionalRoles =
+    public static List<String> getPolicyEventNames(@Nonnull final TCAPolicy tcaPolicy) {
+        final List<MetricsPerEventName> metricsPerEventNames =
                 tcaPolicyMetricsExtractorFunction().apply(tcaPolicy);
 
-        return Lists.transform(metricsPerFunctionalRoles, tcaFunctionalRoleExtractorFunction());
+        return Lists.transform(metricsPerEventNames, tcaEventNameExtractorFunction());
     }
 
     /**
-     * A {@link Supplier} which caches {@link TCAPolicy} Functional Roles as they are not expected to
+     * A {@link Supplier} which caches {@link TCAPolicy} Event names as they are not expected to
      * change during runtime
      *
      * @param tcaPolicy TCA Policy
-     * @return a Supplier that memoize the Functional roles
+     * @return a Supplier that memoize the TCA Policy event names
      */
-    public static Supplier<List<String>> getPolicyFunctionalRoleSupplier(@Nonnull final TCAPolicy tcaPolicy) {
+    public static Supplier<List<String>> getPolicyEventNamesSupplier(@Nonnull final TCAPolicy tcaPolicy) {
         return Suppliers.memoize(new Supplier<List<String>>() {
             @Override
             public List<String> get() {
-                return getPolicyFunctionalRoles(tcaPolicy);
+                return getPolicyEventNames(tcaPolicy);
             }
         });
     }
 
 
     /**
-     * Creates a Table to lookup thresholds of a {@link TCAPolicy} by its Functional Role and Threshold Field path
+     * Creates a Table to lookup thresholds of a {@link TCAPolicy} by its Event Name and Threshold Field path
      *
      * @param tcaPolicy TCA Policy
-     * @return A table with Keys of functional role and field path containing List of threshold as values
+     * @return A table with Keys of event name and field path containing List of threshold as values
      */
-    public static Table<String, String, List<Threshold>> getPolicyFRThresholdsTable(final TCAPolicy tcaPolicy) {
+    public static Table<String, String, List<Threshold>> getPolicyEventNameThresholdsTable(final TCAPolicy tcaPolicy) {
         final Table<String, String, List<Threshold>> domainFRTable = HashBasedTable.create();
-        for (MetricsPerFunctionalRole metricsPerFunctionalRole : tcaPolicy.getMetricsPerFunctionalRole()) {
-            final String functionalRole = metricsPerFunctionalRole.getFunctionalRole();
-            final List<Threshold> thresholds = metricsPerFunctionalRole.getThresholds();
+        for (MetricsPerEventName metricsPerEventName : tcaPolicy.getMetricsPerEventName()) {
+            final String eventName = metricsPerEventName.getEventName();
+            final List<Threshold> thresholds = metricsPerEventName.getThresholds();
             for (Threshold threshold : thresholds) {
-                final List<Threshold> existingThresholds = domainFRTable.get(functionalRole, threshold.getFieldPath());
+                final List<Threshold> existingThresholds = domainFRTable.get(eventName, threshold.getFieldPath());
                 if (existingThresholds == null) {
                     final LinkedList<Threshold> newThresholdList = new LinkedList<>();
                     newThresholdList.add(threshold);
-                    domainFRTable.put(functionalRole, threshold.getFieldPath(), newThresholdList);
+                    domainFRTable.put(eventName, threshold.getFieldPath(), newThresholdList);
                 } else {
-                    domainFRTable.get(functionalRole, threshold.getFieldPath()).add(threshold);
+                    domainFRTable.get(eventName, threshold.getFieldPath()).add(threshold);
                 }
             }
         }
@@ -208,17 +210,17 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
 
 
     /**
-     * A {@link Supplier} which caches Policy Functional Role and Threshold Field Path Thresholds lookup table
+     * A {@link Supplier} which caches Policy Event Name and Threshold Field Path Thresholds lookup table
      *
      * @param tcaPolicy TCA Policy
-     * @return Cached Supplier for table with Keys of functional role and field path containing thresholds as values
+     * @return Cached Supplier for table with Keys of event Name and field path containing thresholds as values
      */
-    public static Supplier<Table<String, String, List<Threshold>>> getPolicyFRThresholdsTableSupplier
+    public static Supplier<Table<String, String, List<Threshold>>> getPolicyEventNameThresholdsTableSupplier
     (final TCAPolicy tcaPolicy) {
         return Suppliers.memoize(new Supplier<Table<String, String, List<Threshold>>>() {
             @Override
             public Table<String, String, List<Threshold>> get() {
-                return getPolicyFRThresholdsTable(tcaPolicy);
+                return getPolicyEventNameThresholdsTable(tcaPolicy);
             }
         });
     }
@@ -226,8 +228,8 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
 
     /**
      * Creates a {@link GenericMessageChainProcessor} of {@link TCACEFJsonProcessor},
-     * {@link TCACEFPolicyDomainFilter} and {@link TCACEFPolicyFunctionalRoleFilter}s to
-     * filter out messages which does not match policy domain or functional role
+     * {@link TCACEFPolicyDomainFilter} and {@link TCACEFPolicyEventNameFilter}s to
+     * filter out messages which does not match policy domain or event Name
      *
      * @param cefMessage CEF Message
      * @param tcaPolicy TCA Policy
@@ -238,10 +240,10 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
 
         final TCACEFJsonProcessor jsonProcessor = new TCACEFJsonProcessor();
         final TCACEFPolicyDomainFilter domainFilter = new TCACEFPolicyDomainFilter();
-        final TCACEFPolicyFunctionalRoleFilter functionalRoleFilter = new TCACEFPolicyFunctionalRoleFilter();
+        final TCACEFPolicyEventNameFilter eventNameFilter = new TCACEFPolicyEventNameFilter();
         // Create a list of message processors
         final ImmutableList<AbstractMessageProcessor<TCACEFProcessorContext>> messageProcessors =
-                ImmutableList.of(jsonProcessor, domainFilter, functionalRoleFilter);
+                ImmutableList.of(jsonProcessor, domainFilter, eventNameFilter);
         final TCACEFProcessorContext processorContext = new TCACEFProcessorContext(cefMessage, tcaPolicy);
         // Create a message processors chain
         final GenericMessageChainProcessor<TCACEFProcessorContext> tcaProcessingChain =
@@ -331,33 +333,33 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
 
 
     /**
-     * Creates {@link MetricsPerFunctionalRole} object which contains violated thresholds
+     * Creates {@link MetricsPerEventName} object which contains violated thresholds
      *
      * @param tcaPolicy TCA Policy
      * @param violatedThreshold Violated thresholds
-     * @param functionalRole Functional Role
+     * @param eventName Event Name
      *
-     * @return MetricsPerFunctionalRole object containing one highest severity violated threshold
+     * @return MetricsPerEventName object containing one highest severity violated threshold
      */
-    public static MetricsPerFunctionalRole createViolatedMetrics(@Nonnull final TCAPolicy tcaPolicy,
-                                                                 @Nonnull final Threshold violatedThreshold,
-                                                                 @Nonnull final String functionalRole) {
+    public static MetricsPerEventName createViolatedMetrics(@Nonnull final TCAPolicy tcaPolicy,
+                                                            @Nonnull final Threshold violatedThreshold,
+                                                            @Nonnull final String eventName) {
 
-        final ArrayList<MetricsPerFunctionalRole> metricsPerFunctionalRoles = newArrayList(
-                Iterables.filter(tcaPolicy.getMetricsPerFunctionalRole(), new Predicate<MetricsPerFunctionalRole>() {
+        final ArrayList<MetricsPerEventName> metricsPerEventNames = newArrayList(
+                Iterables.filter(tcaPolicy.getMetricsPerEventName(), new Predicate<MetricsPerEventName>() {
                     @Override
-                    public boolean apply(@Nonnull MetricsPerFunctionalRole metricsPerFunctionalRole) {
-                        return metricsPerFunctionalRole.getFunctionalRole().equals(functionalRole);
+                    public boolean apply(@Nonnull MetricsPerEventName metricsPerEventName) {
+                        return metricsPerEventName.getEventName().equals(eventName);
                     }
                 }));
-        // TCA policy must have only one metrics role per functional role
-        if (metricsPerFunctionalRoles.size() == 1) {
-            final MetricsPerFunctionalRole violatedMetrics =
-                    MetricsPerFunctionalRole.copy(metricsPerFunctionalRoles.get(0));
+        // TCA policy must have only one metrics per event Name
+        if (metricsPerEventNames.size() == 1) {
+            final MetricsPerEventName violatedMetrics =
+                    MetricsPerEventName.copy(metricsPerEventNames.get(0));
             violatedMetrics.setThresholds(ImmutableList.of(Threshold.copy(violatedThreshold)));
             return violatedMetrics;
         } else {
-            final String errorMessage = String.format("TCA Policy must contain functional Role: %s", functionalRole);
+            final String errorMessage = String.format("TCA Policy must contain eventName: %s", eventName);
             throw new MessageProcessingException(errorMessage, LOG, new IllegalStateException(errorMessage));
         }
     }
@@ -413,16 +415,16 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
     public static EventListener addThresholdViolationFields(
             final TCACEFProcessorContext processorContextWithViolations) {
 
-        final MetricsPerFunctionalRole metricsPerFunctionalRole =
-                processorContextWithViolations.getMetricsPerFunctionalRole();
+        final MetricsPerEventName metricsPerEventName =
+                processorContextWithViolations.getMetricsPerEventName();
         // confirm violations are indeed present
-        if (metricsPerFunctionalRole == null) {
+        if (metricsPerEventName == null) {
             final String errorMessage = "No violations metrics. Unable to add Threshold Violation Fields";
             throw new MessageProcessingException(errorMessage, LOG, new IllegalArgumentException(errorMessage));
         }
 
         // get violated threshold
-        final Threshold violatedThreshold = metricsPerFunctionalRole.getThresholds().get(0);
+        final Threshold violatedThreshold = metricsPerEventName.getThresholds().get(0);
         final EventListener eventListener = processorContextWithViolations.getCEFEventListener();
         final CommonEventHeader commonEventHeader = eventListener.getEvent().getCommonEventHeader();
 
@@ -435,7 +437,7 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
         thresholdCrossingAlertFields.setAlertType(AlertType.INTERFACE_ANOMALY);
         thresholdCrossingAlertFields.setAlertDescription(violatedThreshold.getDirection().toString());
         thresholdCrossingAlertFields.setInterfaceName(commonEventHeader.getReportingEntityName());
-        thresholdCrossingAlertFields.setElementType(commonEventHeader.getFunctionalRole());
+        thresholdCrossingAlertFields.setElementType(commonEventHeader.getEventName());
 
         // create new performance count
         final PerformanceCounter performanceCounter = new PerformanceCounter();
@@ -482,15 +484,14 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
     public static TCAVESResponse createNewTCAVESResponse(final TCACEFProcessorContext processorContext,
                                                          final String tcaAppName) {
 
-        final MetricsPerFunctionalRole metricsPerFunctionalRole = processorContext.getMetricsPerFunctionalRole();
+        final MetricsPerEventName metricsPerEventName = processorContext.getMetricsPerEventName();
         // confirm violations are indeed present
-        if (metricsPerFunctionalRole == null) {
+        if (metricsPerEventName == null) {
             final String errorMessage = "No violations metrics. Unable to create VES Response";
             throw new MessageProcessingException(errorMessage, LOG, new IllegalArgumentException(errorMessage));
         }
 
-        final String functionalRole = metricsPerFunctionalRole.getFunctionalRole();
-        final Threshold violatedThreshold = metricsPerFunctionalRole.getThresholds().get(0);
+        final Threshold violatedThreshold = metricsPerEventName.getThresholds().get(0);
         final EventListener eventListener = processorContext.getCEFEventListener();
         final CommonEventHeader commonEventHeader = eventListener.getEvent().getCommonEventHeader();
 
@@ -510,18 +511,19 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
         final AAI aai = new AAI();
         tcavesResponse.setAai(aai);
 
-        // vLoadBalancer specific settings
-        if (isFunctionalRoleVLoadBalancer(functionalRole)) {
+        // VM specific settings
+        if (metricsPerEventName.getControlLoopSchemaType() == ControlLoopSchemaType.VM) {
             // Hard Coded - "VM"
-            tcavesResponse.setTargetType(AnalyticsConstants.LOAD_BALANCER_TCA_VES_RESPONSE_TARGET_TYPE);
+            tcavesResponse.setTargetType(AnalyticsConstants.TCA_VES_RESPONSE_VM_TARGET_TYPE);
             // Hard Coded - "vserver.vserver-name"
-            tcavesResponse.setTarget(AnalyticsConstants.LOAD_BALANCER_TCA_VES_RESPONSE_TARGET);
+            tcavesResponse.setTarget(AnalyticsConstants.TCA_VES_RESPONSE_VM_TARGET);
             aai.setGenericServerId(commonEventHeader.getReportingEntityName());
         } else {
+            // VNF specific settings
             // Hard Coded - "VNF"
-            tcavesResponse.setTargetType(AnalyticsConstants.TCA_VES_RESPONSE_TARGET_TYPE);
+            tcavesResponse.setTargetType(AnalyticsConstants.TCA_VES_RESPONSE_VNF_TARGET_TYPE);
             // Hard Coded - "generic-vnf.vnf-id"
-            tcavesResponse.setTarget(AnalyticsConstants.TCA_VES_RESPONSE_TARGET);
+            tcavesResponse.setTarget(AnalyticsConstants.TCA_VES_RESPONSE_VNF_TARGET);
             // commonEventHeader.reportingEntityName from the received VES measurementsForVfScaling message (value for
             // the data element used in A&AI)
             aai.setGenericVNFId(commonEventHeader.getReportingEntityName());
@@ -530,40 +532,29 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
         // Hard Coded - "DCAE"
         tcavesResponse.setFrom(AnalyticsConstants.TCA_VES_RESPONSE_FROM);
         // policyScope included in the DCAE configuration Policy
-        tcavesResponse.setPolicyScope(metricsPerFunctionalRole.getPolicyScope());
+        tcavesResponse.setPolicyScope(metricsPerEventName.getPolicyScope());
         // policyName included in the DCAE configuration Policy
-        tcavesResponse.setPolicyName(metricsPerFunctionalRole.getPolicyName());
+        tcavesResponse.setPolicyName(metricsPerEventName.getPolicyName());
         // policyVersion included in the DCAE configuration Policy
-        tcavesResponse.setPolicyVersion(metricsPerFunctionalRole.getPolicyVersion());
-        // Hard Coded - "ONSET"
-        tcavesResponse.setClosedLoopEventStatus(AnalyticsConstants.TCA_VES_RESPONSE_CLOSED_LOOP_EVENT_STATUS);
+        tcavesResponse.setPolicyVersion(metricsPerEventName.getPolicyVersion());
+        // Extracted from violated threshold
+        tcavesResponse.setClosedLoopEventStatus(violatedThreshold.getClosedLoopEventStatus().name());
 
         return tcavesResponse;
     }
 
-    /**
-     * Determines if Functional Role is vLoadBalancer
-     *
-     * @param functionalRole functional Role to check
-     *
-     * @return return true if functional role is for vLoadBalancer
-     */
-    private static boolean isFunctionalRoleVLoadBalancer(final String functionalRole) {
-        return functionalRole.equals(AnalyticsConstants.LOAD_BALANCER_FUNCTIONAL_ROLE);
-    }
-
 
     /**
-     * Extract Domain and functional Role from processor context if present
+     * Extract Domain and Event Name from processor context if present
      *
      * @param processorContext processor context
-     * @return Tuple of domain and functional role
+     * @return Tuple of domain and event Name
      */
-    public static Pair<String, String> getDomainAndFunctionalRole(@Nullable final TCACEFProcessorContext
-                                                                          processorContext) {
+    public static Pair<String, String> getDomainAndEventName(
+            @Nullable final TCACEFProcessorContext processorContext) {
 
         String domain = null;
-        String functionalRole = null;
+        String eventName = null;
 
         if (processorContext != null &&
                 processorContext.getCEFEventListener() != null &&
@@ -573,42 +564,42 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
                     .getCommonEventHeader();
 
             if (commonEventHeader.getDomain() != null) {
-                domain = commonEventHeader.getDomain();
+                domain = commonEventHeader.getDomain().name();
             }
 
-            if (commonEventHeader.getFunctionalRole() != null) {
-                functionalRole = commonEventHeader.getFunctionalRole();
+            if (commonEventHeader.getEventName() != null) {
+                eventName = commonEventHeader.getEventName();
             }
 
         }
 
-        return new ImmutablePair<>(domain, functionalRole);
+        return new ImmutablePair<>(domain, eventName);
 
     }
 
     /**
-     * Creates {@link TCAPolicy} Metrics per Functional Role list
+     * Creates {@link TCAPolicy} Metrics per Event Name list
      *
-     * @param functionalRolesMap Map containing functional Roles as key and corresponding values
+     * @param eventNamesMap Map containing event Name as key and corresponding values
      *
-     * @return List of {@link MetricsPerFunctionalRole}
+     * @return List of {@link MetricsPerEventName}
      */
-    public static List<MetricsPerFunctionalRole> createTCAPolicyMetricsPerFunctionalRoleList(
-            final Map<String, Map<String, String>> functionalRolesMap) {
+    public static List<MetricsPerEventName> createTCAPolicyMetricsPerEventNameList(
+            final Map<String, Map<String, String>> eventNamesMap) {
 
-        // create a new metrics per functional role list
-        final List<MetricsPerFunctionalRole> metricsPerFunctionalRoles = new LinkedList<>();
+        // create a new metrics per event Name list
+        final List<MetricsPerEventName> metricsPerEventNames = new LinkedList<>();
 
-        for (Map.Entry<String, Map<String, String>> functionalRolesEntry : functionalRolesMap.entrySet()) {
+        for (Map.Entry<String, Map<String, String>> eventNamesEntry : eventNamesMap.entrySet()) {
 
-            // create new metrics per functional role instance
-            final MetricsPerFunctionalRole newMetricsPerFunctionalRole =
-                    createNewMetricsPerFunctionalRole(functionalRolesEntry);
-            metricsPerFunctionalRoles.add(newMetricsPerFunctionalRole);
+            // create new metrics per event Name instance
+            final MetricsPerEventName newMetricsPerEventName =
+                    createNewMetricsPerEventName(eventNamesEntry);
+            metricsPerEventNames.add(newMetricsPerEventName);
 
             // determine all threshold related values
             final Map<String, String> thresholdsValuesMaps =
-                    filterMapByKeyNamePrefix(functionalRolesEntry.getValue(),
+                    filterMapByKeyNamePrefix(eventNamesEntry.getValue(),
                             AnalyticsConstants.TCA_POLICY_THRESHOLDS_PATH_POSTFIX);
 
             // create a map of all threshold values
@@ -616,14 +607,14 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
                     extractSubTree(thresholdsValuesMaps, 1, 2,
                             AnalyticsConstants.TCA_POLICY_DELIMITER);
 
-            // add thresholds to nmetrics per functional roles threshold list
+            // add thresholds to nmetrics per event Names threshold list
             for (Map<String, String> thresholdMap : thresholdsMap.values()) {
-                newMetricsPerFunctionalRole.getThresholds().add(createNewThreshold(thresholdMap));
+                newMetricsPerEventName.getThresholds().add(createNewThreshold(thresholdMap));
             }
 
         }
 
-        return metricsPerFunctionalRoles;
+        return metricsPerEventNames;
     }
 
     /**
@@ -641,32 +632,36 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
         threshold.setDirection(Direction.valueOf(thresholdMap.get("policy.direction")));
         threshold.setSeverity(EventSeverity.valueOf(thresholdMap.get("policy.severity")));
         threshold.setThresholdValue(Long.valueOf(thresholdMap.get("policy.thresholdValue")));
+        threshold.setClosedLoopEventStatus(
+                ControlLoopEventStatus.valueOf(thresholdMap.get("policy.closedLoopEventStatus")));
         return threshold;
     }
 
     /**
-     * Create new {@link MetricsPerFunctionalRole} instance with policy Name, policy Version and policy Scope
-     * extracted from given functionalRolesEntry
+     * Create new {@link MetricsPerEventName} instance with policy Name, policy Version and policy Scope
+     * extracted from given eventNamesEntry
      *
-     * @param functionalRolesEntry Functional Role Entry
+     * @param eventNamesEntry Event Names Entry
      *
-     * @return new instance of MetricsPerFunctionalRole
+     * @return new instance of MetricsPerEventName
      */
-    public static MetricsPerFunctionalRole createNewMetricsPerFunctionalRole(
-            final Map.Entry<String, Map<String, String>> functionalRolesEntry) {
-        // determine functional Role
-        final String functionalRole = functionalRolesEntry.getKey();
-        // determine functional Role thresholds
-        final Map<String, String> metricsPerFunctionalRoleThresholdsMap = functionalRolesEntry.getValue();
-        final MetricsPerFunctionalRole metricsPerFunctionalRole = new MetricsPerFunctionalRole();
+    public static MetricsPerEventName createNewMetricsPerEventName(
+            final Map.Entry<String, Map<String, String>> eventNamesEntry) {
+        // determine event Name
+        final String eventName = eventNamesEntry.getKey();
+        // determine event Name thresholds
+        final Map<String, String> metricsPerEventNameThresholdsMap = eventNamesEntry.getValue();
+        final MetricsPerEventName metricsPerEventName = new MetricsPerEventName();
         final List<Threshold> thresholds = new LinkedList<>();
-        metricsPerFunctionalRole.setThresholds(thresholds);
-        metricsPerFunctionalRole.setFunctionalRole(functionalRole);
-        // bind policyName, policyVersion and policyScope
-        metricsPerFunctionalRole.setPolicyName(metricsPerFunctionalRoleThresholdsMap.get("policyName"));
-        metricsPerFunctionalRole.setPolicyVersion(metricsPerFunctionalRoleThresholdsMap.get("policyVersion"));
-        metricsPerFunctionalRole.setPolicyScope(metricsPerFunctionalRoleThresholdsMap.get("policyScope"));
-        return metricsPerFunctionalRole;
+        metricsPerEventName.setThresholds(thresholds);
+        metricsPerEventName.setEventName(eventName);
+        // bind policyName, policyVersion, policyScope and closedLoopControlName
+        metricsPerEventName.setPolicyName(metricsPerEventNameThresholdsMap.get("policyName"));
+        metricsPerEventName.setPolicyVersion(metricsPerEventNameThresholdsMap.get("policyVersion"));
+        metricsPerEventName.setPolicyScope(metricsPerEventNameThresholdsMap.get("policyScope"));
+        metricsPerEventName.setControlLoopSchemaType(ControlLoopSchemaType.valueOf(
+                metricsPerEventNameThresholdsMap.get("closedLoopControlName")));
+        return metricsPerEventName;
     }
 
     /**
@@ -751,7 +746,7 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
      * @param <T> An implementation of Quartz {@link Job} interface
      * @return Configured Quartz Scheduler
      *
-     * @throws SchedulerException expection if unable to create to Quartz Scheduler
+     * @throws SchedulerException exception if unable to create to Quartz Scheduler
      */
     public static <T extends Job> Scheduler createQuartzScheduler(final Integer pollingIntervalMS,
             final StdSchedulerFactory stdSchedulerFactory, final String quartzPublisherPropertiesFileName,
@@ -785,7 +780,5 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
         LOG.info("Scheduler Initialized successfully for JobName: {}", quartzJobClass.getSimpleName());
         return scheduler;
     }
-
-
 
 }

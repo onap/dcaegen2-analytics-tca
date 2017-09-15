@@ -42,8 +42,8 @@ public class MessageProcessorUtilsTest extends BaseAnalyticsCommonUnitTest {
 
         final Map<String, Set<String>> jsonFilterMappings = new HashMap<>();
         jsonFilterMappings.put("$.event.commonEventHeader.domain", ImmutableSet.of("measurementsForVfScaling"));
-        jsonFilterMappings.put(
-                "$.event.commonEventHeader.functionalRole", ImmutableSet.of("vFirewall", "vLoadBalancer"));
+        jsonFilterMappings.put("$.event.commonEventHeader.eventName",
+                ImmutableSet.of("vFirewall", "vLoadBalancer", "Mfvs_eNodeB_RANKPI"));
 
         final JsonMessageFilterProcessorContext jsonMessageFilterProcessorContext =
                 MessageProcessorUtils.processJsonFilterMappings(jsonMessage, jsonFilterMappings);

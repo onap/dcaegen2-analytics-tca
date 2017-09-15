@@ -22,7 +22,6 @@ package org.openecomp.dcae.apod.analytics.model.domain.policy.tca;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.openecomp.dcae.apod.analytics.model.domain.cef.CommonEventHeader;
 
 import java.util.List;
 
@@ -40,7 +39,7 @@ public class TCAPolicy extends BaseTCAPolicyModel {
     private static final long serialVersionUID = 1L;
 
     /**
-     * TCA Policy domain which is associated with TCA incoming CEF message {@link CommonEventHeader#getDomain()}
+     * TCA Policy domain which is associated with TCA incoming CEF message domain
      *
      * @param domain New value for domain
      * @return Policy domain which is associated with incoming CEF message
@@ -50,10 +49,10 @@ public class TCAPolicy extends BaseTCAPolicyModel {
     /**
      * Contains TCA Policy metrics that needs to be applied to each Functional Role
      *
-     * @param metricsPerFunctionalRole New value for metrics that needs to be applied to each Functional Role
+     * @param metricsPerEventName New value for metrics that needs to be applied to each Functional Role
      * @return Contains TCA Policy metrics that needs to be applied to each Functional Role
      */
-    private List<MetricsPerFunctionalRole> metricsPerFunctionalRole;
+    private List<MetricsPerEventName> metricsPerEventName;
 
 
 }

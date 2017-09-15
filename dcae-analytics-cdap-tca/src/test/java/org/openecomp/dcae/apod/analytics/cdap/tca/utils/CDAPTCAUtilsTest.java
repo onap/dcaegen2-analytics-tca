@@ -21,7 +21,9 @@
 package org.openecomp.dcae.apod.analytics.cdap.tca.utils;
 
 import co.cask.cdap.api.RuntimeContext;
+import co.cask.cdap.api.app.ApplicationSpecification;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.openecomp.dcae.apod.analytics.cdap.tca.BaseAnalyticsCDAPTCAUnitTest;
 import org.openecomp.dcae.apod.analytics.cdap.tca.settings.TCAAppPreferences;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.TCAPolicy;
@@ -41,8 +43,11 @@ public class CDAPTCAUtilsTest extends BaseAnalyticsCDAPTCAUnitTest {
     public void testGetValidatedTCAAppPreferences() throws Exception {
         RuntimeContext runtimeContext = mock(RuntimeContext.class);
         when(runtimeContext.getRuntimeArguments()).thenReturn(getPreferenceMap());
+        ApplicationSpecification mockApplicationSpecification = Mockito.mock(ApplicationSpecification.class);
+        when(mockApplicationSpecification.getConfiguration()).thenReturn(fromStream(TCA_APP_CONFIG_FILE_LOCATION));
+        when(runtimeContext.getApplicationSpecification()).thenReturn(mockApplicationSpecification);
         TCAAppPreferences validatedTCAAppPreferences = CDAPTCAUtils.getValidatedTCAAppPreferences(runtimeContext);
-        assertEquals(validatedTCAAppPreferences.getSubscriberHostName(), "mrlocal-mtnjftle01.homer.com");
+        assertEquals(validatedTCAAppPreferences.getSubscriberHostName(), "HOSTNAME");
     }
 
     @Test
@@ -53,7 +58,7 @@ public class CDAPTCAUtilsTest extends BaseAnalyticsCDAPTCAUnitTest {
         assertThat("Policy Domain must be measurementsForVfScaling",
                 tcaPolicy.getDomain(), is("measurementsForVfScaling"));
         assertThat("Policy must have 2 metrics per functional roles",
-                tcaPolicy.getMetricsPerFunctionalRole().size(), is(2));
+                tcaPolicy.getMetricsPerEventName().size(), is(2));
     }
 
     @Test
@@ -64,7 +69,7 @@ public class CDAPTCAUtilsTest extends BaseAnalyticsCDAPTCAUnitTest {
         assertThat("Policy Domain must be measurementsForVfScaling",
                 tcaPolicy.getDomain(), is("measurementsForVfScaling"));
         assertThat("Policy must have 2 metrics per functional roles",
-                tcaPolicy.getMetricsPerFunctionalRole().size(), is(2));
+                tcaPolicy.getMetricsPerEventName().size(), is(2));
     }
 
 }

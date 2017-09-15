@@ -96,6 +96,7 @@
         <findbugs.plugin.version>3.0.2</findbugs.plugin.version>
         <pmd.plugin.version>3.5</pmd.plugin.version>
         <surefire.report.plugin.version>2.19.1</surefire.report.plugin.version>
+        <checkstyle.plugin.version>2.16</checkstyle.plugin.version>
         <javadoc.plugin.version>2.10.4</javadoc.plugin.version>
         <source.plugin.version>2.4</source.plugin.version>
         <jar.plugin.version>2.4</jar.plugin.version>
@@ -115,6 +116,9 @@
         <skip.integration.tests>true</skip.integration.tests>
         <pmd.violation.buildfail>true</pmd.violation.buildfail>
         <findbugs.failOnError>true</findbugs.failOnError>
+        <checkstyle.failOnViolation>true</checkstyle.failOnViolation>
+        <checkstyle.file.name>checkstyle.xml</checkstyle.file.name>
+        <checkstyle.suppression.file.name>suppressions.xml</checkstyle.suppression.file.name>       
         <dependency.locations.enabled>false</dependency.locations.enabled>
         <nexusproxy>https://nexus.onap.org</nexusproxy>
 		<snapshots.path>content/repositories/snapshots/</snapshots.path>
@@ -767,6 +771,39 @@
                     </executions>
                 </plugin>
 
+                <!-- CHECKSTYLE PLUGIN -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${checkstyle.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>validate</id>
+                            <phase>validate</phase>
+                            <configuration>
+                                <configLocation>${checkstyle.file.name}</configLocation>
+                                <suppressionsLocation>${checkstyle.suppression.file.name}</suppressionsLocation>
+                                <encoding>UTF-8</encoding>
+                                <consoleOutput>true</consoleOutput>
+                                <!-- BUILD FAIL ON CHECKSTYLE VIOLATION -->
+                                <failOnViolation>${checkstyle.failOnViolation}</failOnViolation>
+                                <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                                <outputFile>${project.reporting.outputDirectory}/checkstyle</outputFile>
+                            </configuration>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>6.19</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
                 <!-- ECLIPSE PLUGIN -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -797,7 +834,6 @@
 
 
                 <!-- JGIT FLOW PLUGIN -->
-
                 <plugin>
                     <groupId>external.atlassian.jgitflow</groupId>
                     <artifactId>jgitflow-maven-plugin</artifactId>
@@ -941,6 +977,12 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <inherited>false</inherited>
+            </plugin>
+
+            <plugin>
                 <groupId>external.atlassian.jgitflow</groupId>
                 <artifactId>jgitflow-maven-plugin</artifactId>
             </plugin>
@@ -953,6 +995,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <configuration>
+                    <configLocation>${checkstyle.file.name}</configLocation>
+                    <suppressionsLocation>${checkstyle.suppression.file.name}</suppressionsLocation>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

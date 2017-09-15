@@ -29,6 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.openecomp.dcae.apod.analytics.cdap.common.CDAPComponentsConstants;
+import org.openecomp.dcae.apod.analytics.cdap.common.domain.tca.ThresholdCalculatorOutput;
 import org.openecomp.dcae.apod.analytics.cdap.common.persistance.tca.TCAMessageStatusEntity;
 import org.openecomp.dcae.apod.analytics.cdap.tca.BaseAnalyticsCDAPTCAUnitTest;
 import org.openecomp.dcae.apod.analytics.cdap.tca.utils.CDAPTCAUtils;
@@ -119,16 +120,16 @@ public class TCAVESThresholdViolationCalculatorFlowletTest extends BaseAnalytics
         final FlowletContext flowletContext =
                 initializeFlowlet(thresholdViolationCalculatorFlowlet, vesMessageStatusTable);
         final TCAPolicy policy = CDAPTCAUtils.getValidatedTCAPolicyPreferences(flowletContext);
-        final Threshold threshold = policy.getMetricsPerFunctionalRole().get(0).getThresholds().get(0);
+        final Threshold threshold = policy.getMetricsPerEventName().get(0).getThresholds().get(0);
         final Long thresholdValue = threshold.getThresholdValue();
         final EventListener thresholdViolatingMessage = getCEFEventListener();
-        thresholdViolatingMessage.getEvent().getMeasurementsForVfScalingFields().getVNicUsageArray().get(0).setBytesIn
-                (thresholdValue - 1);
+        thresholdViolatingMessage.getEvent().getMeasurementsForVfScalingFields().getVNicPerformanceArray().
+                get(0).setReceivedBroadcastPacketsAccumulated(thresholdValue - 1);
         thresholdViolationCalculatorFlowlet.filterVESMessages(
                 ANALYTICS_MODEL_OBJECT_MAPPER.writeValueAsString(thresholdViolatingMessage));
         verify(vesMessageStatusTable, times(1)).write(anyString(),
                 any(TCAMessageStatusEntity.class));
-        verify(outputEmitter, times(1)).emit(anyString());
+        verify(outputEmitter, times(1)).emit(any(ThresholdCalculatorOutput.class));
     }
 
     private static TCATestVESThresholdViolationCalculatorFlowlet createTestViolationCalculator(
@@ -142,11 +143,12 @@ public class TCAVESThresholdViolationCalculatorFlowletTest extends BaseAnalytics
     }
 
     private static <T extends TCAVESThresholdViolationCalculatorFlowlet> FlowletContext initializeFlowlet(
-            T calculatorFlowlet, ObjectMappedTable<TCAMessageStatusEntity> vesMessageStatusTable) {
+            T calculatorFlowlet, ObjectMappedTable<TCAMessageStatusEntity> vesMessageStatusTable) throws Exception {
         final FlowletContext mockFlowletContext = getTestFlowletContextWithValidPolicy();
         when(mockFlowletContext.getDataset(anyString())).thenReturn(vesMessageStatusTable);
         when(mockFlowletContext.getInstanceId()).thenReturn(1);
         ApplicationSpecification mockApplicationSpecification = Mockito.mock(ApplicationSpecification.class);
+        when(mockApplicationSpecification.getConfiguration()).thenReturn(fromStream(TCA_APP_CONFIG_FILE_LOCATION));
         when(mockFlowletContext.getApplicationSpecification()).thenReturn(mockApplicationSpecification);
         when(mockApplicationSpecification.getName()).thenReturn("TestTCAAppName");
         try {

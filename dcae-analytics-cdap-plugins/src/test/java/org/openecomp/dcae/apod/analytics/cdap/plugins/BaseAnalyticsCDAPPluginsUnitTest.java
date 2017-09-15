@@ -49,7 +49,7 @@ public abstract class BaseAnalyticsCDAPPluginsUnitTest extends BaseDCAEAnalytics
     protected static final String TCA_POLICY_JSON_FILE_LOCATION = "data/json/policy/tca_policy.json";
     protected static final String CEF_MESSAGE_JSON_FILE_LOCATION = "data/json/cef/cef_message.json";
     protected static final String CEF_NON_COMPLIANT_MESSAGE_JSON_FILE_LOCATION =
-            "data/json/cef/non_compliant_cef_message.json";
+            "data/json/cef/cef_message_with_threshold_violation.json";
 
 
     protected static final String DMAAP_MR_SOURCE_PLUGIN_REFERENCE_NAME = "testDMaaPMRSource";
@@ -89,7 +89,7 @@ public abstract class BaseAnalyticsCDAPPluginsUnitTest extends BaseDCAEAnalytics
     protected static final String JSON_PATH_FILTER_PLUGIN_OUTPUT_SCHEMA_FILED_NAME = "filterMatched";
     protected static final String JSON_PATH_FILTER_PLUGIN_JSON_FILTER_MAPPINGS =
             "$.event.commonEventHeader.domain:measurementsForVfScaling," +
-                    "$.event.commonEventHeader.functionalRole:vLoadBalancer;vFirewall";
+                    "$.event.commonEventHeader.eventName:vLoadBalancer;vFirewall";
     protected static final String JSON_PATH_FILTER_PLUGIN_JSON_FILTER_OUTPUT_SCHEMA =
             "{\"type\":\"record\"," +
                     "\"name\":\"etlSchemaBody\",\"fields\":" +

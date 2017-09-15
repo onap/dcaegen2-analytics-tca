@@ -158,6 +158,22 @@ public abstract class CDAPComponentsConstants {
 
 
     /**
+     * Fixed Name for TCA VES Alerts Abatement Flowlet
+     */
+    public static final String TCA_FIXED_VES_ALERTS_ABATEMENT_NAME_FLOWLET = "TCAVESAlertsAbatementFlowlet";
+
+    /**
+     * Fixed Description for TCA VES Alerts Abatement Flowlet
+     */
+    public static final String TCA_FIXED_VES_ALERTS_ABATEMENT_DESCRIPTION_FLOWLET =
+            "Determines if abatement event needs to be posted to downstream systems";
+
+    /**
+     * Fixed Name for TCA VES Alerts Abatement Flowlet output
+     */
+    public static final String TCA_FIXED_VES_ALERTS_ABATEMENT_NAME_OUTPUT = "TCAVESAlertsAbatementFlowletOutput";
+
+    /**
      * Fixed Name for TCA VES Alerts Sink Flowlet
      */
     public static final String TCA_FIXED_VES_ALERTS_SINK_NAME_FLOWLET = "TCAVESAlertsSinkFlowlet";
@@ -189,8 +205,19 @@ public abstract class CDAPComponentsConstants {
     /**
      * Fixed Description for TCA VES Alerts table which contains alerts that can be send to downstream systems
      */
-    public static final String TCA_DEFAULT_VES_ALERTS_DESCRIPTION_TABLE =
+    public static final String TCA_FIXED_VES_ALERTS_DESCRIPTION_TABLE =
             "Stores alert messages that need to be DMaaP";
+
+    /**
+     * Default Name for TCA Alerts abatement table which contains information to send out abated alerts
+     */
+    public static final String TCA_DEFAULT_ALERTS_ABATEMENT_NAME_TABLE = "TCAAlertsAbatementTable";
+
+    /**
+     * Fixed Description for TCA Alerts abatement table which contains information to determine abatement alerts
+     */
+    public static final String TCA_FIXED_ALERTS_ABATEMENT_DESCRIPTION_TABLE =
+            "Stores information to determine creation of abatement alerts";
 
 
     private CDAPComponentsConstants() {

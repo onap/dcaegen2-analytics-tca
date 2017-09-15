@@ -327,17 +327,24 @@ public abstract class BaseDMaaPMRComponent implements DMaaPMRComponent {
 
         // If message string is not null or not empty parse json message array to List of string messages
         if (messagesJsonString != null && !messagesJsonString.trim().isEmpty()
-                && !"[]".equals(messagesJsonString.trim())) {
+                && !("[]").equals(messagesJsonString.trim())) {
 
             try {
-                final List messageList = objectMapper.readValue(messagesJsonString, List.class);
-                for (Object message : messageList) {
-                    final String jsonMessageString = objectMapper.writeValueAsString(message);
-                    if (jsonMessageString.startsWith("\"") && jsonMessageString.endsWith("\"")) {
-                        final String jsonSubString = jsonMessageString.substring(1, jsonMessageString.length() - 1);
-                        messages.add(StringEscapeUtils.unescapeJson(jsonSubString));
+                // get root node
+                final JsonNode rootNode = objectMapper.readTree(messagesJsonString);
+                // iterate over root node and parse arrays messages
+                for (JsonNode jsonNode : rootNode) {
+                    // if array parse it is array of messages
+                    final String incomingMessageString = jsonNode.toString();
+                    if (jsonNode.isArray()) {
+                        final List messageList = objectMapper.readValue(incomingMessageString, List.class);
+                        for (Object message : messageList) {
+                            final String jsonMessageString = objectMapper.writeValueAsString(message);
+                            addUnescapedJsonToMessage(messages, jsonMessageString);
+                        }
                     } else {
-                        messages.add(StringEscapeUtils.unescapeJson(jsonMessageString));
+                        // parse it as object
+                        addUnescapedJsonToMessage(messages, incomingMessageString);
                     }
                 }
 
@@ -350,6 +357,21 @@ public abstract class BaseDMaaPMRComponent implements DMaaPMRComponent {
 
         }
         return messages;
+    }
+
+    /**
+     * Adds unescaped Json messages to given messages list
+     *
+     * @param messages message list in which unescaped messages will be added
+     * @param incomingMessageString incoming message string that may need to be escaped
+     */
+    private static void addUnescapedJsonToMessage(List<String> messages, String incomingMessageString) {
+        if (incomingMessageString.startsWith("\"") && incomingMessageString.endsWith("\"")) {
+            messages.add(StringEscapeUtils.unescapeJson(
+                    incomingMessageString.substring(1, incomingMessageString.length() - 1)));
+        } else {
+            messages.add(StringEscapeUtils.unescapeJson(incomingMessageString));
+        }
     }
 
 

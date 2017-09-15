@@ -25,6 +25,7 @@ import co.cask.cdap.api.data.stream.Stream;
 import co.cask.cdap.api.dataset.DatasetProperties;
 import co.cask.cdap.api.dataset.lib.ObjectMappedTable;
 import org.openecomp.dcae.apod.analytics.cdap.common.CDAPComponentsConstants;
+import org.openecomp.dcae.apod.analytics.cdap.common.persistance.tca.TCAAlertsAbatementPersister;
 import org.openecomp.dcae.apod.analytics.cdap.common.persistance.tca.TCAMessageStatusPersister;
 import org.openecomp.dcae.apod.analytics.cdap.common.persistance.tca.TCAVESAlertsPersister;
 import org.openecomp.dcae.apod.analytics.cdap.common.utils.ValidationUtils;
@@ -78,6 +79,16 @@ public class TCAAnalyticsApplication extends AbstractApplication<TCAAppConfig> {
         final DatasetProperties messageStatusTableProperties =
                 TCAMessageStatusPersister.getDatasetProperties(messageStatusTableTTLSeconds);
         createDataset(tcaVESMessageStatusTableName, ObjectMappedTable.class, messageStatusTableProperties);
+
+
+        // Create TCA Alerts Abatement Table
+        final String tcaAlertsAbatementTableName = tcaAppConfig.getTcaAlertsAbatementTableName();
+        final Integer tcaAlertsAbatementTableTTLSeconds = tcaAppConfig.getTcaAlertsAbatementTableTTLSeconds();
+        LOG.info("Creating Alerts Abatement Table: {} with TTL: {}",
+                tcaAlertsAbatementTableName, tcaAlertsAbatementTableTTLSeconds);
+        final DatasetProperties alertsAbatementTableProperties =
+                TCAAlertsAbatementPersister.getDatasetProperties(tcaAlertsAbatementTableTTLSeconds);
+        createDataset(tcaAlertsAbatementTableName, ObjectMappedTable.class, alertsAbatementTableProperties);
 
         // Create TCA VES Alerts Table
         final String tcaVESAlertsTableName = tcaAppConfig.getTcaVESAlertsTableName();

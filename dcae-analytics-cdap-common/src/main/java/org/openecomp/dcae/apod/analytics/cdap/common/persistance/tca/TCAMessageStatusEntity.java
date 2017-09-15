@@ -22,12 +22,11 @@ package org.openecomp.dcae.apod.analytics.cdap.common.persistance.tca;
 
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.io.WritableUtils;
-import org.openecomp.dcae.apod.analytics.model.domain.cef.EventSeverity;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Direction;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.TCAPolicy;
 import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFJsonProcessor;
 import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFPolicyDomainFilter;
-import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFPolicyFunctionalRoleFilter;
+import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFPolicyEventNameFilter;
 import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFPolicyThresholdsProcessor;
 
 import java.io.DataInput;
@@ -49,7 +48,7 @@ public class TCAMessageStatusEntity implements Writable, Serializable {
     private String messageType;
     private String vesMessage;
     private String domain;
-    private String functionalRole;
+    private String eventName;
     private String thresholdPath;
     private String thresholdSeverity;
     private String thresholdDirection;
@@ -58,8 +57,8 @@ public class TCAMessageStatusEntity implements Writable, Serializable {
     private String jsonProcessorMessage;
     private String domainFilterStatus;
     private String domainFilterMessage;
-    private String functionalRoleFilterStatus;
-    private String functionalRoleFilterMessage;
+    private String eventNameFilterStatus;
+    private String eventNameFilterMessage;
     private String thresholdCalculatorStatus;
     private String thresholdCalculatorMessage;
     private String alertMessage;
@@ -79,11 +78,11 @@ public class TCAMessageStatusEntity implements Writable, Serializable {
      * @param messageType {@link TCACalculatorMessageType}
      * @param vesMessage incoming VES message from collector
      * @param domain VES message domain if present
-     * @param functionalRole VES message functional role if present
+     * @param eventName VES message functional role if present
      */
     public TCAMessageStatusEntity(final long creationTS, final int instanceId, final String messageType,
-                                  final String vesMessage, final String domain, final String functionalRole) {
-        this(creationTS, instanceId, messageType, vesMessage, domain, functionalRole, null, null, null, null,
+                                  final String vesMessage, final String domain, final String eventName) {
+        this(creationTS, instanceId, messageType, vesMessage, domain, eventName, null, null, null, null,
                 null, null, null, null, null, null, null, null, null);
     }
 
@@ -96,7 +95,7 @@ public class TCAMessageStatusEntity implements Writable, Serializable {
      * @param messageType {@link TCACalculatorMessageType}
      * @param vesMessage incoming VES message from collector
      * @param domain VES message domain if present
-     * @param functionalRole VES message functional role if present
+     * @param eventName VES message event name if present
      * @param thresholdPath Violated threshold path
      * @param thresholdSeverity Violated threshold Severity if any
      * @param thresholdDirection Violated threshold Direction if any
@@ -105,23 +104,19 @@ public class TCAMessageStatusEntity implements Writable, Serializable {
      * @param jsonProcessorMessage {@link TCACEFJsonProcessor} message
      * @param domainFilterStatus {@link TCACEFPolicyDomainFilter} status
      * @param domainFilterMessage {@link TCACEFPolicyDomainFilter} message
-     * @param functionalRoleFilterStatus
-     * {@link TCACEFPolicyFunctionalRoleFilter} status
-     * @param functionalRoleFilterMessage
-     * {@link TCACEFPolicyFunctionalRoleFilter} message
-     * @param thresholdCalculatorStatus
-     * {@link TCACEFPolicyThresholdsProcessor} status
-     * @param thresholdCalculatorMessage
-     * {@link TCACEFPolicyThresholdsProcessor} message
+     * @param eventNameFilterStatus {@link TCACEFPolicyEventNameFilter} status
+     * @param eventNameFilterMessage {@link TCACEFPolicyEventNameFilter} message
+     * @param thresholdCalculatorStatus {@link TCACEFPolicyThresholdsProcessor} status
+     * @param thresholdCalculatorMessage {@link TCACEFPolicyThresholdsProcessor} message
      * @param alertMessage alert message that will be sent out in case of threshold violation
      */
     public TCAMessageStatusEntity(long creationTS, int instanceId, String messageType, String vesMessage,
-                                  String domain, String functionalRole,
+                                  String domain, String eventName,
                                   String thresholdPath, String thresholdSeverity, String thresholdDirection,
                                   Long thresholdValue,
                                   String jsonProcessorStatus, String jsonProcessorMessage,
                                   String domainFilterStatus, String domainFilterMessage,
-                                  String functionalRoleFilterStatus, String functionalRoleFilterMessage,
+                                  String eventNameFilterStatus, String eventNameFilterMessage,
                                   String thresholdCalculatorStatus, String thresholdCalculatorMessage,
                                   String alertMessage) {
         this.creationTS = creationTS;
@@ -129,7 +124,7 @@ public class TCAMessageStatusEntity implements Writable, Serializable {
         this.messageType = messageType;
         this.vesMessage = vesMessage;
         this.domain = domain;
-        this.functionalRole = functionalRole;
+        this.eventName = eventName;
         this.thresholdPath = thresholdPath;
         this.thresholdSeverity = thresholdSeverity;
         this.thresholdDirection = thresholdDirection;
@@ -138,8 +133,8 @@ public class TCAMessageStatusEntity implements Writable, Serializable {
         this.jsonProcessorMessage = jsonProcessorMessage;
         this.domainFilterStatus = domainFilterStatus;
         this.domainFilterMessage = domainFilterMessage;
-        this.functionalRoleFilterStatus = functionalRoleFilterStatus;
-        this.functionalRoleFilterMessage = functionalRoleFilterMessage;
+        this.eventNameFilterStatus = eventNameFilterStatus;
+        this.eventNameFilterMessage = eventNameFilterMessage;
         this.thresholdCalculatorStatus = thresholdCalculatorStatus;
         this.thresholdCalculatorMessage = thresholdCalculatorMessage;
         this.alertMessage = alertMessage;
@@ -237,21 +232,21 @@ public class TCAMessageStatusEntity implements Writable, Serializable {
     }
 
     /**
-     * Provides VES Message Functional Role
+     * Provides VES Message Event Name
      *
-     * @return ves message functional role
+     * @return ves message Event Name
      */
-    public String getFunctionalRole() {
-        return functionalRole;
+    public String getEventName() {
+        return eventName;
     }
 
     /**
      * Sets VES Message Functional Role
      *
-     * @param functionalRole ves message Functional Role
+     * @param eventName ves message Functional Role
      */
-    public void setFunctionalRole(String functionalRole) {
-        this.functionalRole = functionalRole;
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
     }
 
     /**
@@ -273,7 +268,7 @@ public class TCAMessageStatusEntity implements Writable, Serializable {
     }
 
     /**
-     * Violated threshold {@link EventSeverity}
+     * Violated threshold Event Severity
      *
      * @return event severity
      */
@@ -398,35 +393,35 @@ public class TCAMessageStatusEntity implements Writable, Serializable {
         this.domainFilterMessage = domainFilterMessage;
     }
 
-    public String getFunctionalRoleFilterStatus() {
-        return functionalRoleFilterStatus;
+    public String getEventNameFilterStatus() {
+        return eventNameFilterStatus;
     }
 
     /**
-     * Provides {@link TCACEFPolicyFunctionalRoleFilter} status
+     * Provides {@link TCACEFPolicyEventNameFilter} status
      *
-     * @param functionalRoleFilterStatus functional Role filter status
+     * @param eventNameFilterStatus functional Role filter status
      */
-    public void setFunctionalRoleFilterStatus(String functionalRoleFilterStatus) {
-        this.functionalRoleFilterStatus = functionalRoleFilterStatus;
+    public void setEventNameFilterStatus(String eventNameFilterStatus) {
+        this.eventNameFilterStatus = eventNameFilterStatus;
     }
 
     /**
-     * Provides {@link TCACEFPolicyFunctionalRoleFilter} message
+     * Provides {@link TCACEFPolicyEventNameFilter} message
      *
      * @return functional role filter message
      */
-    public String getFunctionalRoleFilterMessage() {
-        return functionalRoleFilterMessage;
+    public String getEventNameFilterMessage() {
+        return eventNameFilterMessage;
     }
 
     /**
      * Sets Functional Role filter message
      *
-     * @param functionalRoleFilterMessage functional role filter message
+     * @param eventNameFilterMessage functional role filter message
      */
-    public void setFunctionalRoleFilterMessage(String functionalRoleFilterMessage) {
-        this.functionalRoleFilterMessage = functionalRoleFilterMessage;
+    public void setEventNameFilterMessage(String eventNameFilterMessage) {
+        this.eventNameFilterMessage = eventNameFilterMessage;
     }
 
     /**
@@ -498,7 +493,7 @@ public class TCAMessageStatusEntity implements Writable, Serializable {
         WritableUtils.writeString(dataOutput, vesMessage);
 
         WritableUtils.writeString(dataOutput, domain);
-        WritableUtils.writeString(dataOutput, functionalRole);
+        WritableUtils.writeString(dataOutput, eventName);
 
         WritableUtils.writeString(dataOutput, thresholdPath);
         WritableUtils.writeString(dataOutput, thresholdSeverity);
@@ -509,8 +504,8 @@ public class TCAMessageStatusEntity implements Writable, Serializable {
         WritableUtils.writeString(dataOutput, jsonProcessorMessage);
         WritableUtils.writeString(dataOutput, domainFilterStatus);
         WritableUtils.writeString(dataOutput, domainFilterMessage);
-        WritableUtils.writeString(dataOutput, functionalRoleFilterStatus);
-        WritableUtils.writeString(dataOutput, functionalRoleFilterMessage);
+        WritableUtils.writeString(dataOutput, eventNameFilterStatus);
+        WritableUtils.writeString(dataOutput, eventNameFilterMessage);
         WritableUtils.writeString(dataOutput, thresholdCalculatorStatus);
         WritableUtils.writeString(dataOutput, thresholdCalculatorMessage);
 
@@ -532,7 +527,7 @@ public class TCAMessageStatusEntity implements Writable, Serializable {
         vesMessage = WritableUtils.readString(dataInput);
 
         domain = WritableUtils.readString(dataInput);
-        functionalRole = WritableUtils.readString(dataInput);
+        eventName = WritableUtils.readString(dataInput);
 
         thresholdPath = WritableUtils.readString(dataInput);
         thresholdSeverity = WritableUtils.readString(dataInput);
@@ -543,8 +538,8 @@ public class TCAMessageStatusEntity implements Writable, Serializable {
         jsonProcessorMessage = WritableUtils.readString(dataInput);
         domainFilterStatus = WritableUtils.readString(dataInput);
         domainFilterMessage = WritableUtils.readString(dataInput);
-        functionalRoleFilterStatus = WritableUtils.readString(dataInput);
-        functionalRoleFilterMessage = WritableUtils.readString(dataInput);
+        eventNameFilterStatus = WritableUtils.readString(dataInput);
+        eventNameFilterMessage = WritableUtils.readString(dataInput);
         thresholdCalculatorStatus = WritableUtils.readString(dataInput);
         thresholdCalculatorMessage = WritableUtils.readString(dataInput);
 

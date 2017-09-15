@@ -24,11 +24,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.Test;
 import org.openecomp.dcae.apod.analytics.model.BaseAnalyticsModelUnitTest;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventListener;
-import org.openecomp.dcae.apod.analytics.model.domain.cef.MeasurementsForVfScalingFields;
-import org.openecomp.dcae.apod.analytics.model.domain.cef.VNicUsageArray;
+import org.openecomp.dcae.apod.analytics.model.domain.cef.Field;
+import org.openecomp.dcae.apod.analytics.model.domain.cef.NamedArrayOfFields;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -38,7 +37,7 @@ import static org.junit.Assert.assertThat;
  */
 public class EventListenerMixinTest extends BaseAnalyticsModelUnitTest {
 
-    final String eventListenerJsonFileLocation = "data/json/cef/event_listener.json";
+    final String eventListenerJsonFileLocation = "data/json/cef/cef_message.json";
     final String cefMessagesJsonFileLocation = "data/json/cef/cef_messages.json";
 
     @Test
@@ -46,11 +45,19 @@ public class EventListenerMixinTest extends BaseAnalyticsModelUnitTest {
 
         final EventListener eventListener = assertJsonConversions(eventListenerJsonFileLocation, EventListener.class);
 
-        Map<String, Object> dynamicProperties = eventListener.getDynamicProperties();
+        final List<Field> additionalFields =
+                eventListener.getEvent().getMeasurementsForVfScalingFields().getAdditionalFields();
 
-        assertThat("Dynamic Properties size must be 1", dynamicProperties.size(), is(1));
+        assertThat("Additional Fields size must be 2", additionalFields.size(), is(2));
 
+        final List<NamedArrayOfFields> additionalMeasurements =
+                eventListener.getEvent().getMeasurementsForVfScalingFields().getAdditionalMeasurements();
 
+        assertThat("Additional Measurements size must be 1", additionalMeasurements.size(), is(1));
+
+        final List<Field> arrayOfFields = additionalMeasurements.get(0).getArrayOfFields();
+
+        assertThat("Array Of Field size must be 6", arrayOfFields.size(), is(6));
     }
 
     @Test
@@ -62,19 +69,7 @@ public class EventListenerMixinTest extends BaseAnalyticsModelUnitTest {
                 new TypeReference<List<EventListener>>() {
                 };
         List<EventListener> eventListeners = objectMapper.readValue(cefMessageAsString, eventListenerListTypeReference);
-        assertThat("Event Listeners size must be 350", eventListeners.size(), is(350));
-
-        final MeasurementsForVfScalingFields measurementsForVfScalingFields = eventListeners.get(0).getEvent()
-                .getMeasurementsForVfScalingFields();
-
-        // Note: vNicUsageArray - due to odd naming convention have to be explicitly resolved with Mixin annotations
-        assertThat("vNicUsageArray is present on the first measurementForVfScaling",
-                measurementsForVfScalingFields.getVNicUsageArray().size(), is(1));
-        final VNicUsageArray vNicUsageArray = measurementsForVfScalingFields.getVNicUsageArray().get(0);
-        assertThat("ByesIn is present on vNicUsageArray", vNicUsageArray.getBytesIn(), is(6086L));
-
-        // Note: vNicIdentifier - due to odd naming convention have to be explicity resolved with Mixin annotations
-        assertThat("vNicIdentifier is present on vNicUsageArray", vNicUsageArray.getVNicIdentifier(), is("eth0"));
+        assertThat("Event Listeners size must be 31", eventListeners.size(), is(31));
 
         // Check serialized json will match deserialized json
         final String eventListenerString = objectMapper.writeValueAsString(eventListeners);

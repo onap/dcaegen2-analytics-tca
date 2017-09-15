@@ -79,7 +79,7 @@ public abstract class TCAVESAlertsPersister {
                     .setRowKeyExploreName(TABLE_ROW_KEY_COLUMN_NAME)
                     .setRowKeyExploreType(Schema.Type.STRING)
                     .add(IndexedTable.PROPERTY_TTL, timeToLiveSeconds)
-                    .setDescription(CDAPComponentsConstants.TCA_DEFAULT_VES_ALERTS_DESCRIPTION_TABLE)
+                    .setDescription(CDAPComponentsConstants.TCA_FIXED_VES_ALERTS_DESCRIPTION_TABLE)
                     .build();
         } catch (UnsupportedTypeException e) {
             final String errorMessage = "Unable to convert TCAVESAlertEntity class to Schema";

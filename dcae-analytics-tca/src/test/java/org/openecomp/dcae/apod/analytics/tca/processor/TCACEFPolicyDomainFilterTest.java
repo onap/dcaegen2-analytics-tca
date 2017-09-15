@@ -23,6 +23,7 @@ package org.openecomp.dcae.apod.analytics.tca.processor;
 import org.junit.Before;
 import org.junit.Test;
 import org.openecomp.dcae.apod.analytics.common.service.processor.ProcessingState;
+import org.openecomp.dcae.apod.analytics.model.domain.cef.Domain;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventListener;
 import org.openecomp.dcae.apod.analytics.tca.BaseAnalyticsTCAUnitTest;
 
@@ -64,7 +65,7 @@ public class TCACEFPolicyDomainFilterTest extends BaseAnalyticsTCAUnitTest {
 
     @Test
     public void testProcessMessageWhenPolicyDomainDoesNotMatchMessageDomain() throws Exception {
-        cefEventListener.getEvent().getCommonEventHeader().setDomain("notPolicyDomain");
+        cefEventListener.getEvent().getCommonEventHeader().setDomain(Domain.other);
         tcacefPolicyDomainFilter.processMessage(processorContext);
         assertThat("Processing must terminate early",
                 tcacefPolicyDomainFilter.getProcessingState(), is(ProcessingState.PROCESSING_TERMINATED_EARLY));

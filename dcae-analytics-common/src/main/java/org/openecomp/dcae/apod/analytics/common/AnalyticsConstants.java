@@ -103,15 +103,14 @@ public abstract class AnalyticsConstants {
     public static final String DMAAP_PUBLISHER_VARIABLE_NAME = "DMAAP_PUBLISHER";
 
     // TCA VES Response Constants
-    public static final String TCA_VES_RESPONSE_TARGET_TYPE = "VNF";
-    public static final String TCA_VES_RESPONSE_TARGET = "generic-vnf.vnf-id";
+    // VNF Constants
+    public static final String TCA_VES_RESPONSE_VNF_TARGET_TYPE = "VNF";
+    public static final String TCA_VES_RESPONSE_VNF_TARGET = "generic-vnf.vnf-id";
+    // VM Constants
+    public static final String TCA_VES_RESPONSE_VM_TARGET_TYPE = "VM";
+    public static final String TCA_VES_RESPONSE_VM_TARGET = "vserver.vserver-name";
+    // VNF & VM - Common Constants
     public static final String TCA_VES_RESPONSE_FROM = "DCAE";
-    public static final String TCA_VES_RESPONSE_CLOSED_LOOP_EVENT_STATUS = "ONSET";
-
-    // TCA VES Response Constants for vLoadBalancer
-    public static final String LOAD_BALANCER_FUNCTIONAL_ROLE = "vLoadBalancer";
-    public static final String LOAD_BALANCER_TCA_VES_RESPONSE_TARGET_TYPE = "VM";
-    public static final String LOAD_BALANCER_TCA_VES_RESPONSE_TARGET = "vserver.vserver-name";
 
     // TCA VES Message Router Partition Key
     public static final String TCA_VES_MESSAGE_ROUTER_PARTITION_KEY = "VESMessageHash";
@@ -129,17 +128,23 @@ public abstract class AnalyticsConstants {
     /**
      * Default TTL for TCA VES Alerts table which contains alerts that can be send to downstream systems
      */
-    public static final Integer TCA_DEFAULT_VES_ALERTS_TTL_TABLE = 60 * 60 * 24 * 20; // 20 Days
+    public static final Integer TCA_DEFAULT_VES_ALERTS_TTL_TABLE = 60 * 60 * 24 * 30; // 30 Days
+
+
+    /**
+     * Default TTL for TCA Alerts abatement table which contains information to send out abated alerts
+     */
+    public static final Integer TCA_DEFAULT_ALERTS_ABATEMENT_TTL_TABLE = 60 * 60 * 24 * 30; // 30 Days
 
 
     // TCA Policy Runtime Argument Paths
     public static final String TCA_POLICY_DELIMITER = ".";
     public static final String TCA_POLICY_DOMAIN_PATH = "domain";
-    public static final String TCA_POLICY_METRICS_PER_FUNCTIONAL_ROLE_PATH = "configuration.metricsPerFunctionalRole";
+    public static final String TCA_POLICY_METRICS_PER_FUNCTIONAL_ROLE_PATH = "configuration.metricsPerEventName";
     public static final String TCA_POLICY_THRESHOLDS_PATH_POSTFIX = "thresholds";
 
     public static final String TCA_POLICY_JSON_KEY = "tca_policy";
-    public static final String TCA_POLICY_STRING_DELIMITER = "'";
+    public static final String TCA_POLICY_STRING_DELIMITER = "\"";
 
     private AnalyticsConstants() {
 

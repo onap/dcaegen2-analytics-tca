@@ -42,7 +42,7 @@ public class AnalyticsModelJsonUtilsTest extends BaseAnalyticsModelUnitTest {
             };
 
     final String cefMessagesJsonFileLocation = "data/json/cef/cef_messages.json";
-    final String eventListenerJsonFileLocation = "data/json/cef/event_listener.json";
+    final String eventListenerJsonFileLocation = "data/json/cef/cef_message.json";
 
     @Test
     public void testReadValueWithTypeReference() throws Exception {
@@ -50,7 +50,7 @@ public class AnalyticsModelJsonUtilsTest extends BaseAnalyticsModelUnitTest {
                 Thread.currentThread().getContextClassLoader().getResourceAsStream(cefMessagesJsonFileLocation);
         List<EventListener> eventListeners = AnalyticsModelJsonUtils.readValue(resourceAsStream,
                 EVENT_LISTENER_TYPE_REFERENCE);
-        assertThat("Event Listeners size must be 350", eventListeners.size(), is(350));
+        assertThat("Event Listeners size must be 31", eventListeners.size(), is(31));
     }
 
     @Test

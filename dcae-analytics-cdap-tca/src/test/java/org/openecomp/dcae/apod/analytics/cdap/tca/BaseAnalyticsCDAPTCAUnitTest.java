@@ -65,12 +65,15 @@ public abstract class BaseAnalyticsCDAPTCAUnitTest extends BaseDCAEAnalyticsUnit
     protected static final String CEF_MESSAGE_JSON_FILE_LOCATION = "data/json/cef/cef_message.json";
     protected static final String CEF_MESSAGE_WITH_THRESHOLD_VIOLATION_JSON_FILE_LOCATION =
             "data/json/cef/cef_message_with_threshold_violation.json";
+    protected static final String TCA_APP_CONFIG_FILE_LOCATION = "data/json/config/controller_app_config.json";
+    protected static final String TCA_ALERT_JSON_FILE_LOCATION = "data/json/facade/tca_ves_cef_response.json";
+
 
     protected static final String TCA_CONTROLLER_POLICY_FILE_LOCATION =
             "data/properties/tca_controller_policy.properties";
 
     protected static final String TCA_CONTROLLER_POLICY_FROM_JSON_FILE_LOCATION =
-                        "data/properties/tca_controller_policy_from_json.properties";
+            "data/properties/tca_controller_policy_from_json.properties";
 
 
     protected static final String TCA_TEST_APP_CONFIG_NAME = "testTCAAppName";
@@ -87,7 +90,7 @@ public abstract class BaseAnalyticsCDAPTCAUnitTest extends BaseDCAEAnalyticsUnit
      *
      * @return test TCA Policy Object
      */
-    protected TCAPolicy getSampleTCAPolicy() {
+    protected static TCAPolicy getSampleTCAPolicy() {
         return deserializeJsonFileToModel(TCA_POLICY_JSON_FILE_LOCATION, TCAPolicy.class);
     }
 
@@ -96,7 +99,7 @@ public abstract class BaseAnalyticsCDAPTCAUnitTest extends BaseDCAEAnalyticsUnit
      *
      * @return test {@link TCAPolicyPreferences}
      */
-    protected TCAPolicyPreferences getSampleTCAPolicyPreferences() {
+    protected static TCAPolicyPreferences getSampleTCAPolicyPreferences() {
         return deserializeJsonFileToModel(TCA_POLICY_JSON_FILE_LOCATION, TCAPolicyPreferences.class);
     }
 
@@ -107,7 +110,7 @@ public abstract class BaseAnalyticsCDAPTCAUnitTest extends BaseDCAEAnalyticsUnit
      *
      * @throws Exception Exception
      */
-    protected List<EventListener> getCEFMessages() throws Exception {
+    protected static List<EventListener> getCEFMessages() throws Exception {
         final String cefMessageAsString = fromStream(CEF_MESSAGES_JSON_FILE_LOCATION);
         final TypeReference<List<EventListener>> eventListenerListTypeReference =
                 new TypeReference<List<EventListener>>() {
@@ -122,7 +125,7 @@ public abstract class BaseAnalyticsCDAPTCAUnitTest extends BaseDCAEAnalyticsUnit
      *
      * @throws Exception Exception
      */
-    protected String getValidCEFMessage() throws Exception {
+    protected static String getValidCEFMessage() throws Exception {
         return fromStream(CEF_MESSAGE_JSON_FILE_LOCATION);
     }
 
@@ -134,7 +137,7 @@ public abstract class BaseAnalyticsCDAPTCAUnitTest extends BaseDCAEAnalyticsUnit
      *
      * @throws Exception Exception
      */
-    protected EventListener getCEFEventListener() throws Exception {
+    protected static EventListener getCEFEventListener() throws Exception {
         final String cefMessageAsString = fromStream(CEF_MESSAGE_JSON_FILE_LOCATION);
         return ANALYTICS_MODEL_OBJECT_MAPPER.readValue(cefMessageAsString, EventListener.class);
     }
@@ -257,23 +260,16 @@ public abstract class BaseAnalyticsCDAPTCAUnitTest extends BaseDCAEAnalyticsUnit
     }
 
     protected static FlowletContext getTestFlowletContextWithValidPolicy() {
-        final Properties controllerProperties =
-                AnalyticsModelIOUtils.loadPropertiesFile(TCA_CONTROLLER_POLICY_FILE_LOCATION, new Properties());
-
-        Map<String, String> runtimeArgs = new LinkedHashMap<>();
-        for (Map.Entry<Object, Object> property : controllerProperties.entrySet()) {
-            runtimeArgs.put(property.getKey().toString(), property.getValue().toString());
-        }
-
-        final FlowletContext flowletContext = mock(FlowletContext.class);
-        when(flowletContext.getRuntimeArguments()).thenReturn(runtimeArgs);
-        return flowletContext;
+        return createNewFlowletContextFromPropertiesFile(TCA_CONTROLLER_POLICY_FILE_LOCATION);
     }
 
     protected static FlowletContext getTestFlowletContextWithValidPolicyFromJSON() {
+        return createNewFlowletContextFromPropertiesFile(TCA_CONTROLLER_POLICY_FROM_JSON_FILE_LOCATION);
+    }
+
+    private static FlowletContext createNewFlowletContextFromPropertiesFile(final String propertyFileLocation) {
         final Properties controllerProperties =
-                AnalyticsModelIOUtils.loadPropertiesFile(TCA_CONTROLLER_POLICY_FROM_JSON_FILE_LOCATION,
-                        new Properties());
+                AnalyticsModelIOUtils.loadPropertiesFile(propertyFileLocation, new Properties());
 
         Map<String, String> runtimeArgs = new LinkedHashMap<>();
         for (Map.Entry<Object, Object> property : controllerProperties.entrySet()) {

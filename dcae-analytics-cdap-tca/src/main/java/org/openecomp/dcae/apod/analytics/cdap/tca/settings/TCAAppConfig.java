@@ -43,6 +43,8 @@ public class TCAAppConfig extends CDAPBaseAppConfig {
     protected Integer tcaVESMessageStatusTableTTLSeconds;
     protected String tcaVESAlertsTableName;
     protected Integer tcaVESAlertsTableTTLSeconds;
+    protected String tcaAlertsAbatementTableName;
+    protected Integer tcaAlertsAbatementTableTTLSeconds;
 
 
     public TCAAppConfig() {
@@ -54,6 +56,8 @@ public class TCAAppConfig extends CDAPBaseAppConfig {
         tcaVESMessageStatusTableTTLSeconds = AnalyticsConstants.TCA_DEFAULT_VES_MESSAGE_STATUS_TTL_TABLE;
         tcaVESAlertsTableName = CDAPComponentsConstants.TCA_DEFAULT_VES_ALERTS_NAME_TABLE;
         tcaVESAlertsTableTTLSeconds = AnalyticsConstants.TCA_DEFAULT_VES_ALERTS_TTL_TABLE;
+        tcaAlertsAbatementTableName = CDAPComponentsConstants.TCA_DEFAULT_ALERTS_ABATEMENT_NAME_TABLE;
+        tcaAlertsAbatementTableTTLSeconds = AnalyticsConstants.TCA_DEFAULT_ALERTS_ABATEMENT_TTL_TABLE;
     }
 
     public String getTcaSubscriberOutputStreamName() {
@@ -80,6 +84,14 @@ public class TCAAppConfig extends CDAPBaseAppConfig {
         return thresholdCalculatorFlowletInstances;
     }
 
+    public String getTcaAlertsAbatementTableName() {
+        return tcaAlertsAbatementTableName;
+    }
+
+    public Integer getTcaAlertsAbatementTableTTLSeconds() {
+        return tcaAlertsAbatementTableTTLSeconds;
+    }
+
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
@@ -91,6 +103,8 @@ public class TCAAppConfig extends CDAPBaseAppConfig {
                 .add("tcaVESMessageStatusTableTTLSeconds", tcaVESMessageStatusTableTTLSeconds)
                 .add("tcaVESAlertsTableName", tcaVESAlertsTableName)
                 .add("tcaVESAlertsTableTTLSeconds", tcaVESAlertsTableTTLSeconds)
+                .add("tcaAlertsAbatementTableName", tcaAlertsAbatementTableName)
+                .add("tcaAlertsAbatementTableTTLSeconds", tcaAlertsAbatementTableTTLSeconds)
                 .toString();
     }
 }

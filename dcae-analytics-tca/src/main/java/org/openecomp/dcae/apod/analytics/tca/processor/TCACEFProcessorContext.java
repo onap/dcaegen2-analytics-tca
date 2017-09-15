@@ -22,7 +22,7 @@ package org.openecomp.dcae.apod.analytics.tca.processor;
 
 import org.openecomp.dcae.apod.analytics.common.service.processor.AbstractProcessorContext;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventListener;
-import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerFunctionalRole;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerEventName;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.TCAPolicy;
 
 /**
@@ -36,7 +36,7 @@ public class TCACEFProcessorContext extends AbstractProcessorContext {
 
     private final TCAPolicy tcaPolicy;
     private EventListener eventListener;
-    private MetricsPerFunctionalRole metricsPerFunctionalRole;
+    private MetricsPerEventName metricsPerEventName;
 
     public TCACEFProcessorContext(final String message, boolean canProcessingContinue, final TCAPolicy tcaPolicy) {
         super(message, canProcessingContinue);
@@ -44,7 +44,7 @@ public class TCACEFProcessorContext extends AbstractProcessorContext {
         // present only if cef incoming message can be parsed successfully to Event Listener Object
         this.eventListener = null;
         // present only if there are any threshold violations are detected
-        this.metricsPerFunctionalRole = null;
+        this.metricsPerEventName = null;
     }
 
     // Auxiliary Constructor which default canProcessingContinue Flag to true
@@ -82,22 +82,22 @@ public class TCACEFProcessorContext extends AbstractProcessorContext {
 
 
     /**
-     * Returns TCA Policy {@link MetricsPerFunctionalRole} which was has violated Threshold for the CEF Message if
+     * Returns TCA Policy {@link MetricsPerEventName} which was has violated Threshold for the CEF Message if
      * present else null
      *
      * @return Violated Threshold
      */
-    public MetricsPerFunctionalRole getMetricsPerFunctionalRole() {
-        return metricsPerFunctionalRole;
+    public MetricsPerEventName getMetricsPerEventName() {
+        return metricsPerEventName;
     }
 
     /**
-     * Assign new TCA Policy {@link MetricsPerFunctionalRole} which was has violated Threshold for the CEF Message
+     * Assign new TCA Policy {@link MetricsPerEventName} which was has violated Threshold for the CEF Message
      *
-     * @param metricsPerFunctionalRole new value for Metrics Per Functional Role with violated threshold
+     * @param metricsPerEventName new value for Metrics Per Functional Role with violated threshold
      */
-    public void setMetricsPerFunctionalRole(MetricsPerFunctionalRole metricsPerFunctionalRole) {
-        this.metricsPerFunctionalRole = metricsPerFunctionalRole;
+    public void setMetricsPerEventName(MetricsPerEventName metricsPerEventName) {
+        this.metricsPerEventName = metricsPerEventName;
     }
 
 }

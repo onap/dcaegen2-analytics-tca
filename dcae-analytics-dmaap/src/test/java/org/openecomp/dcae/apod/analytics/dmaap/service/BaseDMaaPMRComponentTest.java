@@ -62,7 +62,8 @@ public class BaseDMaaPMRComponentTest extends BaseAnalyticsDMaaPUnitTest {
 
     @Test
     public void testGetAuthHeaderWithGoodValues() {
-        String expectedEncodedString = "Basic bTAwNTAyQHRjYS5hZi5kY2FlLmNvbTpUZTUwMjFhYmM=";
+        String expectedEncodedString = "Basic [VVNFUjpQQVNTV09SRA=]=";
+//        String expectedEncodedString = "Basic bTAwNTAyQHRjYS5hZi5kY2FlLmNvbTpUZTUwMjFhYmM=";
         Optional<String> actualOutput = BaseDMaaPMRComponent.getAuthHeader("USER", "PASSWORD");
         assertTrue(" Authentication Header has value ", actualOutput.isPresent());
         assertEquals(" Authentication Header has value ", expectedEncodedString, actualOutput.get());

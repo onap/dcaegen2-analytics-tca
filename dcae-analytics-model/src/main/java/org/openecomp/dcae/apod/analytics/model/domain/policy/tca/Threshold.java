@@ -42,6 +42,15 @@ public class Threshold extends BaseTCAPolicyModel {
      */
     private String closedLoopControlName;
 
+
+    /**
+     * Closed Loop Event Status
+     *
+     * @param closedLoopEventStatus New value for Closed Loop Event Status
+     * @return Closed Loop Event Status
+     */
+    private ControlLoopEventStatus closedLoopEventStatus;
+
     /**
      * Threshold Version
      *
@@ -85,16 +94,16 @@ public class Threshold extends BaseTCAPolicyModel {
 
 
     /**
-     * Actual Field value that caused the threshold violation. Ignored for deserialization
+     * Actual Field value that caused the threshold violation. Note: Ignored for serialization / deserialization
      *
      *
-     * @param actualFieldValue new value value for actual Field value that caused the violation
+     * @param actualFieldValue new value for actual Field value that caused the violation
      * @return actual field value that caused the violation
      */
     private Long actualFieldValue;
 
     /**
-     * Creates a copy of give {@link Threshold}
+     * Creates a deep copy of give {@link Threshold}
      *
      * @param threshold threshold that need to be copied
      *
@@ -103,6 +112,7 @@ public class Threshold extends BaseTCAPolicyModel {
     public static Threshold copy(final Threshold threshold) {
         final Threshold newThreshold = new Threshold();
         newThreshold.setClosedLoopControlName(threshold.getClosedLoopControlName());
+        newThreshold.setClosedLoopEventStatus(threshold.getClosedLoopEventStatus());
         newThreshold.setFieldPath(threshold.getFieldPath());
         newThreshold.setThresholdValue(threshold.getThresholdValue());
         newThreshold.setDirection(threshold.getDirection());

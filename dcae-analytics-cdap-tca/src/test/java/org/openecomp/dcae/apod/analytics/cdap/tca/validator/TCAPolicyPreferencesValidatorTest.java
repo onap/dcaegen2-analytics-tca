@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.openecomp.dcae.apod.analytics.cdap.tca.BaseAnalyticsCDAPTCAUnitTest;
 import org.openecomp.dcae.apod.analytics.cdap.tca.settings.TCAPolicyPreferences;
 import org.openecomp.dcae.apod.analytics.common.validation.GenericValidationResponse;
-import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerFunctionalRole;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerEventName;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Threshold;
 
 import java.util.Collections;
@@ -57,7 +57,7 @@ public class TCAPolicyPreferencesValidatorTest extends BaseAnalyticsCDAPTCAUnitT
     @Test
     public void testValidateAppSettingsWhenDomainIsNullAndFunctionRoleIsEmpty() throws Exception {
         tcaPolicyPreferences.setDomain(null);
-        tcaPolicyPreferences.setMetricsPerFunctionalRole(Collections.<MetricsPerFunctionalRole>emptyList());
+        tcaPolicyPreferences.setMetricsPerEventName(Collections.<MetricsPerEventName>emptyList());
         final GenericValidationResponse<TCAPolicyPreferences> validationResponse =
                 tcaPolicyPreferencesValidator.validateAppSettings(tcaPolicyPreferences);
         assertTrue(validationResponse.hasErrors());
@@ -66,7 +66,7 @@ public class TCAPolicyPreferencesValidatorTest extends BaseAnalyticsCDAPTCAUnitT
 
     @Test
     public void testValidateAppSettingsWhenThresholdIsEmpty() throws Exception {
-        tcaPolicyPreferences.getMetricsPerFunctionalRole().get(0).setThresholds(Collections.<Threshold>emptyList());
+        tcaPolicyPreferences.getMetricsPerEventName().get(0).setThresholds(Collections.<Threshold>emptyList());
         final GenericValidationResponse<TCAPolicyPreferences> validationResponse =
                 tcaPolicyPreferencesValidator.validateAppSettings(tcaPolicyPreferences);
         assertTrue(validationResponse.hasErrors());
@@ -75,7 +75,7 @@ public class TCAPolicyPreferencesValidatorTest extends BaseAnalyticsCDAPTCAUnitT
 
     @Test
     public void testValidateAppSettingsWhenThresholdPathIsMissing() throws Exception {
-        tcaPolicyPreferences.getMetricsPerFunctionalRole().get(0).getThresholds().get(0).setFieldPath(null);
+        tcaPolicyPreferences.getMetricsPerEventName().get(0).getThresholds().get(0).setFieldPath(null);
         final GenericValidationResponse<TCAPolicyPreferences> validationResponse =
                 tcaPolicyPreferencesValidator.validateAppSettings(tcaPolicyPreferences);
         assertTrue(validationResponse.hasErrors());

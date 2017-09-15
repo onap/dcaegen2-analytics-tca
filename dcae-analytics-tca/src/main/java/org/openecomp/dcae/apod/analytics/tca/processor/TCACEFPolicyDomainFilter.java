@@ -20,6 +20,7 @@
 
 package org.openecomp.dcae.apod.analytics.tca.processor;
 
+import org.openecomp.dcae.apod.analytics.model.domain.cef.Domain;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventListener;
 
 /**
@@ -48,7 +49,7 @@ public class TCACEFPolicyDomainFilter extends AbstractTCAECEFPolicyProcessor {
         // event listener is indeed present
         final EventListener eventListener = processorContext.getCEFEventListener();
 
-        String cefMessageDomain;
+        Domain cefMessageDomain;
 
         // Extract CEF domain as it is must be present as per CEF Schema
         if (eventListener.getEvent() != null &&
@@ -67,7 +68,7 @@ public class TCACEFPolicyDomainFilter extends AbstractTCAECEFPolicyProcessor {
         final String policyDomain = processorContext.getTCAPolicy().getDomain();
 
         // If Policy domain matches CEF message domain then continue processing
-        if (cefMessageDomain.equals(policyDomain)) {
+        if (cefMessageDomain.toString().equalsIgnoreCase(policyDomain)) {
             final String finishMessage = String.format("Policy Domain and CEF Message Domain match successful." +
                     " Message Domain: %s, Policy Domain: %s", cefMessageDomain, policyDomain);
             setFinishedProcessingMessage(finishMessage, processorContext);

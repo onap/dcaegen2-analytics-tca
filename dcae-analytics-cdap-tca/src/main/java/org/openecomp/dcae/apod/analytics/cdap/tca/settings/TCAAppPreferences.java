@@ -195,6 +195,55 @@ public class TCAAppPreferences implements CDAPAppPreferences {
         return enableAlertCEFFormat;
     }
 
+
+    public void setSubscriberHostName(String subscriberHostName) {
+        this.subscriberHostName = subscriberHostName;
+    }
+
+    public void setSubscriberHostPort(Integer subscriberHostPort) {
+        this.subscriberHostPort = subscriberHostPort;
+    }
+
+    public void setSubscriberTopicName(String subscriberTopicName) {
+        this.subscriberTopicName = subscriberTopicName;
+    }
+
+    public void setSubscriberProtocol(String subscriberProtocol) {
+        this.subscriberProtocol = subscriberProtocol;
+    }
+
+    public void setSubscriberUserName(String subscriberUserName) {
+        this.subscriberUserName = subscriberUserName;
+    }
+
+    public void setSubscriberUserPassword(String subscriberUserPassword) {
+        this.subscriberUserPassword = subscriberUserPassword;
+    }
+
+    public void setPublisherHostName(String publisherHostName) {
+        this.publisherHostName = publisherHostName;
+    }
+
+    public void setPublisherHostPort(Integer publisherHostPort) {
+        this.publisherHostPort = publisherHostPort;
+    }
+
+    public void setPublisherTopicName(String publisherTopicName) {
+        this.publisherTopicName = publisherTopicName;
+    }
+
+    public void setPublisherProtocol(String publisherProtocol) {
+        this.publisherProtocol = publisherProtocol;
+    }
+
+    public void setPublisherUserName(String publisherUserName) {
+        this.publisherUserName = publisherUserName;
+    }
+
+    public void setPublisherUserPassword(String publisherUserPassword) {
+        this.publisherUserPassword = publisherUserPassword;
+    }
+
     @Override
     public String toString() {
         return Objects.toStringHelper(this)

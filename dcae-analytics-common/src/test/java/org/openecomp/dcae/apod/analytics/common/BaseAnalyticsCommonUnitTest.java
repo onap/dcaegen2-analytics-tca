@@ -35,7 +35,7 @@ public abstract class BaseAnalyticsCommonUnitTest extends BaseDCAEAnalyticsUnitT
 
     protected static final String TEST_MESSAGE_PROCESSOR_MESSAGE = "Test Processor Message";
 
-    protected static final String CEF_MESSAGE_FILE_PATH = "data/json/cef_message.json";
+    protected static final String CEF_MESSAGE_FILE_PATH = "data/json/cef/cef_message.json";
 
     /*
      * Test implementation for {@link CDAPAppSettings}

@@ -39,7 +39,7 @@ import org.openecomp.dcae.apod.analytics.cdap.common.utils.ValidationUtils;
 import org.openecomp.dcae.apod.analytics.cdap.plugins.domain.config.tca.SimpleTCAPluginConfig;
 import org.openecomp.dcae.apod.analytics.cdap.plugins.utils.CDAPPluginUtils;
 import org.openecomp.dcae.apod.analytics.cdap.plugins.validator.SimpleTCAPluginConfigValidator;
-import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerFunctionalRole;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerEventName;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.TCAPolicy;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Threshold;
 import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFJsonProcessor;
@@ -128,12 +128,12 @@ public class SimpleTCAPlugin extends SparkCompute<StructuredRecord, StructuredRe
                         LOG.debug("VES Threshold Violation Detected.An alert message is be generated: {}",
                                 alertMessage);
 
-                        final MetricsPerFunctionalRole metricsPerFunctionalRole =
-                                processorContextWithViolations.getMetricsPerFunctionalRole();
-                        if (metricsPerFunctionalRole != null
-                                && metricsPerFunctionalRole.getThresholds() != null
-                                && metricsPerFunctionalRole.getThresholds().get(0) != null) {
-                            final Threshold violatedThreshold = metricsPerFunctionalRole.getThresholds().get(0);
+                        final MetricsPerEventName metricsPerEventName =
+                                processorContextWithViolations.getMetricsPerEventName();
+                        if (metricsPerEventName != null
+                                && metricsPerEventName.getThresholds() != null
+                                && metricsPerEventName.getThresholds().get(0) != null) {
+                            final Threshold violatedThreshold = metricsPerEventName.getThresholds().get(0);
                             LOG.debug("CEF Message: {}, Violated Threshold: {}", cefMessage, violatedThreshold);
                         }
 

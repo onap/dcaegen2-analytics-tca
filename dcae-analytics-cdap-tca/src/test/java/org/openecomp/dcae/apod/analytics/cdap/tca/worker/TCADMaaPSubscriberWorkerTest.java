@@ -20,10 +20,12 @@
 
 package org.openecomp.dcae.apod.analytics.cdap.tca.worker;
 
+import co.cask.cdap.api.app.ApplicationSpecification;
 import co.cask.cdap.api.worker.WorkerConfigurer;
 import co.cask.cdap.api.worker.WorkerContext;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.openecomp.dcae.apod.analytics.cdap.common.CDAPComponentsConstants;
 import org.openecomp.dcae.apod.analytics.cdap.common.exception.CDAPSettingsException;
 import org.openecomp.dcae.apod.analytics.cdap.tca.BaseAnalyticsCDAPTCAUnitTest;
@@ -46,11 +48,14 @@ public class TCADMaaPSubscriberWorkerTest extends BaseAnalyticsCDAPTCAUnitTest {
     private WorkerConfigurer workerConfigurer;
     private WorkerContext workerContext;
     private TCADMaaPSubscriberWorker subscriberWorker;
+    private ApplicationSpecification mockApplicationSpecification;
 
     @Before
     public void before() throws Exception {
         workerConfigurer = mock(WorkerConfigurer.class);
         workerContext = mock(WorkerContext.class);
+        mockApplicationSpecification = Mockito.mock(ApplicationSpecification.class);
+        when(workerContext.getApplicationSpecification()).thenReturn(mockApplicationSpecification);
         doNothing().when(workerConfigurer).setName(anyString());
         doNothing().when(workerConfigurer).setDescription(anyString());
         subscriberWorker =
@@ -69,12 +74,14 @@ public class TCADMaaPSubscriberWorkerTest extends BaseAnalyticsCDAPTCAUnitTest {
 
     @Test(expected = CDAPSettingsException.class)
     public void testInitializeWhenSettingsHaveErrors() throws Exception {
+        when(mockApplicationSpecification.getConfiguration()).thenReturn("{}");
         subscriberWorker.initialize(workerContext);
     }
 
     @Test
     public void testInitializeWhenSettingsAreValid() throws Exception {
         when(workerContext.getRuntimeArguments()).thenReturn(getPreferenceMap());
+        when(mockApplicationSpecification.getConfiguration()).thenReturn(fromStream(TCA_APP_CONFIG_FILE_LOCATION));
         subscriberWorker.initialize(workerContext);
     }
 

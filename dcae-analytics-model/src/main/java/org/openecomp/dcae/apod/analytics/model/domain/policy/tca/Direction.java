@@ -30,6 +30,12 @@ import javax.annotation.Nonnull;
  */
 public enum Direction implements TCAPolicyModel {
 
+    EQUAL {
+        @Override
+        public Boolean operate(@Nonnull Long value1, @Nonnull Long value2) {
+            return value1.equals(value2);
+        }
+    },
     LESS {
         @Override
         public Boolean operate(@Nonnull Long value1, @Nonnull Long value2) {

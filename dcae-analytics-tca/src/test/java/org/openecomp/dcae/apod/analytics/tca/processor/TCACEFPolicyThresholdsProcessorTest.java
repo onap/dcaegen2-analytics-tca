@@ -63,7 +63,8 @@ public class TCACEFPolicyThresholdsProcessorTest extends BaseAnalyticsTCAUnitTes
         final TCACEFProcessorContext tcacefProcessorContext = new TCACEFProcessorContext(cefMessageString,
                 getSampleTCAPolicy());
 
-        final EventListener eventListener = getCEFEventListener();
+        final EventListener eventListener = ANALYTICS_MODEL_OBJECT_MAPPER.readValue(cefMessageString,
+                EventListener.class);
         tcacefProcessorContext.setCEFEventListener(eventListener);
 
         AbstractTCAECEFPolicyProcessor policyThresholdsProcessor = new TCACEFPolicyThresholdsProcessor();

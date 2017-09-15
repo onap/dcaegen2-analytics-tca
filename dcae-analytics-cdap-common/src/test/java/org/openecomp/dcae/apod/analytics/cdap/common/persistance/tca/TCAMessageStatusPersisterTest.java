@@ -28,11 +28,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openecomp.dcae.apod.analytics.cdap.common.BaseAnalyticsCDAPCommonUnitTest;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.CommonEventHeader;
+import org.openecomp.dcae.apod.analytics.model.domain.cef.Domain;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.Event;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventListener;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventSeverity;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Direction;
-import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerFunctionalRole;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerEventName;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.TCAPolicy;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Threshold;
 import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFProcessorContext;
@@ -51,8 +52,8 @@ import static org.mockito.Mockito.when;
 public class TCAMessageStatusPersisterTest extends BaseAnalyticsCDAPCommonUnitTest {
 
     private static final int TEST_INSTANCE_ID = 0;
-    private static final String TEST_DOMAIN = "TEST_DOMAIN";
-    private static final String TEST_FUNCTIONAL_ROLE = "TEST_FUNCIONAL_ROLE";
+    private static final Domain TEST_DOMAIN = Domain.other;
+    private static final String TEST_EVENT_NAME = "TEST_EVENT_NAME";
 
     private ObjectMappedTable<TCAMessageStatusEntity> vesMessageStatusTable;
     private TCACEFProcessorContext processorContext;
@@ -73,7 +74,7 @@ public class TCAMessageStatusPersisterTest extends BaseAnalyticsCDAPCommonUnitTe
         when(processorContext.getCEFEventListener()).thenReturn(eventListener);
         when(eventListener.getEvent()).thenReturn(event);
         when(event.getCommonEventHeader()).thenReturn(commonEventHeader);
-        when(commonEventHeader.getFunctionalRole()).thenReturn(TEST_FUNCTIONAL_ROLE);
+        when(commonEventHeader.getEventName()).thenReturn(TEST_EVENT_NAME);
         when(commonEventHeader.getDomain()).thenReturn(TEST_DOMAIN);
     }
 
@@ -88,10 +89,10 @@ public class TCAMessageStatusPersisterTest extends BaseAnalyticsCDAPCommonUnitTe
 
     @Test
     public void testPersistWithNonCompliantMessage() throws Exception {
-        final MetricsPerFunctionalRole metricsPerFunctionalRole = mock(MetricsPerFunctionalRole.class);
+        final MetricsPerEventName metricsPerEventName = mock(MetricsPerEventName.class);
         final Threshold threshold = mock(Threshold.class);
-        when(processorContext.getMetricsPerFunctionalRole()).thenReturn(metricsPerFunctionalRole);
-        when((metricsPerFunctionalRole.getThresholds())).thenReturn(ImmutableList.of(threshold));
+        when(processorContext.getMetricsPerEventName()).thenReturn(metricsPerEventName);
+        when((metricsPerEventName.getThresholds())).thenReturn(ImmutableList.of(threshold));
         when(threshold.getDirection()).thenReturn(Direction.GREATER);
         when(threshold.getSeverity()).thenReturn(EventSeverity.CRITICAL);
         TCAMessageStatusPersister.persist(

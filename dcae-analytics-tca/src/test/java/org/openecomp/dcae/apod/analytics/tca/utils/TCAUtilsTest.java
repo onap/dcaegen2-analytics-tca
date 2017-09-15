@@ -31,11 +31,14 @@ import org.mockito.Mockito;
 import org.openecomp.dcae.apod.analytics.common.AnalyticsConstants;
 import org.openecomp.dcae.apod.analytics.common.exception.MessageProcessingException;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.CommonEventHeader;
+import org.openecomp.dcae.apod.analytics.model.domain.cef.Domain;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.Event;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventListener;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventSeverity;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ControlLoopEventStatus;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ControlLoopSchemaType;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Direction;
-import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerFunctionalRole;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerEventName;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.TCAPolicy;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Threshold;
 import org.openecomp.dcae.apod.analytics.model.facade.tca.TCAVESResponse;
@@ -74,23 +77,23 @@ import static org.mockito.Mockito.when;
 public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
 
     @Test
-    public void testGetPolicyFunctionalRoles() throws Exception {
+    public void testGetPolicyEventNames() throws Exception {
 
         final TCAPolicy sampleTCAPolicy = getSampleTCAPolicy();
-        final List<String> policyFunctionalRoles = TCAUtils.getPolicyFunctionalRoles(sampleTCAPolicy);
+        final List<String> eventNames = TCAUtils.getPolicyEventNames(sampleTCAPolicy);
 
-        assertThat("Policy Functional Roles must contain vFirewall and vLoadBalancer", policyFunctionalRoles,
-                containsInAnyOrder("vFirewall", "vLoadBalancer"));
+        assertThat("Policy event names must contain vFirewall and vLoadBalancer", eventNames,
+                containsInAnyOrder("Mfvs_eNodeB_RANKPI", "vLoadBalancer"));
     }
 
     @Test
-    public void testGetPolicyFunctionalRoleSupplier() throws Exception {
+    public void testGetPolicyEventNamesSupplier() throws Exception {
         final TCAPolicy sampleTCAPolicy = getSampleTCAPolicy();
-        final Supplier<List<String>> policyFunctionalRoleSupplier = TCAUtils.getPolicyFunctionalRoleSupplier
+        final Supplier<List<String>> policyEventNamesSupplier = TCAUtils.getPolicyEventNamesSupplier
                 (sampleTCAPolicy);
-        final List<String> policyFunctionalRoles = policyFunctionalRoleSupplier.get();
-        assertThat("Policy Functional Roles must contain vFirewall and vLoadBalancer", policyFunctionalRoles,
-                containsInAnyOrder("vFirewall", "vLoadBalancer"));
+        final List<String> eventNames = policyEventNamesSupplier.get();
+        assertThat("Policy event names must contain vFirewall and vLoadBalancer", eventNames,
+                containsInAnyOrder("Mfvs_eNodeB_RANKPI", "vLoadBalancer"));
     }
 
     @Test
@@ -105,47 +108,52 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
     @Test
     public void testGetPolicyFRThresholdsTableSupplier() throws Exception {
         final Table<String, String, List<Threshold>> policyFRThresholdPathTable = TCAUtils
-                .getPolicyFRThresholdsTableSupplier(getSampleTCAPolicy()).get();
+                .getPolicyEventNameThresholdsTableSupplier(getSampleTCAPolicy()).get();
 
-        final Map<String, List<Threshold>> vFirewall = policyFRThresholdPathTable.row("vFirewall");
+        final Map<String, List<Threshold>> eNodeBRankpi = policyFRThresholdPathTable.row("Mfvs_eNodeB_RANKPI");
         final Map<String, List<Threshold>> vLoadBalancer = policyFRThresholdPathTable.row("vLoadBalancer");
 
-        final Set<String> vFirewallThresholdPaths = vFirewall.keySet();
+        final Set<String> eNodeBRankpiFieldPaths = eNodeBRankpi.keySet();
         final Set<String> vLoadBalancerPaths = vLoadBalancer.keySet();
 
-        assertThat("vFirewall threshold field path size must be " +
-                        "\"$.event.measurementsForVfScalingFields.vNicUsageArray[*].bytesIn\"",
-                vFirewallThresholdPaths.iterator().next(),
-                is("$.event.measurementsForVfScalingFields.vNicUsageArray[*].bytesIn"));
+        final String receivedBroadcastPacketsFieldPath =
+                "$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsAccumulated";
+        assertThat("eNodeBRankpi threshold field path size must be " +
+                        "$.event.measurementsForVfScalingFields.vNicPerformanceArray[*]" +
+                        ".receivedBroadcastPacketsAccumulated",
+                eNodeBRankpiFieldPaths.iterator().next(),
+                is(receivedBroadcastPacketsFieldPath));
 
         assertThat("vLoadBalancer threshold field path size must be " +
-                        "\"\"$.event.measurementsForVfScalingFields.vNicUsageArray[*].packetsIn\"",
+                        "$.event.measurementsForVfScalingFields.vNicPerformanceArray[*]" +
+                        ".receivedBroadcastPacketsAccumulated",
                 vLoadBalancerPaths.iterator().next(),
-                is("$.event.measurementsForVfScalingFields.vNicUsageArray[*].packetsIn"));
+                is(receivedBroadcastPacketsFieldPath));
 
-        final List<Threshold> firewallThresholds = policyFRThresholdPathTable.get("vFirewall",
-                "$.event.measurementsForVfScalingFields.vNicUsageArray[*].bytesIn");
+        final List<Threshold> eNodeBRankpiThresholds = policyFRThresholdPathTable.get("Mfvs_eNodeB_RANKPI",
+                receivedBroadcastPacketsFieldPath);
         final List<Threshold> vLoadBalancerThresholds = policyFRThresholdPathTable.get("vLoadBalancer",
-                "$.event.measurementsForVfScalingFields.vNicUsageArray[*].packetsIn");
+                receivedBroadcastPacketsFieldPath);
 
-        assertThat("vFirewall Threshold size must be 2", firewallThresholds.size(), is(2));
+        assertThat("eNodeBRankpi Threshold size must be 3", eNodeBRankpiThresholds.size(), is(3));
         assertThat("vLoadBalancer Threshold size must be 2", vLoadBalancerThresholds.size(), is(2));
     }
 
     @Test
     public void testGetJsonPathValueWithValidMessageAndPolicy() throws Exception {
         final String cefMessageString = fromStream(CEF_MESSAGE_JSON_FILE_LOCATION);
-        final String jsonPath = "$.event.measurementsForVfScalingFields.vNicUsageArray[*].bytesIn";
+        final String jsonPath =
+                "$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsAccumulated";
         final ImmutableSet<String> fieldPaths = ImmutableSet.of(jsonPath);
         final Map<String, List<Long>> jsonPathValueMap = TCAUtils.getJsonPathValue(cefMessageString, fieldPaths);
-        assertThat("Json Path value must match", jsonPathValueMap.get(jsonPath).get(0), is(6086L));
+        assertThat("Json Path value must match", jsonPathValueMap.get(jsonPath).get(0), is(5000L));
 
     }
 
     @Test
     public void testGetJsonPathValueWithValidPath() throws Exception {
         final String cefMessageString = fromStream(CEF_MESSAGE_JSON_FILE_LOCATION);
-        final String jsonPath = "$.event.measurementsForVfScalingFields.vNicUsageArray[*].invalid";
+        final String jsonPath = "$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].invalid";
         final ImmutableSet<String> fieldPaths = ImmutableSet.of(jsonPath);
         final Map<String, List<Long>> jsonPathValueMap = TCAUtils.getJsonPathValue(cefMessageString, fieldPaths);
         assertThat("Json path value must be empty", jsonPathValueMap.size(), is(0));
@@ -154,14 +162,15 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
 
 
     @Test
-    public void testCreateNewTCAVESResponseWithFunctionalRolevLoadBalancer() throws Exception {
+    public void testCreateNewTCAVESResponseWithVFControlLoopSchemaType() throws Exception {
         TCACEFProcessorContext tcacefProcessorContext = mock(TCACEFProcessorContext.class);
 
-        MetricsPerFunctionalRole metricsPerFunctionalRole = mock(MetricsPerFunctionalRole.class);
-        when(metricsPerFunctionalRole.getThresholds()).thenReturn(getThresholds());
-        when(metricsPerFunctionalRole.getPolicyScope()).thenReturn("Test Policy scope");
-        when(tcacefProcessorContext.getMetricsPerFunctionalRole()).thenReturn(metricsPerFunctionalRole);
-        when(metricsPerFunctionalRole.getFunctionalRole()).thenReturn("vLoadBalancer");
+        MetricsPerEventName metricsPerEventName = mock(MetricsPerEventName.class);
+        when(metricsPerEventName.getThresholds()).thenReturn(getThresholds());
+        when(metricsPerEventName.getPolicyScope()).thenReturn("Test Policy scope");
+        when(tcacefProcessorContext.getMetricsPerEventName()).thenReturn(metricsPerEventName);
+        when(metricsPerEventName.getEventName()).thenReturn("testEventName");
+        when(metricsPerEventName.getControlLoopSchemaType()).thenReturn(ControlLoopSchemaType.VM);
 
         when(tcacefProcessorContext.getCEFEventListener()).thenReturn(getCEFEventListener());
         TCAVESResponse tcaVESResponse = TCAUtils.createNewTCAVESResponse(tcacefProcessorContext, "TCA_APP_NAME");
@@ -179,11 +188,11 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
     public void testCreateNewTCAVESResponseWithFunctionalRolevFirewall() throws Exception {
         TCACEFProcessorContext tcacefProcessorContext = mock(TCACEFProcessorContext.class);
 
-        MetricsPerFunctionalRole metricsPerFunctionalRole = mock(MetricsPerFunctionalRole.class);
-        when(metricsPerFunctionalRole.getThresholds()).thenReturn(getThresholds());
-        when(metricsPerFunctionalRole.getPolicyScope()).thenReturn("Test Policy scope");
-        when(tcacefProcessorContext.getMetricsPerFunctionalRole()).thenReturn(metricsPerFunctionalRole);
-        when(metricsPerFunctionalRole.getFunctionalRole()).thenReturn("vFirewall");
+        MetricsPerEventName metricsPerEventName = mock(MetricsPerEventName.class);
+        when(metricsPerEventName.getThresholds()).thenReturn(getThresholds());
+        when(metricsPerEventName.getPolicyScope()).thenReturn("Test Policy scope");
+        when(tcacefProcessorContext.getMetricsPerEventName()).thenReturn(metricsPerEventName);
+        when(metricsPerEventName.getEventName()).thenReturn("vFirewall");
 
         when(tcacefProcessorContext.getCEFEventListener()).thenReturn(getCEFEventListener());
         TCAVESResponse tcaVESResponse = TCAUtils.createNewTCAVESResponse(tcacefProcessorContext, "TCA_APP_NAME");
@@ -234,56 +243,55 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
     public void testCreateViolatedMetrics() throws Exception {
         TCAPolicy tcaPolicy = getSampleTCAPolicy();
         Threshold violatedThreshold = getCriticalThreshold();
-        String functionalRole = "vFirewall";
-        MetricsPerFunctionalRole result = TCAUtils.createViolatedMetrics(tcaPolicy, violatedThreshold, functionalRole);
+        String functionalRole = "Mfvs_eNodeB_RANKPI";
+        MetricsPerEventName result = TCAUtils.createViolatedMetrics(tcaPolicy, violatedThreshold, functionalRole);
         assertThat(result.getPolicyScope(), is("resource=vFirewall;type=configuration"));
         assertThat(result.getPolicyName(), is("configuration.dcae.microservice.tca.xml"));
     }
 
     @Test
-    public void testCreateViolatedMetricsWrongFunctionalRole() throws Exception {
+    public void testCreateViolatedMetricsWrongEventName() throws Exception {
         expectedIllegalArgumentException.expect(MessageProcessingException.class);
         expectedIllegalArgumentException.expectCause(isA(IllegalStateException.class));
-        expectedIllegalArgumentException.expectMessage("TCA Policy must contain functional Role: badFunctionRoleName");
-
+        String eventName = "badEventName";
+        expectedIllegalArgumentException.expectMessage("TCA Policy must contain eventName: " + eventName);
         TCAPolicy tcaPolicy = getSampleTCAPolicy();
         Threshold violatedThreshold = getCriticalThreshold();
-        String functionalRole = "badFunctionRoleName";
-        MetricsPerFunctionalRole result = TCAUtils.createViolatedMetrics(tcaPolicy, violatedThreshold, functionalRole);
+        TCAUtils.createViolatedMetrics(tcaPolicy, violatedThreshold, eventName);
     }
 
     @Test
-    public void testGetDomainAndFunctionalRole() {
+    public void testGetDomainAndEventName() {
         TCACEFProcessorContext tcacefProcessorContext = mock(TCACEFProcessorContext.class);
         EventListener eventListener = mock(EventListener.class);
         Event event = mock(Event.class);
         CommonEventHeader commonEventHeader = mock(CommonEventHeader.class);
 
-        Pair<String, String> result = TCAUtils.getDomainAndFunctionalRole(tcacefProcessorContext);
+        Pair<String, String> result = TCAUtils.getDomainAndEventName(tcacefProcessorContext);
         assertNull(result.getLeft());
         assertNull(result.getRight());
 
         when(tcacefProcessorContext.getCEFEventListener()).thenReturn(eventListener);
-        result = TCAUtils.getDomainAndFunctionalRole(tcacefProcessorContext);
+        result = TCAUtils.getDomainAndEventName(tcacefProcessorContext);
         assertNull(result.getLeft());
         assertNull(result.getRight());
 
         when(eventListener.getEvent()).thenReturn(event);
-        result = TCAUtils.getDomainAndFunctionalRole(tcacefProcessorContext);
+        result = TCAUtils.getDomainAndEventName(tcacefProcessorContext);
         assertNull(result.getLeft());
         assertNull(result.getRight());
 
         when(event.getCommonEventHeader()).thenReturn(commonEventHeader);
-        result = TCAUtils.getDomainAndFunctionalRole(tcacefProcessorContext);
+        result = TCAUtils.getDomainAndEventName(tcacefProcessorContext);
         assertNull(result.getLeft());
         assertNull(result.getRight());
 
-        when(commonEventHeader.getDomain()).thenReturn("testDomain");
-        when(commonEventHeader.getFunctionalRole()).thenReturn("functionalRole");
+        when(commonEventHeader.getDomain()).thenReturn(Domain.other);
+        when(commonEventHeader.getEventName()).thenReturn("eventName");
 
-        result = TCAUtils.getDomainAndFunctionalRole(tcacefProcessorContext);
-        assertEquals(result.getLeft(), "testDomain");
-        assertEquals(result.getRight(), "functionalRole");
+        result = TCAUtils.getDomainAndEventName(tcacefProcessorContext);
+        assertEquals(result.getLeft(), "other");
+        assertEquals(result.getRight(), "eventName");
 
     }
 
@@ -298,7 +306,7 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
 
         TCACEFProcessorContext result = TCAUtils.computeThresholdViolations(tcacefProcessorContext);
         assertNotNull(result);
-        verify(result, times(0)).setMetricsPerFunctionalRole(Mockito.any(MetricsPerFunctionalRole.class));
+        verify(result, times(0)).setMetricsPerEventName(Mockito.any(MetricsPerEventName.class));
         assertEquals("Policy must not change", getSampleTCAPolicy(), result.getTCAPolicy());
     }
 
@@ -313,7 +321,7 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
         when(tcacefProcessorContext.getCEFEventListener()).thenReturn(getCEFEventListener());
 
         TCACEFProcessorContext result = TCAUtils.computeThresholdViolations(tcacefProcessorContext);
-        verify(result, times(1)).setMetricsPerFunctionalRole(Mockito.any(MetricsPerFunctionalRole.class));
+        verify(result, times(1)).setMetricsPerEventName(Mockito.any(MetricsPerEventName.class));
 
         assertEquals("Policy must not change", getSampleTCAPolicy(), result.getTCAPolicy());
     }
@@ -329,11 +337,11 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
         final Map<String, Map<String, String>> functionalRolesMap =
                 TCAUtils.extractSubTree(tcaPolicyMap, 2, 3, AnalyticsConstants.TCA_POLICY_DELIMITER);
 
-        final List<MetricsPerFunctionalRole> tcaPolicyMetricsPerFunctionalRoleList =
-                TCAUtils.createTCAPolicyMetricsPerFunctionalRoleList(functionalRolesMap);
+        final List<MetricsPerEventName> tcaPolicyMetricsPerEventNameList =
+                TCAUtils.createTCAPolicyMetricsPerEventNameList(functionalRolesMap);
 
         assertThat("There are two Metrics per function role", 2,
-                is(tcaPolicyMetricsPerFunctionalRoleList.size()));
+                is(tcaPolicyMetricsPerEventNameList.size()));
     }
 
 
@@ -353,9 +361,9 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
 
     @Test
     public void testCreateTCAAlertStringWhenCEFIsEnabled() throws Exception {
-        final MetricsPerFunctionalRole violatedMetrics = createViolatedMetricsPerFunctionalRole(EventSeverity.CRITICAL);
+        final MetricsPerEventName violatedMetrics = createViolatedMetricsPerEventName(EventSeverity.CRITICAL);
         TCACEFProcessorContext processorContext = mock(TCACEFProcessorContext.class);
-        when(processorContext.getMetricsPerFunctionalRole()).thenReturn(violatedMetrics);
+        when(processorContext.getMetricsPerEventName()).thenReturn(violatedMetrics);
         when(processorContext.getCEFEventListener()).thenReturn(getCEFEventListener());
         final String alertString = TCAUtils.createTCAAlertString(processorContext, "testApp", true);
         assertTrue(alertString.contains("thresholdCrossingAlertFields"));
@@ -364,15 +372,15 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
     @Test(expected = MessageProcessingException.class)
     public void testCreateTCAAlertStringWhenViolatedMetricsNotPresentAndCEFIsEnabled() throws Exception {
         TCACEFProcessorContext processorContext = mock(TCACEFProcessorContext.class);
-        when(processorContext.getMetricsPerFunctionalRole()).thenReturn(null);
+        when(processorContext.getMetricsPerEventName()).thenReturn(null);
         TCAUtils.createTCAAlertString(processorContext, "testApp", true);
     }
 
     @Test
     public void testCreateTCAAlertStringWhenCEFIsDisabled() throws Exception {
-        final MetricsPerFunctionalRole violatedMetrics = createViolatedMetricsPerFunctionalRole(EventSeverity.MAJOR);
+        final MetricsPerEventName violatedMetrics = createViolatedMetricsPerEventName(EventSeverity.MAJOR);
         TCACEFProcessorContext processorContext = mock(TCACEFProcessorContext.class);
-        when(processorContext.getMetricsPerFunctionalRole()).thenReturn(violatedMetrics);
+        when(processorContext.getMetricsPerEventName()).thenReturn(violatedMetrics);
         when(processorContext.getCEFEventListener()).thenReturn(getCEFEventListener());
         final String alertString = TCAUtils.createTCAAlertString(processorContext, "testApp", false);
         assertFalse(alertString.contains("thresholdCrossingAlertFields"));
@@ -381,11 +389,11 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
     @Test(expected = MessageProcessingException.class)
     public void testCreateTCAAlertStringWhenViolatedMetricsNotPresentAndCEFIsDisabled() throws Exception {
         TCACEFProcessorContext processorContext = mock(TCACEFProcessorContext.class);
-        when(processorContext.getMetricsPerFunctionalRole()).thenReturn(null);
+        when(processorContext.getMetricsPerEventName()).thenReturn(null);
         TCAUtils.createTCAAlertString(processorContext, "testApp", false);
     }
 
-    private static MetricsPerFunctionalRole createViolatedMetricsPerFunctionalRole(EventSeverity severity) {
+    private static MetricsPerEventName createViolatedMetricsPerEventName(EventSeverity severity) {
         final Threshold violatedThreshold = new Threshold();
         violatedThreshold.setSeverity(severity);
         violatedThreshold.setDirection(Direction.GREATER);
@@ -393,13 +401,14 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
         violatedThreshold.setActualFieldValue(100L);
         violatedThreshold.setFieldPath("violatedThresholdFieldPath");
         violatedThreshold.setVersion("violatedThresholdVersion");
+        violatedThreshold.setClosedLoopEventStatus(ControlLoopEventStatus.ONSET);
         violatedThreshold.setThresholdValue(50L);
 
-        final MetricsPerFunctionalRole violatedMetrics = new MetricsPerFunctionalRole();
+        final MetricsPerEventName violatedMetrics = new MetricsPerEventName();
         violatedMetrics.setPolicyName("violatePolicyName");
         violatedMetrics.setPolicyVersion("violatedPolicyVersion");
         violatedMetrics.setPolicyScope("violatedPolicyScope");
-        violatedMetrics.setFunctionalRole("violatedFunctionalRole");
+        violatedMetrics.setEventName("violatedEventName");
         violatedMetrics.setThresholds(Arrays.asList(violatedThreshold));
         return violatedMetrics;
     }

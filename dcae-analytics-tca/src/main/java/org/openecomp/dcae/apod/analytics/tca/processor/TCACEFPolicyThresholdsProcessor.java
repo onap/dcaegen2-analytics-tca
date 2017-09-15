@@ -23,8 +23,9 @@ package org.openecomp.dcae.apod.analytics.tca.processor;
 import com.google.common.base.Optional;
 import com.google.common.collect.Table;
 import org.openecomp.dcae.apod.analytics.common.exception.MessageProcessingException;
+import org.openecomp.dcae.apod.analytics.model.domain.cef.Domain;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventListener;
-import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerFunctionalRole;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerEventName;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.TCAPolicy;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Threshold;
 import org.openecomp.dcae.apod.analytics.tca.utils.TCAUtils;
@@ -57,10 +58,10 @@ public class TCACEFPolicyThresholdsProcessor extends AbstractTCAECEFPolicyProces
     public TCACEFProcessorContext preProcessor(@Nonnull TCACEFProcessorContext processorContext) {
         // validates Domain and Functional Role are present
         final EventListener eventListener = processorContext.getCEFEventListener();
-        final String domain = eventListener.getEvent().getCommonEventHeader().getDomain();
-        final String functionalRole = eventListener.getEvent().getCommonEventHeader().getFunctionalRole();
-        if (domain == null || functionalRole == null) {
-            final String errorMessage = "CEF Event Listener domain or functional role not Present. " +
+        final Domain domain = eventListener.getEvent().getCommonEventHeader().getDomain();
+        final String eventName = eventListener.getEvent().getCommonEventHeader().getEventName();
+        if (domain == null || eventName == null) {
+            final String errorMessage = "CEF Event Listener domain or eventName not Present. " +
                     "Invalid use of this Processor";
             throw new MessageProcessingException(errorMessage, LOG, new IllegalArgumentException(errorMessage));
         }
@@ -78,17 +79,17 @@ public class TCACEFPolicyThresholdsProcessor extends AbstractTCAECEFPolicyProces
 
         final String cefMessage = processorContext.getMessage();
 
-        // Determine domain and functional Role
+        // Determine domain and eventName
         final EventListener eventListener = processorContext.getCEFEventListener();
-        final String functionalRole = eventListener.getEvent().getCommonEventHeader().getFunctionalRole();
+        final String eventName = eventListener.getEvent().getCommonEventHeader().getEventName();
 
-        // Get Table containing Functional Role and Thresholds Field Path
+        // Get Table containing event Name and Thresholds Field Path
         final TCAPolicy tcaPolicy = processorContext.getTCAPolicy();
-        final Table<String, String, List<Threshold>> functionalRoleFieldPathsTable =
-                TCAUtils.getPolicyFRThresholdsTableSupplier(tcaPolicy).get();
+        final Table<String, String, List<Threshold>> eventNameFieldPathsTable =
+                TCAUtils.getPolicyEventNameThresholdsTableSupplier(tcaPolicy).get();
 
-        // Get Policy Field Paths for that functional Role
-        final Map<String, List<Threshold>> policyFieldPathsMap = functionalRoleFieldPathsTable.row(functionalRole);
+        // Get Policy Field Paths for that event Name
+        final Map<String, List<Threshold>> policyFieldPathsMap = eventNameFieldPathsTable.row(eventName);
         final Set<String> policyFieldPaths = policyFieldPathsMap.keySet();
 
         // Get Json Values for Policy Fields
@@ -119,10 +120,10 @@ public class TCACEFPolicyThresholdsProcessor extends AbstractTCAECEFPolicyProces
             // If there are policy violations then determine max priority violation
             final Threshold maxSeverityThresholdViolation =
                     TCAUtils.prioritizeThresholdViolations(violatedThresholdsMap);
-            final MetricsPerFunctionalRole violatedMetrics = TCAUtils.createViolatedMetrics(tcaPolicy,
-                    maxSeverityThresholdViolation, functionalRole);
+            final MetricsPerEventName violatedMetrics = TCAUtils.createViolatedMetrics(tcaPolicy,
+                    maxSeverityThresholdViolation, eventName);
             // attach policy violation to processor Context
-            processorContext.setMetricsPerFunctionalRole(violatedMetrics);
+            processorContext.setMetricsPerEventName(violatedMetrics);
 
             final String finishMessage = String.format("Policy Threshold violation detected for threshold: %s",
                     maxSeverityThresholdViolation);

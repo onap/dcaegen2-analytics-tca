@@ -62,7 +62,7 @@ public class TCAVESAlertsSinkFlowlet extends AbstractFlowlet {
      *
      * @param alertMessage alert message
      */
-    @ProcessInput(CDAPComponentsConstants.TCA_FIXED_VES_TCA_CALCULATOR_NAME_OUTPUT)
+    @ProcessInput(CDAPComponentsConstants.TCA_FIXED_VES_ALERTS_ABATEMENT_NAME_OUTPUT)
     public void saveAlerts(String alertMessage) {
         // Saves alert message in alerts table
         TCAVESAlertsPersister.persist(alertMessage, tcaVESAlertsTable);

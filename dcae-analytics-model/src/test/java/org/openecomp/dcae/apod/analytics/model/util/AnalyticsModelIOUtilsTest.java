@@ -42,7 +42,7 @@ public class AnalyticsModelIOUtilsTest extends BaseAnalyticsModelUnitTest {
 
     private static final String TEST_CONFIG_FILE_LOCATION = "data/json/config/testAppConfig.json";
     private static final String INVALID_TEST_CONFIG_FILE_LOCATION = "data/json/config/invalidJsonConfig.json";
-    private static final String TEST_PROPERTIES_FILE_LOCATION = "data/testApp.properties";
+    private static final String TEST_PROPERTIES_FILE_LOCATION = "data/properties/testApp.properties";
 
     @Test
     public void testConvertToJsonObjectWhenFileLocationIsValid() throws Exception {

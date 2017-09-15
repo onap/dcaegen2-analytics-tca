@@ -24,8 +24,10 @@ import org.openecomp.dcae.apod.analytics.cdap.common.validation.CDAPAppSettingsV
 import org.openecomp.dcae.apod.analytics.cdap.tca.settings.TCAPolicyPreferences;
 import org.openecomp.dcae.apod.analytics.common.validation.GenericValidationResponse;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventSeverity;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ControlLoopEventStatus;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ControlLoopSchemaType;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Direction;
-import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerFunctionalRole;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerEventName;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Threshold;
 import org.openecomp.dcae.apod.analytics.tca.utils.TCAUtils;
 
@@ -36,6 +38,7 @@ import static org.openecomp.dcae.apod.analytics.cdap.common.utils.ValidationUtil
 /**
  * Validates TCA Policy Preferences
  * <p>
+ *
  * @author Rajiv Singla . Creation Date: 11/29/2016.
  */
 public class TCAPolicyPreferencesValidator implements CDAPAppSettingsValidator<TCAPolicyPreferences,
@@ -55,42 +58,58 @@ public class TCAPolicyPreferencesValidator implements CDAPAppSettingsValidator<T
             validationResponse.addErrorMessage("domain", "TCA Policy must have only one domain present");
         }
 
-        // validate TCA Policy must have at least one functional role
-        final List<String> policyFunctionalRoles = TCAUtils.getPolicyFunctionalRoles(tcaPolicyPreferences);
-        if (policyFunctionalRoles.isEmpty()) {
-            validationResponse.addErrorMessage("metricsPerFunctionalRoles",
-                    "TCA Policy must have at least one or more functional roles");
+        // validate TCA Policy must have at least one event name
+        final List<String> policyEventNames = TCAUtils.getPolicyEventNames(tcaPolicyPreferences);
+        if (policyEventNames.isEmpty()) {
+            validationResponse.addErrorMessage("metricsPerEventNames",
+                    "TCA Policy must have at least one or more event names");
         }
 
-        final List<MetricsPerFunctionalRole> metricsPerFunctionalRoles =
-                tcaPolicyPreferences.getMetricsPerFunctionalRole();
+        final List<MetricsPerEventName> metricsPerEventNames =
+                tcaPolicyPreferences.getMetricsPerEventName();
 
-        // validate each Functional Role must have at least one threshold
-        for (MetricsPerFunctionalRole metricsPerFunctionalRole : metricsPerFunctionalRoles) {
-            if (metricsPerFunctionalRole.getThresholds().isEmpty()) {
-                validationResponse.addErrorMessage("thresholds",
-                        "TCA Policy Functional Role must have at least one threshold. " +
-                                "Functional Role causing this validation error:" + metricsPerFunctionalRole);
+        // validate Metrics Per Event Name
+        for (MetricsPerEventName metricsPerEventName : metricsPerEventNames) {
+
+            // event name must be present
+            final String eventName = metricsPerEventName.getEventName();
+            if (isEmpty(eventName)) {
+                validationResponse.addErrorMessage("eventName",
+                        "TCA Policy eventName is not present for metricsPerEventName:" + metricsPerEventName);
             }
-        }
 
-        // validate each threshold must have non null - fieldPath, thresholdValue, direction and severity
-        for (MetricsPerFunctionalRole metricsPerFunctionalRole : metricsPerFunctionalRoles) {
-            final List<Threshold> functionalRoleThresholds = metricsPerFunctionalRole.getThresholds();
-            for (Threshold functionalRoleThreshold : functionalRoleThresholds) {
-                final String fieldPath = functionalRoleThreshold.getFieldPath();
-                final Long thresholdValue = functionalRoleThreshold.getThresholdValue();
-                final Direction direction = functionalRoleThreshold.getDirection();
-                final EventSeverity severity = functionalRoleThreshold.getSeverity();
-                if (isEmpty(fieldPath) || thresholdValue == null || direction == null || severity == null) {
-                    validationResponse.addErrorMessage("threshold",
-                            "TCA Policy threshold must have fieldPath, thresholdValue, direction and severity present."
-                                    + "Threshold causing this validation error:" + functionalRoleThreshold);
+            // control Loop Schema type must be present
+            final ControlLoopSchemaType controlLoopSchemaType = metricsPerEventName.getControlLoopSchemaType();
+            if (controlLoopSchemaType == null) {
+                validationResponse.addErrorMessage("controlLoopEventType",
+                        "TCA Policy controlLoopSchemaType is not present for metricsPerEventName:"
+                                + metricsPerEventName);
+            }
+
+            // must have at least 1 threshold defined
+            if (metricsPerEventName.getThresholds() == null || metricsPerEventName.getThresholds().isEmpty()) {
+                validationResponse.addErrorMessage("thresholds",
+                        "TCA Policy event Name must have at least one threshold. " +
+                                "Event Name causing this validation error:" + metricsPerEventName);
+            } else {
+                // validate each threshold must have non null - fieldPath, thresholdValue, direction and severity
+                final List<Threshold> eventNameThresholds = metricsPerEventName.getThresholds();
+                for (Threshold eventNameThreshold : eventNameThresholds) {
+                    final String fieldPath = eventNameThreshold.getFieldPath();
+                    final Long thresholdValue = eventNameThreshold.getThresholdValue();
+                    final Direction direction = eventNameThreshold.getDirection();
+                    final EventSeverity severity = eventNameThreshold.getSeverity();
+                    final ControlLoopEventStatus closedLoopEventStatus = eventNameThreshold.getClosedLoopEventStatus();
+                    if (isEmpty(fieldPath) || thresholdValue == null || direction == null || severity == null ||
+                            closedLoopEventStatus == null) {
+                        validationResponse.addErrorMessage("threshold",
+                                "TCA Policy threshold must have fieldPath,thresholdValue,direction, " +
+                                        "closedLoopEventStatus and severity defined." +
+                                        "Threshold causing this validation error:" + eventNameThreshold);
+                    }
                 }
             }
         }
-
-
         return validationResponse;
     }
 }

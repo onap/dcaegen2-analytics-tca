@@ -1,21 +1,21 @@
 /*
- * ===============================LICENSE_START======================================
- *  dcae-analytics
+ * ============LICENSE_START=========================================================
+ * dcae-analytics
  * ================================================================================
- *    Copyright © 2017 AT&T Intellectual Property. All rights reserved.
+ *  Copyright © 2017 AT&T Intellectual Property. All rights reserved.
  * ================================================================================
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
+ *  You may obtain a copy of the License at
  *
- *          http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
- *  ============================LICENSE_END===========================================
+ * ============LICENSE_END=========================================================
  */
 
 package org.openecomp.dcae.apod.analytics.model.domain.cef;
@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Common Event Format - Fields Specific to threshold crossing alert events
  *
- * @author Rajiv Singla . Creation Date: 11/3/2016.
+ * @author Rajiv Singla. Creation Date: 08/15/2017.
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -102,10 +102,10 @@ public class ThresholdCrossingAlertFields extends BaseCEFModel {
     private String dataCollector;
 
     /**
-     * Type of network element - internal field
+     * Type of network element
      *
-     * @param elementType New value for type of network element - internal field
-     * @return Type of network element - internal field
+     * @param elementType New value for type of network element
+     * @return Type of network element
      */
     private String elementType;
 
@@ -134,10 +134,10 @@ public class ThresholdCrossingAlertFields extends BaseCEFModel {
     private String interfaceName;
 
     /**
-     * Network name - internal field
+     * Network name
      *
-     * @param networkService New value for network name - internal field
-     * @return Network name - internal field
+     * @param networkService New value for network name
+     * @return Network name
      */
     private String networkService;
 

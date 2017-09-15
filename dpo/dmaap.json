@@ -1,18 +1,18 @@
 {
-	"tca_handle_in": {
-		"aaf_username": "USER",
-		"aaf_password": "PASSWORD",
-		"type": "message_router",
-		"dmaap_info": {
-			"topic_url": "https://HOSTNAME:3905/events/com.att.dcae.dmaap.mtnje2.DcaeTestVESSub"
-		}
-	},
-	"tca_handle_out": {
-		"aaf_username": "USER",
-		"aaf_password": "PASSWORD",
-		"type": "message_router",
-		"dmaap_info": {
-			"topic_url": "https://HOSTNAME:3905/events/com.att.dcae.dmaap.mtnje2.DcaeTestVESPub"
-		}
-	}
+  "tca_handle_in": {
+    "aaf_username": "USER",
+    "aaf_password": "PASSWORD",
+    "type": "message_router",
+    "dmaap_info": {
+      "topic_url": "https://HOSTNAME:3905/events/com.att.dcae.dmaap.mtnje2.DcaeTestVESSub"
+    }
+  },
+  "tca_handle_out": {
+    "aaf_username": "USER",
+    "aaf_password": "PASSWORD",
+    "type": "message_router",
+    "dmaap_info": {
+      "topic_url": "https://HOSTNAME:3905/events/com.att.dcae.dmaap.mtnje2.DcaeTestVESPub"
+    }
+  }
 }

@@ -27,23 +27,31 @@ import org.openecomp.dcae.apod.analytics.model.domain.cef.AlertType;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.BaseCEFModel;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.CommonEventHeader;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.Criticality;
+import org.openecomp.dcae.apod.analytics.model.domain.cef.Domain;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.Event;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventListener;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventSeverity;
+import org.openecomp.dcae.apod.analytics.model.domain.cef.Field;
+import org.openecomp.dcae.apod.analytics.model.domain.cef.InternalHeaderFields;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.MeasurementsForVfScalingFields;
+import org.openecomp.dcae.apod.analytics.model.domain.cef.NamedArrayOfFields;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.PerformanceCounter;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.Priority;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.ThresholdCrossingAlertFields;
-import org.openecomp.dcae.apod.analytics.model.domain.cef.VNicUsageArray;
+import org.openecomp.dcae.apod.analytics.model.domain.cef.VNicPerformance;
 import org.openecomp.dcae.apod.analytics.model.util.json.mixin.cef.AlertActionMixin;
 import org.openecomp.dcae.apod.analytics.model.util.json.mixin.cef.AlertTypeMixin;
 import org.openecomp.dcae.apod.analytics.model.util.json.mixin.cef.BaseCEFModelMixin;
 import org.openecomp.dcae.apod.analytics.model.util.json.mixin.cef.CommonEventHeaderMixin;
 import org.openecomp.dcae.apod.analytics.model.util.json.mixin.cef.CriticalityMixin;
+import org.openecomp.dcae.apod.analytics.model.util.json.mixin.cef.DomainMixin;
 import org.openecomp.dcae.apod.analytics.model.util.json.mixin.cef.EventListenerMixin;
 import org.openecomp.dcae.apod.analytics.model.util.json.mixin.cef.EventMixin;
 import org.openecomp.dcae.apod.analytics.model.util.json.mixin.cef.EventSeverityMixin;
+import org.openecomp.dcae.apod.analytics.model.util.json.mixin.cef.FieldMixin;
+import org.openecomp.dcae.apod.analytics.model.util.json.mixin.cef.InternalHeaderFieldsMixin;
 import org.openecomp.dcae.apod.analytics.model.util.json.mixin.cef.MeasurementsForVfScalingFieldsMixin;
+import org.openecomp.dcae.apod.analytics.model.util.json.mixin.cef.NamedArrayOfFieldsMixin;
 import org.openecomp.dcae.apod.analytics.model.util.json.mixin.cef.PerformanceCounterMixin;
 import org.openecomp.dcae.apod.analytics.model.util.json.mixin.cef.PriorityMixin;
 import org.openecomp.dcae.apod.analytics.model.util.json.mixin.cef.ThresholdCrossingAlertFieldsMixin;
@@ -58,7 +66,7 @@ public class CommonEventFormatModule extends SimpleModule {
 
     public CommonEventFormatModule() {
         super("Common Event Format",
-                new Version(25, 0, 0, null, " org.openecomp.dcae.apod.analytics.model", "dcae-analytics-model"));
+                new Version(28, 3, 0, null, " org.openecomp.dcae.apod.analytics.model", "dcae-analytics-model"));
     }
 
     @Override
@@ -68,6 +76,10 @@ public class CommonEventFormatModule extends SimpleModule {
         setupContext.setMixInAnnotations(AlertType.class, AlertTypeMixin.class);
         setupContext.setMixInAnnotations(BaseCEFModel.class, BaseCEFModelMixin.class);
         setupContext.setMixInAnnotations(CommonEventHeader.class, CommonEventHeaderMixin.class);
+        setupContext.setMixInAnnotations(Domain.class, DomainMixin.class);
+        setupContext.setMixInAnnotations(InternalHeaderFields.class, InternalHeaderFieldsMixin.class);
+        setupContext.setMixInAnnotations(Field.class, FieldMixin.class);
+        setupContext.setMixInAnnotations(NamedArrayOfFields.class, NamedArrayOfFieldsMixin.class);
         setupContext.setMixInAnnotations(Criticality.class, CriticalityMixin.class);
         setupContext.setMixInAnnotations(EventListener.class, EventListenerMixin.class);
         setupContext.setMixInAnnotations(Event.class, EventMixin.class);
@@ -77,7 +89,7 @@ public class CommonEventFormatModule extends SimpleModule {
         setupContext.setMixInAnnotations(PerformanceCounter.class, PerformanceCounterMixin.class);
         setupContext.setMixInAnnotations(Priority.class, PriorityMixin.class);
         setupContext.setMixInAnnotations(ThresholdCrossingAlertFields.class, ThresholdCrossingAlertFieldsMixin.class);
-        setupContext.setMixInAnnotations(VNicUsageArray.class, VNicUsageArrayMixin.class);
+        setupContext.setMixInAnnotations(VNicPerformance.class, VNicUsageArrayMixin.class);
 
     }
 

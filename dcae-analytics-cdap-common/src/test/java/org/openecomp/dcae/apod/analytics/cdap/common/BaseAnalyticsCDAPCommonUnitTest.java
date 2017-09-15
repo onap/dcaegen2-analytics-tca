@@ -35,8 +35,8 @@ import org.openecomp.dcae.apod.analytics.test.BaseDCAEAnalyticsUnitTest;
  */
 public abstract class BaseAnalyticsCDAPCommonUnitTest extends BaseDCAEAnalyticsUnitTest {
 
-    protected static final String CEF_MESSAGE_FILE_LOCATION = "data/json/cef_message.json";
-    protected static final String TCA_POLICY_FILE_LOCATION = "data/json/tca_policy.json";
+    protected static final String CEF_MESSAGE_FILE_LOCATION = "data/json/cef/cef_message.json";
+    protected static final String TCA_POLICY_FILE_LOCATION = "data/json/policy/tca_policy.json";
     protected static final ObjectMapper ANALYTICS_MODEL_OBJECT_MAPPER =
             Suppliers.memoize(new AnalyticsModelObjectMapperSupplier()).get();
 

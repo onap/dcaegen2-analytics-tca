@@ -33,7 +33,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.openecomp.dcae.apod.analytics.common.exception.DCAEAnalyticsRuntimeException;
 import org.openecomp.dcae.apod.analytics.dmaap.BaseAnalyticsDMaaPUnitTest;
 import org.openecomp.dcae.apod.analytics.dmaap.domain.config.DMaaPMRSubscriberConfig;
@@ -55,7 +55,7 @@ import static org.mockito.BDDMockito.given;
 public class DMaaPMRSubscriberImplTest extends BaseAnalyticsDMaaPUnitTest {
 
     @Mock
-    CloseableHttpClient closeableHttpClient;
+    private CloseableHttpClient closeableHttpClient;
 
     private String consumerGroup, consumerId;
 
@@ -152,7 +152,7 @@ public class DMaaPMRSubscriberImplTest extends BaseAnalyticsDMaaPUnitTest {
 
         DMaaPMRSubscriberImpl dmaapMRSubscriberImpl = new DMaaPMRSubscriberImpl(
                 getSubscriberConfig(consumerId, consumerGroup), closeableHttpClient);
-        DMaaPMRSubscriberResponse dmaapMRSubscriberResponse = dmaapMRSubscriberImpl.fetchMessages();
+        dmaapMRSubscriberImpl.fetchMessages();
     }
 
 }

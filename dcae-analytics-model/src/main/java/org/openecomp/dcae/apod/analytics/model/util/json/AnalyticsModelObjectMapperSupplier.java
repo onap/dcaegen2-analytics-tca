@@ -67,6 +67,8 @@ public class AnalyticsModelObjectMapperSupplier implements Supplier<ObjectMapper
         objectMapper.registerModule(new TCAPolicyModule());
         // Register TCA Facade Module
         objectMapper.registerModule(new TCAFacadeModelModule());
+        // Register TCA Controller App Config Module
+        objectMapper.registerModule(new TCAControllerConfigModule());
 
 
         // Setup JsonPath default config

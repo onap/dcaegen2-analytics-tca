@@ -27,8 +27,7 @@ import co.cask.cdap.api.flow.flowlet.OutputEmitter;
 import co.cask.cdap.api.flow.flowlet.StreamEvent;
 import com.google.common.base.Charsets;
 import org.openecomp.dcae.apod.analytics.cdap.common.CDAPComponentsConstants;
-
-import static org.openecomp.dcae.apod.analytics.common.AnalyticsConstants.TCA_VES_MESSAGE_ROUTER_PARTITION_KEY;
+import org.openecomp.dcae.apod.analytics.common.AnalyticsConstants;
 
 
 /**
@@ -54,6 +53,7 @@ public class TCAVESMessageRouterFlowlet extends AbstractFlowlet {
     @ProcessInput
     public void routeVESMessage(StreamEvent vesMessageStreamEvent) {
         final String vesMessage = Charsets.UTF_8.decode(vesMessageStreamEvent.getBody()).toString();
-        vesMessageEmitter.emit(vesMessage, TCA_VES_MESSAGE_ROUTER_PARTITION_KEY, vesMessage.hashCode());
+        vesMessageEmitter.emit(
+                vesMessage, AnalyticsConstants.TCA_VES_MESSAGE_ROUTER_PARTITION_KEY, vesMessage.hashCode());
     }
 }

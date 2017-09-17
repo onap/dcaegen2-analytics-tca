@@ -48,6 +48,4 @@ public abstract class CDAPBasePluginConfig extends PluginConfig implements CDAPP
     public String getReferenceName() {
         return referenceName;
     }
-
-
 }

@@ -35,7 +35,7 @@ import org.openecomp.dcae.apod.analytics.common.validation.ValidationResponse;
  * @author Rajiv Singla . Creation Date: 11/2/2016.
  */
 public interface CDAPAppSettingsValidator<T extends CDAPAppSettings, R extends ValidationResponse<T>>
-        extends DCAEValidator {
+    extends DCAEValidator {
 
     /**
      * Validates DCAE Analytics App Settings and return Validation response which can be
@@ -45,8 +45,6 @@ public interface CDAPAppSettingsValidator<T extends CDAPAppSettings, R extends V
      * @return validation response
      */
     R validateAppSettings(T appSettings);
-
-
 }
 
 

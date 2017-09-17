@@ -20,6 +20,10 @@
 
 package org.openecomp.dcae.apod.analytics.cdap.common.persistance.tca;
 
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
+import java.io.Serializable;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.io.WritableUtils;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventSeverity;
@@ -29,11 +33,6 @@ import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFJsonProcessor;
 import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFPolicyDomainFilter;
 import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFPolicyFunctionalRoleFilter;
 import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFPolicyThresholdsProcessor;
-
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
-import java.io.Serializable;
 
 /**
  * TCA Message Status is an Entity which is used to persist TCA VES Message status information in Message Status Table
@@ -82,9 +81,9 @@ public class TCAMessageStatusEntity implements Writable, Serializable {
      * @param functionalRole VES message functional role if present
      */
     public TCAMessageStatusEntity(final long creationTS, final int instanceId, final String messageType,
-                                  final String vesMessage, final String domain, final String functionalRole) {
+        final String vesMessage, final String domain, final String functionalRole) {
         this(creationTS, instanceId, messageType, vesMessage, domain, functionalRole, null, null, null, null,
-                null, null, null, null, null, null, null, null, null);
+            null, null, null, null, null, null, null, null, null);
     }
 
 
@@ -116,14 +115,14 @@ public class TCAMessageStatusEntity implements Writable, Serializable {
      * @param alertMessage alert message that will be sent out in case of threshold violation
      */
     public TCAMessageStatusEntity(long creationTS, int instanceId, String messageType, String vesMessage,
-                                  String domain, String functionalRole,
-                                  String thresholdPath, String thresholdSeverity, String thresholdDirection,
-                                  Long thresholdValue,
-                                  String jsonProcessorStatus, String jsonProcessorMessage,
-                                  String domainFilterStatus, String domainFilterMessage,
-                                  String functionalRoleFilterStatus, String functionalRoleFilterMessage,
-                                  String thresholdCalculatorStatus, String thresholdCalculatorMessage,
-                                  String alertMessage) {
+        String domain, String functionalRole,
+        String thresholdPath, String thresholdSeverity, String thresholdDirection,
+        Long thresholdValue,
+        String jsonProcessorStatus, String jsonProcessorMessage,
+        String domainFilterStatus, String domainFilterMessage,
+        String functionalRoleFilterStatus, String functionalRoleFilterMessage,
+        String thresholdCalculatorStatus, String thresholdCalculatorMessage,
+        String alertMessage) {
         this.creationTS = creationTS;
         this.instanceId = instanceId;
         this.messageType = messageType;
@@ -515,7 +514,6 @@ public class TCAMessageStatusEntity implements Writable, Serializable {
         WritableUtils.writeString(dataOutput, thresholdCalculatorMessage);
 
         WritableUtils.writeString(dataOutput, alertMessage);
-
     }
 
     /**
@@ -549,7 +547,5 @@ public class TCAMessageStatusEntity implements Writable, Serializable {
         thresholdCalculatorMessage = WritableUtils.readString(dataInput);
 
         alertMessage = WritableUtils.readString(dataInput);
-
     }
-
 }

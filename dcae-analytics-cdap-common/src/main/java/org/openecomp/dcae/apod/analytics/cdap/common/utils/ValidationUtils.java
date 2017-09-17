@@ -20,18 +20,16 @@
 
 package org.openecomp.dcae.apod.analytics.cdap.common.utils;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.openecomp.dcae.apod.analytics.cdap.common.exception.CDAPSettingsException;
 import org.openecomp.dcae.apod.analytics.cdap.common.settings.CDAPAppSettings;
 import org.openecomp.dcae.apod.analytics.cdap.common.validation.CDAPAppSettingsValidator;
 import org.openecomp.dcae.apod.analytics.common.validation.ValidationResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Utility methods to validate null checks, empty string etc
@@ -43,7 +41,6 @@ public abstract class ValidationUtils {
     private static final Logger LOG = LoggerFactory.getLogger(ValidationUtils.class);
 
     private ValidationUtils() {
-
     }
 
     /**
@@ -81,27 +78,26 @@ public abstract class ValidationUtils {
      * @param <V> Validator Type
      */
     public static <T extends CDAPAppSettings, R extends ValidationResponse<T>,
-            V extends CDAPAppSettingsValidator<T, R>> void validateSettings(@Nonnull final T appSettings,
-                                                                            @Nonnull final V appSettingsValidator) {
+        V extends CDAPAppSettingsValidator<T, R>> void validateSettings(@Nonnull final T appSettings,
+        @Nonnull final V appSettingsValidator) {
         checkNotNull(appSettings, "App Settings must not be null");
         checkNotNull(appSettingsValidator, "App Settings validator must not be null");
 
         final String appSettingsClassName = appSettings.getClass().getSimpleName();
-        final String appSettingsClassValidator = appSettingsValidator.getClass().getSimpleName();
+        final   String appSettingsClassValidator = appSettingsValidator.getClass().getSimpleName();
 
         LOG.debug("Validating App Settings for: {}, with App Settings Validator: {} ",
-                appSettingsClassName, appSettingsClassValidator);
+            appSettingsClassName, appSettingsClassValidator);
 
         final R validationResponse = appSettingsValidator.validateAppSettings(appSettings);
 
         // If setting validation fails throw an exception
         if (validationResponse.hasErrors()) {
             throw new CDAPSettingsException(
-                    validationResponse.getAllErrorMessage(), LOG, new IllegalArgumentException());
+                validationResponse.getAllErrorMessage(), LOG, new IllegalArgumentException());
         }
 
         LOG.debug("App Settings Validation Successful for app Settings: {} with validator: {}", appSettingsClassName,
-                appSettingsClassValidator);
+            appSettingsClassValidator);
     }
-
 }

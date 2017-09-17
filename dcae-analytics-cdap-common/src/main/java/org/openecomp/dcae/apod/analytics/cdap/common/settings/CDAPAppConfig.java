@@ -43,5 +43,4 @@ public interface CDAPAppConfig extends CDAPAppSettings {
      * @return cdap app description
      */
     String getAppDescription();
-
 }

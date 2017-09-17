@@ -20,21 +20,20 @@
 
 package org.openecomp.dcae.apod.analytics.cdap.common.persistance.tca;
 
+import static org.openecomp.dcae.apod.analytics.common.utils.PersistenceUtils.TABLE_ROW_KEY_COLUMN_NAME;
+
 import co.cask.cdap.api.data.schema.Schema;
 import co.cask.cdap.api.data.schema.UnsupportedTypeException;
 import co.cask.cdap.api.dataset.DatasetProperties;
 import co.cask.cdap.api.dataset.lib.IndexedTable;
 import co.cask.cdap.api.dataset.lib.ObjectMappedTable;
 import co.cask.cdap.api.dataset.lib.ObjectMappedTableProperties;
+import java.util.Date;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.openecomp.dcae.apod.analytics.cdap.common.CDAPComponentsConstants;
 import org.openecomp.dcae.apod.analytics.common.exception.DCAEAnalyticsRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Date;
-
-import static org.openecomp.dcae.apod.analytics.common.utils.PersistenceUtils.TABLE_ROW_KEY_COLUMN_NAME;
 
 /**
  *
@@ -57,7 +56,7 @@ public abstract class TCAVESAlertsPersister {
     public static void persist(final String alertMessage, final ObjectMappedTable<TCAVESAlertEntity> tcaVESAlertTable) {
         final Date currentDate = new Date();
         final TCAVESAlertEntity alertEntity = new TCAVESAlertEntity(currentDate.getTime(),
-                StringEscapeUtils.unescapeJson(alertMessage));
+            StringEscapeUtils.unescapeJson(alertMessage));
         // row key is same as current timestamp
         final String rowKey = createRowKey(currentDate);
         tcaVESAlertTable.write(rowKey, alertEntity);
@@ -75,17 +74,16 @@ public abstract class TCAVESAlertsPersister {
     public static DatasetProperties getDatasetProperties(final int timeToLiveSeconds) {
         try {
             return ObjectMappedTableProperties.builder()
-                    .setType(TCAVESAlertEntity.class)
-                    .setRowKeyExploreName(TABLE_ROW_KEY_COLUMN_NAME)
-                    .setRowKeyExploreType(Schema.Type.STRING)
-                    .add(IndexedTable.PROPERTY_TTL, timeToLiveSeconds)
-                    .setDescription(CDAPComponentsConstants.TCA_DEFAULT_VES_ALERTS_DESCRIPTION_TABLE)
-                    .build();
+                .setType(TCAVESAlertEntity.class)
+                .setRowKeyExploreName(TABLE_ROW_KEY_COLUMN_NAME)
+                .setRowKeyExploreType(Schema.Type.STRING)
+                .add(IndexedTable.PROPERTY_TTL, timeToLiveSeconds)
+                .setDescription(CDAPComponentsConstants.TCA_DEFAULT_VES_ALERTS_DESCRIPTION_TABLE)
+                .build();
         } catch (UnsupportedTypeException e) {
             final String errorMessage = "Unable to convert TCAVESAlertEntity class to Schema";
             throw new DCAEAnalyticsRuntimeException(errorMessage, LOG, e);
         }
-
     }
 
     /**
@@ -96,7 +94,6 @@ public abstract class TCAVESAlertsPersister {
      * @return row key
      */
     public static String createRowKey(final Date date) {
-       return String.format("%025d", date.getTime());
+        return String.format("%025d", date.getTime());
     }
-
 }

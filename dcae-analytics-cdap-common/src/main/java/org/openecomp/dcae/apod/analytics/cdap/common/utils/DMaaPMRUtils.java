@@ -23,6 +23,7 @@ package org.openecomp.dcae.apod.analytics.cdap.common.utils;
 import co.cask.cdap.api.metrics.Metrics;
 import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
+import java.util.List;
 import org.openecomp.dcae.apod.analytics.cdap.common.CDAPMetricsConstants;
 import org.openecomp.dcae.apod.analytics.common.exception.DCAEAnalyticsRuntimeException;
 import org.openecomp.dcae.apod.analytics.common.utils.HTTPUtils;
@@ -30,8 +31,6 @@ import org.openecomp.dcae.apod.analytics.dmaap.domain.response.DMaaPMRSubscriber
 import org.openecomp.dcae.apod.analytics.dmaap.service.subscriber.DMaaPMRSubscriber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 /**
  * Utility common methods for DMaaP MR functionality
@@ -56,10 +55,10 @@ public abstract class DMaaPMRUtils {
      * @return messages fetched from DMaaP MR topic
      */
     public static Optional<List<String>> getSubscriberMessages(final DMaaPMRSubscriber subscriber,
-                                                               final Metrics metrics) {
+        final Metrics metrics) {
 
         final Optional<DMaaPMRSubscriberResponse> subscriberResponseOptional =
-                getSubscriberResponse(subscriber, metrics);
+            getSubscriberResponse(subscriber, metrics);
 
         // If response is not present, unable to proceed
         if (!subscriberResponseOptional.isPresent()) {
@@ -71,13 +70,13 @@ public abstract class DMaaPMRUtils {
         // If response code return by the subscriber call is not successful, unable to do proceed
         if (!HTTPUtils.isSuccessfulResponseCode(subscriberResponse.getResponseCode())) {
             LOG.error("Subscriber was unable to fetch messages properly.Subscriber Response Code: {} " +
-                    "Unable to proceed further....", subscriberResponse.getResponseCode());
+                "Unable to proceed further....", subscriberResponse.getResponseCode());
             metrics.count(CDAPMetricsConstants.DMAAP_MR_SUBSCRIBER_UNSUCCESSFUL_RESPONSES_METRIC, 1);
             return Optional.absent();
         }
 
         LOG.debug("Subscriber HTTP Response Status Code match successful:  {}", subscriberResponse,
-                HTTPUtils.HTTP_SUCCESS_STATUS_CODE);
+            HTTPUtils.HTTP_SUCCESS_STATUS_CODE);
 
         final List<String> actualMessages = subscriberResponse.getFetchedMessages();
 
@@ -92,7 +91,6 @@ public abstract class DMaaPMRUtils {
         metrics.count(CDAPMetricsConstants.DMAAP_MR_SUBSCRIBER_TOTAL_MESSAGES_PROCESSED_METRIC, actualMessages.size());
 
         return Optional.of(actualMessages);
-
     }
 
 
@@ -106,7 +104,7 @@ public abstract class DMaaPMRUtils {
      * @return - Optional of Subscriber Response
      */
     public static Optional<DMaaPMRSubscriberResponse> getSubscriberResponse(final DMaaPMRSubscriber subscriber,
-                                                                            final Metrics metrics) {
+        final Metrics metrics) {
 
         // Record all response count from subscriber
         metrics.count(CDAPMetricsConstants.DMAAP_MR_SUBSCRIBER_ALL_RESPONSES_COUNT_METRIC, 1);
@@ -133,12 +131,11 @@ public abstract class DMaaPMRUtils {
         }
 
         LOG.debug("Subscriber Response:{}, Subscriber HTTP Response Status Code {}, Subscriber Response Time(ms): {}",
-                subscriberResponse, subscriberResponse.getResponseCode(), subscriberResponseTimeMS);
+            subscriberResponse, subscriberResponse.getResponseCode(), subscriberResponseTimeMS);
 
         // Record subscriber response time
         metrics.gauge(CDAPMetricsConstants.DMAAP_MR_SUBSCRIBER_RESPONSE_TIME_MS_METRIC, subscriberResponseTimeMS);
 
         return Optional.of(subscriberResponse);
     }
-
 }

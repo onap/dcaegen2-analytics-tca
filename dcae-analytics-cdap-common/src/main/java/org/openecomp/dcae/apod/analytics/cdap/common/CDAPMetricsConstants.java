@@ -35,21 +35,21 @@ public abstract class CDAPMetricsConstants {
      * Metric captures count of all responses received from DMaaP MR Subscriber Topic
      */
     public static final String DMAAP_MR_SUBSCRIBER_ALL_RESPONSES_COUNT_METRIC =
-            "dmaap.subscriber.fetch.all_responses";
+        "dmaap.subscriber.fetch.all_responses";
 
     /**
      * Metric captures count of responses from DMaaP MR Subscriber Topic which does not have 200 HTTP Response code.
      * This can be due to DMaaP topic being down or any internal server errors etc.
      */
     public static final String DMAAP_MR_SUBSCRIBER_UNSUCCESSFUL_RESPONSES_METRIC =
-            "dmaap.subscriber.fetch.unsuccessful";
+        "dmaap.subscriber.fetch.unsuccessful";
 
     /**
      * Metric that counts the number of successful (200 HTTP Response Code) calls to DMaaP which did not had empty
      * messages
      */
     public static final String DMAAP_MR_SUBSCRIBER_RESPONSES_WITH_NO_MESSAGES_METRIC =
-            "dmaap.subscriber.fetch.no_message";
+        "dmaap.subscriber.fetch.no_message";
 
     /**
      * Metric to count total number of message processed by DMaaP MR subscriber
@@ -86,7 +86,6 @@ public abstract class CDAPMetricsConstants {
      */
     public static final String TCA_VES_NON_COMPLIANT_MESSAGES_METRIC = "tca.ves.calculator.non_compliant";
 
-
     /**
      * Metric that counts the number of publisher look ups in alerts table which resulted in 0 new alerts
      */
@@ -115,5 +114,4 @@ public abstract class CDAPMetricsConstants {
     private CDAPMetricsConstants() {
 
     }
-
 }

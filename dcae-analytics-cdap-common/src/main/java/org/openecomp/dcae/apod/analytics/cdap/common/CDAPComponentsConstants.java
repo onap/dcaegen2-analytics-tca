@@ -40,7 +40,7 @@ package org.openecomp.dcae.apod.analytics.cdap.common;
  *                                    when application is created</li>
  *                  </ul>
  *              </li>
- *              <li>Actual Descriptive name about the CDAP component (may contain underscrores) </li>
+ *              <li>Actual Descriptive name about the CDAP component (may contain underscores) </li>
  *              <li>CDAP component type e.g STREAM, DATASET, APP, FLOW, FLOWLET, OUTPUT</li>
  *          </ul>
  *
@@ -55,12 +55,12 @@ public abstract class CDAPComponentsConstants {
     // ===============  Common Module Constants ==================== //
 
     /**
-     * Default DCAE App Name. It should be overriden by sub modules
+     * Default DCAE App Name. It should be overridden by sub modules
      */
     public static final String COMMON_DEFAULT_DCAE_CDAP_NAME_APP = "DCAE_ANALYTICS_GENERIC_APP";
 
     /**
-     * Default DCAE App Description. It should be overriden by sub modules
+     * Default DCAE App Description. It should be overridden by sub modules
      */
     public static final String COMMON_DEFAULT_DCAE_CDAP_DESCRIPTION_APP = "DCAE ANALYTICS GENERIC APP DESCRIPTION";
 
@@ -86,7 +86,7 @@ public abstract class CDAPComponentsConstants {
      * Fixed TCA DMaaP Subscriber output stream description
      */
     public static final String TCA_FIXED_SUBSCRIBER_OUTPUT_DESCRIPTION_STREAM =
-            "Stream which contains all message from VES Collector DMaaP MR topic";
+        "Stream which contains all message from VES Collector DMaaP MR topic";
 
 
     /**
@@ -98,7 +98,7 @@ public abstract class CDAPComponentsConstants {
      * Fixed Description of TCA DMaaP Subscriber Worker
      */
     public static final String TCA_FIXED_DMAAP_SUBSCRIBER_DESCRIPTION_WORKER =
-            "Fetches messages from DMaaP MR Topic at frequent intervals and writes them to a CDAP stream";
+        "Fetches messages from DMaaP MR Topic at frequent intervals and writes them to a CDAP stream";
 
     /**
      * Fixed Name of TCA DMaaP Publisher Worker - which will be publishing messages to DMaaP MR
@@ -109,7 +109,7 @@ public abstract class CDAPComponentsConstants {
      * Fixed Description of TCA DMaaP Publisher Worker
      */
     public static final String TCA_FIXED_DMAAP_PUBLISHER_DESCRIPTION_WORKER =
-            "Polls TCA Alerts Table at frequent intervals for new alerts and publishes them to DMaaP MR Topic";
+        "Polls TCA Alerts Table at frequent intervals for new alerts and publishes them to DMaaP MR Topic";
 
     /**
      * Fixed name for TCA VES Collector Messages Processing Flow
@@ -132,7 +132,7 @@ public abstract class CDAPComponentsConstants {
      * Fixed Description for TCA VES Message Router Flowlet
      */
     public static final String TCA_FIXED_VES_MESSAGE_ROUTER_DESCRIPTION_FLOWLET =
-            "Routes message received from TCA VES Collector to TCA Threshold Calculator Flowlet instances";
+        "Routes message received from TCA VES Collector to TCA Threshold Calculator Flowlet instances";
 
     /**
      * Fixed TCA VES Message Router Flowlet Output
@@ -143,13 +143,13 @@ public abstract class CDAPComponentsConstants {
      * Fixed Name for TCA VES Message Policy Violated Threshold Calculator Flowlet
      */
     public static final String TCA_FIXED_VES_THRESHOLD_VIOLATION_CALCULATOR_NAME_FLOWLET =
-            "TCAVESThresholdViolationCalculatorFlowlet";
+        "TCAVESThresholdViolationCalculatorFlowlet";
 
     /**
      * Fixed Description for TCA VES Message Policy Violated Threshold Calculator Flowlet
      */
     public static final String TCA_FIXED_VES_THRESHOLD_VIOLATION_CALCULATOR_DESCRIPTION_FLOWLET =
-            "Applies TCA Policy Thresholds to VES Message and determined if any message violated TCA Policy thresholds";
+        "Applies TCA Policy Thresholds to VES Message and determined if any message violated TCA Policy thresholds";
 
     /**
      * Fixed Name for TCA VES Message Policy Violated Threshold Calculator Output
@@ -166,7 +166,7 @@ public abstract class CDAPComponentsConstants {
      * Fixed Description for TCA VES Alerts Sink Flowlet
      */
     public static final String TCA_FIXED_VES_ALERTS_SINK_DESCRIPTION_FLOWLET =
-            "Saves messages which violated TCA Policy in a data set";
+        "Saves messages which violated TCA Policy in a data set";
 
 
     /**
@@ -179,7 +179,7 @@ public abstract class CDAPComponentsConstants {
      * Fixed Description for TCA VES Message status table which contain status of all messages processed by TCA
      */
     public static final String TCA_FIXED_VES_MESSAGE_STATUS_DESCRIPTION_TABLE =
-            "Store processing information about all incoming TCA VES Messages";
+        "Store processing information about all incoming TCA VES Messages";
 
     /**
      * Default Name for TCA VES Alerts table which contains alerts that can be send to downstream systems
@@ -190,11 +190,9 @@ public abstract class CDAPComponentsConstants {
      * Fixed Description for TCA VES Alerts table which contains alerts that can be send to downstream systems
      */
     public static final String TCA_DEFAULT_VES_ALERTS_DESCRIPTION_TABLE =
-            "Stores alert messages that need to be DMaaP";
+        "Stores alert messages that need to be DMaaP";
 
 
     private CDAPComponentsConstants() {
-
     }
-
 }

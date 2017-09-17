@@ -20,6 +20,8 @@
 
 package org.openecomp.dcae.apod.analytics.cdap.common.persistance.tca;
 
+import static org.openecomp.dcae.apod.analytics.common.utils.PersistenceUtils.TABLE_ROW_KEY_COLUMN_NAME;
+
 import co.cask.cdap.api.data.schema.Schema;
 import co.cask.cdap.api.data.schema.UnsupportedTypeException;
 import co.cask.cdap.api.dataset.DatasetProperties;
@@ -27,6 +29,10 @@ import co.cask.cdap.api.dataset.lib.IndexedTable;
 import co.cask.cdap.api.dataset.lib.ObjectMappedTable;
 import co.cask.cdap.api.dataset.lib.ObjectMappedTableProperties;
 import com.google.common.base.Joiner;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import javax.annotation.Nullable;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.openecomp.dcae.apod.analytics.cdap.common.CDAPComponentsConstants;
@@ -44,14 +50,6 @@ import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFProcessorContext;
 import org.openecomp.dcae.apod.analytics.tca.utils.TCAUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
-import static org.openecomp.dcae.apod.analytics.common.utils.PersistenceUtils.TABLE_ROW_KEY_COLUMN_NAME;
 
 /**
  *

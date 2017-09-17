@@ -30,7 +30,6 @@ import org.openecomp.dcae.apod.analytics.cdap.common.CDAPComponentsConstants;
  */
 public abstract class CDAPBaseAppConfig extends Config implements CDAPAppConfig {
 
-
     /**
      * DCAE Analytics App Name
      */
@@ -53,7 +52,7 @@ public abstract class CDAPBaseAppConfig extends Config implements CDAPAppConfig 
     }
 
     /**
-     * Returns DCAE Analytics CDAP Application descrption
+     * Returns DCAE Analytics CDAP Application description
      *
      * @return CDAP application description
      */

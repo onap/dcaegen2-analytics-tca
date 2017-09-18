@@ -20,11 +20,8 @@
 
 package org.openecomp.dcae.apod.analytics.test;
 
-import org.json.JSONException;
-import org.junit.Assert;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.nio.file.Files.deleteIfExists;
+import static java.nio.file.Files.exists;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -42,9 +39,11 @@ import java.nio.file.Paths;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Arrays;
-
-import static java.nio.file.Files.deleteIfExists;
-import static java.nio.file.Files.exists;
+import org.json.JSONException;
+import org.junit.Assert;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base common test class for all DCAE Analytics Test e.g. unit tests, integration test, CDAP tests etc.
@@ -78,16 +77,16 @@ abstract class BaseDCAEAnalyticsCommonTest {
      */
     public static String fromStream(String fileLocation) throws IOException {
         final InputStream jsonFileInputStream =
-                BaseDCAEAnalyticsCommonTest.class.getClassLoader().getResourceAsStream(fileLocation);
+            BaseDCAEAnalyticsCommonTest.class.getClassLoader().getResourceAsStream(fileLocation);
         Assert.assertNotNull("Json File Location must be valid", jsonFileInputStream);
         try (BufferedReader reader =
-                     new BufferedReader(new InputStreamReader(jsonFileInputStream, Charset.forName("UTF-8")))) {
+            new BufferedReader(new InputStreamReader(jsonFileInputStream, Charset.forName("UTF-8")))) {
             final StringBuilder result = new StringBuilder();
             final String newLine = System.getProperty("line.separator");
             String line = reader.readLine();
             while (line != null) {
-                result.append(line);
-                result.append(newLine);
+                result.append(line)
+                    .append(newLine);
                 line = reader.readLine();
             }
             jsonFileInputStream.close();
@@ -106,7 +105,7 @@ abstract class BaseDCAEAnalyticsCommonTest {
     public static void testSerialization(Object object, Class<?> callingClass) throws IOException {
         final URL location = callingClass.getProtectionDomain().getCodeSource().getLocation();
         final File serializedOutputFile =
-                new File(location.getPath() + String.format("serialization/%s.ser", object.getClass().getSimpleName()));
+            new File(location.getPath() + String.format("serialization/%s.ser", object.getClass().getSimpleName()));
 
         // Maybe file already try deleting it first
         final boolean deleteIfExists = deleteIfExists(Paths.get(serializedOutputFile.getPath()));
@@ -121,27 +120,27 @@ abstract class BaseDCAEAnalyticsCommonTest {
         }
         if (mkdirs) {
             try (FileOutputStream fileOutputStream = new FileOutputStream(serializedOutputFile);
-                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
                 objectOutputStream.writeObject(object);
                 LOG.debug("Successfully created serialization file at location: {}", serializedOutputFile.getPath());
             }
         } else {
             throw new IllegalStateException(
-                    String.format("Failed to create location to store serialization file: %s",
-                            serializedOutputFile));
+                String.format("Failed to create location to store serialization file: %s",
+                    serializedOutputFile));
         }
     }
 
     /**
      * Writes Text to Output file
      *
-     * @param textFileLocation - location of text file e.g. textfiles/fileName.json
+     * @param textFileLocation - location of text file e.g. text files/fileName.json
      * @param content           - file content
      * @param callingClass      - calling class
      * @throws IOException      - ioException
      */
     public static void writeToOutputTextFile(String textFileLocation, String content, Class<?> callingClass) throws
-            IOException {
+        IOException {
         final URL location = callingClass.getProtectionDomain().getCodeSource().getLocation();
         final File fileLocation = new File(location.getPath() + textFileLocation);
 
@@ -158,17 +157,16 @@ abstract class BaseDCAEAnalyticsCommonTest {
         }
         if (mkdirs) {
             try (
-                    FileOutputStream fileOutputStream = new FileOutputStream(fileLocation);
-                    OutputStreamWriter outputStream =
-                            new OutputStreamWriter(fileOutputStream, Charset.forName("UTF-8"))) {
+                FileOutputStream fileOutputStream = new FileOutputStream(fileLocation);
+                OutputStreamWriter outputStream =
+                    new OutputStreamWriter(fileOutputStream, Charset.forName("UTF-8"))) {
                 outputStream.write(content);
                 LOG.debug("Successfully created text file at location: {}", fileLocation.getPath());
             }
         } else {
             throw new IllegalStateException(
-                    String.format("Failed to create location to store text file: %s", fileLocation));
+                String.format("Failed to create location to store text file: %s", fileLocation));
         }
-
     }
 
 
@@ -201,9 +199,7 @@ abstract class BaseDCAEAnalyticsCommonTest {
                     }
                 });
 
-
                 return privateFieldClass.cast(privateField.get(object));
-
             } catch (IllegalAccessException e) {
                 LOG.error("Unable to access field: {}", fieldName);
                 throw new IllegalStateException(e);
@@ -212,8 +208,6 @@ abstract class BaseDCAEAnalyticsCommonTest {
             LOG.error("Unable to locate field name: {} in class: {}", fieldName, objectClass.getSimpleName());
             throw new IllegalStateException(e);
         }
-
-
     }
 
 
@@ -230,7 +224,6 @@ abstract class BaseDCAEAnalyticsCommonTest {
 
             URLClassLoader ucl = (URLClassLoader) classLoader;
             LOG.info("\t ==========>>>" + Arrays.toString(ucl.getURLs()));
-
         } else {
             LOG.info("\t(cannot display components as not a URLClassLoader)");
         }
@@ -239,5 +232,4 @@ abstract class BaseDCAEAnalyticsCommonTest {
             dumpClasspath(classLoader.getParent());
         }
     }
-
 }

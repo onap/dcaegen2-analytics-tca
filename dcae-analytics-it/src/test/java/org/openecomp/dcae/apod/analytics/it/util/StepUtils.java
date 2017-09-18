@@ -25,19 +25,13 @@ package org.openecomp.dcae.apod.analytics.it.util;
  */
 public abstract class StepUtils {
 
-
     /**
-     * Determines if step should use default publisher topic as configured in environment properties file
+     * Determines if step should use default publisher topic as configured in environment properties file.
      *
      * @param topicName step passed topic name
      * @return true if default publisher topic
      */
     public static boolean isDefaultPublisherTopic(final String topicName) {
-        if (topicName.equalsIgnoreCase("default")) {
-            return true;
-        } else {
-            return false;
-        }
+        return "default".equalsIgnoreCase(topicName);
     }
-
 }

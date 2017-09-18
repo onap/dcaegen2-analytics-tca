@@ -20,13 +20,12 @@
 
 package org.openecomp.dcae.apod.analytics.it.plugins;
 
+import static com.google.common.collect.ImmutableList.of;
+
 import co.cask.cdap.etl.mock.test.HydratorTestBase;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
-
-import static com.google.common.collect.ImmutableList.of;
 
 /**
  * Base class for all the Hydrator test base , where the utility and common code for integration testing is written
@@ -35,13 +34,14 @@ import static com.google.common.collect.ImmutableList.of;
  */
 
 public abstract class BaseAnalyticsPluginsIT extends HydratorTestBase {
+
     private static final Logger LOG = LoggerFactory.getLogger(BaseAnalyticsPluginsIT.class);
 
     /**
-     * Provides two simple messages for testing of Plugin
+     * Provides two simple messages for testing of Plugin.
      * <p/>
      *
-     * @return
+     * @return two simple messages for testing of Plugin
      */
     protected static List<String> getTwoSampleMessage() {
         String message1 = "{ \"message\" : \"Test Message 1 from DMaaP source Plugin\"}";

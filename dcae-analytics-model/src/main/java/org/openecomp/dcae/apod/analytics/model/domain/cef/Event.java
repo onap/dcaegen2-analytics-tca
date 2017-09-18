@@ -36,28 +36,18 @@ public class Event extends BaseCEFModel {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Fields common to all Events
-     *
-     * @param commonEventHeader New value for common Event Header
-     * @return Fields common to all Events
+     * Common event handler.
      */
     private CommonEventHeader commonEventHeader;
 
     /**
-     * MeasurementsForVfScaling fields
-     *
-     * @param measurementsForVfScalingFields New value for MeasurementsForVfScaling
+     * Measurements for Vf scaling fields.w value for MeasurementsForVfScaling
      * @return MeasurementsForVfScaling fields
      */
     private MeasurementsForVfScalingFields measurementsForVfScalingFields;
 
     /**
-     * Threshold crossing Fields
-     *
-     * @param thresholdCrossingAlertFields New value for Threshold crossing Fields
-     * @return Threshold crossing Fields
+     * Threshold crossing alert fields.
      */
     private ThresholdCrossingAlertFields thresholdCrossingAlertFields;
-
-
 }

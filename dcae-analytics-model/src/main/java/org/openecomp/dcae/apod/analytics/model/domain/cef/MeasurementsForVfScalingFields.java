@@ -20,10 +20,9 @@
 
 package org.openecomp.dcae.apod.analytics.model.domain.cef;
 
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.List;
 
 /**
  * Common Event Format - MeasurementsForVfScaling fields
@@ -38,20 +37,12 @@ public class MeasurementsForVfScalingFields extends BaseCEFModel {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Interval over which measurements are being reported in seconds
-     *
-     * @param measurementInterval New value for measurement Interval
-     * @return Interval over which measurements are being reported in seconds
+     * Interval over which measurements are being reported in seconds.
      */
     private Long measurementInterval;
 
     /**
      * Virtual Network Card Usage Array
-     *
-     * @param vNicUsageArray New value for Virtual Network Card Usage Array
-     * @return Virtual Network Card Usage Array
      */
     private List<VNicUsageArray> vNicUsageArray;
-
-
 }

@@ -21,19 +21,18 @@
 package org.openecomp.dcae.apod.analytics.model.util;
 
 
-import org.junit.Test;
-import org.mockito.Mockito;
-import org.openecomp.dcae.apod.analytics.model.BaseAnalyticsModelUnitTest;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import org.junit.Test;
+import org.mockito.Mockito;
+import org.openecomp.dcae.apod.analytics.model.BaseAnalyticsModelUnitTest;
 
 /**
  * @author Rajiv Singla . Creation Date: 10/17/2016.
@@ -47,19 +46,19 @@ public class AnalyticsModelIOUtilsTest extends BaseAnalyticsModelUnitTest {
     @Test
     public void testConvertToJsonObjectWhenFileLocationIsValid() throws Exception {
         ConfigHolder configHolder =
-                AnalyticsModelIOUtils.convertToJsonObject(TEST_CONFIG_FILE_LOCATION, ConfigHolder.class);
+            AnalyticsModelIOUtils.convertToJsonObject(TEST_CONFIG_FILE_LOCATION, ConfigHolder.class);
         String appName = configHolder.getConfig().getAppName();
         assertEquals("App Name must match with json settings file value", "TestAppName", appName);
         String appDescription = configHolder.getConfig().getAppDescription();
         assertEquals("App Description much with json settings file value", "Test App Description", appDescription);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = IOException.class)
     public void testConvertToJsonObjectWhenFileLocationIsInvValid() throws Exception {
         AnalyticsModelIOUtils.convertToJsonObject("InvalidFileLocation", ConfigHolder.class);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = IOException.class)
     public void testConvertToJsonObjectWhenJsonFileHasInvalidJson() throws Exception {
         AnalyticsModelIOUtils.convertToJsonObject(INVALID_TEST_CONFIG_FILE_LOCATION, ConfigHolder.class);
     }
@@ -68,7 +67,7 @@ public class AnalyticsModelIOUtilsTest extends BaseAnalyticsModelUnitTest {
     @Test
     public void testValidPropertiesFileLoading() throws Exception {
         final Properties properties =
-                AnalyticsModelIOUtils.loadPropertiesFile(TEST_PROPERTIES_FILE_LOCATION, new Properties());
+            AnalyticsModelIOUtils.loadPropertiesFile(TEST_PROPERTIES_FILE_LOCATION, new Properties());
         assertThat("Properties File must contain 2 properties", properties.size(), is(2));
     }
 
@@ -82,8 +81,6 @@ public class AnalyticsModelIOUtilsTest extends BaseAnalyticsModelUnitTest {
         final Properties mockProperties = Mockito.mock(Properties.class);
         doThrow(new IOException()).when(mockProperties).load(any(InputStream.class));
         AnalyticsModelIOUtils.loadPropertiesFile(TEST_PROPERTIES_FILE_LOCATION, mockProperties);
-
     }
-    
 }
 

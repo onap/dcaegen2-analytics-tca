@@ -36,82 +36,55 @@ public class CommonEventHeader extends BaseCEFModel {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The eventing domain associated with this event
-     *
-     * @param domain New value for domain
-     * @return The eventing domain associated with this event
+     * The eventing domain associated with this event.
      */
     private String domain;
 
     /**
-     * Event key that is unique to the event source
-     *
-     * @param eventId New value for event key
-     * @return Event key that is unique to the event source
+     * Event key that is unique to the event source.
      */
     private String eventId;
 
     /**
-     * Function of the source e.g. eNodeB, MME, PCRF
-     *
-     * @param functionalRole New value for functional Role
-     * @return Function of the source e.g. eNodeB, MME, PCRF
+     * Function role of the source e.g. eNodeB, MME, PCRF.
      */
     private String functionalRole;
 
 
     /**
      * The latest unix time aka epoch time associated with the event from any component--as microseconds elapsed since
-     * 1 Jan 1970 not including leap seconds
-     *
-     * @param lastEpochMicrosec New value for last Epoc Microsec
-     * @return The latest unix time associated with the event from any component
+     * 1 Jan 1970 not including leap seconds.
      */
     private Long lastEpochMicrosec;
 
 
     /**
-     * Processing Priority
-     *
-     * @param priority New value for processing Priority
-     * @return Processing Priority
+     * Processing Priority for current event.
      */
     private Priority priority;
 
 
     /**
-     * Name of the entity reporting the event, for example, an OAM VM
-     *
-     * @param reportingEntityName New value for reporting Entity Name
-     * @return Name of the entity reporting the event, for example, an OAM VM
+     * Name of the entity reporting the event, for example, an OAM VM.
      */
     private String reportingEntityName;
 
 
     /**
-     * Ordering of events communicated by an event source instance or 0 if not needed
-     *
-     * @param sequence New value for Sequence
-     * @return Ordering of events communicated by an event source instance or 0 if not needed
+     * Ordering of events communicated by an event source instance or 0 if not needed.
      */
     private Integer sequence;
 
 
     /**
-     * Name of the entity experiencing the event issue
-     *
-     * @param sourceName New value for source name
-     * @return Name of the entity experiencing the event issue
+     * Name of the source entity experiencing the event issue.
      */
     private String sourceName;
 
 
     /**
      * the earliest unix time aka epoch time associated with the event from any component--as microseconds elapsed
-     * since 1 Jan 1970 not including leap seconds
-     *
-     * @param startEpochMicrosec New value for start Epoc Microsec
-     * @return The earliest unix time associated with the event from any component
+     * since 1 Jan 1970 not including leap seconds.
      */
     private Long startEpochMicrosec;
 }

@@ -20,56 +20,53 @@
 
 package org.openecomp.dcae.apod.analytics.model.util.json.mixin.cef;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import com.fasterxml.jackson.core.type.TypeReference;
+import java.util.List;
+import java.util.Map;
 import org.junit.Test;
 import org.openecomp.dcae.apod.analytics.model.BaseAnalyticsModelUnitTest;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventListener;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.MeasurementsForVfScalingFields;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.VNicUsageArray;
 
-import java.util.List;
-import java.util.Map;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
 /**
  * @author Rajiv Singla . Creation Date: 10/18/2016.
  */
 public class EventListenerMixinTest extends BaseAnalyticsModelUnitTest {
 
-    final String eventListenerJsonFileLocation = "data/json/cef/event_listener.json";
-    final String cefMessagesJsonFileLocation = "data/json/cef/cef_messages.json";
+    private static final String EVENT_LISTENER_JSON_FILE_LOCATION = "data/json/cef/event_listener.json";
+    private static final String CEF_MESSAGES_JSON_FILE_LOCATION = "data/json/cef/cef_messages.json";
 
     @Test
     public void testEventListenerJsonConversions() throws Exception {
 
-        final EventListener eventListener = assertJsonConversions(eventListenerJsonFileLocation, EventListener.class);
+        final EventListener eventListener = assertJsonConversions(EVENT_LISTENER_JSON_FILE_LOCATION,
+            EventListener.class);
 
         Map<String, Object> dynamicProperties = eventListener.getDynamicProperties();
-
         assertThat("Dynamic Properties size must be 1", dynamicProperties.size(), is(1));
-
-
     }
 
     @Test
     public void testCollectionOfEventListenersJsonConversion() throws Exception {
 
-        final String cefMessageAsString = fromStream(cefMessagesJsonFileLocation);
+        final String cefMessageAsString = fromStream(CEF_MESSAGES_JSON_FILE_LOCATION);
 
         final TypeReference<List<EventListener>> eventListenerListTypeReference =
-                new TypeReference<List<EventListener>>() {
-                };
+            new TypeReference<List<EventListener>>() {
+            };
         List<EventListener> eventListeners = objectMapper.readValue(cefMessageAsString, eventListenerListTypeReference);
         assertThat("Event Listeners size must be 350", eventListeners.size(), is(350));
 
         final MeasurementsForVfScalingFields measurementsForVfScalingFields = eventListeners.get(0).getEvent()
-                .getMeasurementsForVfScalingFields();
+            .getMeasurementsForVfScalingFields();
 
         // Note: vNicUsageArray - due to odd naming convention have to be explicitly resolved with Mixin annotations
         assertThat("vNicUsageArray is present on the first measurementForVfScaling",
-                measurementsForVfScalingFields.getVNicUsageArray().size(), is(1));
+            measurementsForVfScalingFields.getVNicUsageArray().size(), is(1));
         final VNicUsageArray vNicUsageArray = measurementsForVfScalingFields.getVNicUsageArray().get(0);
         assertThat("ByesIn is present on vNicUsageArray", vNicUsageArray.getBytesIn(), is(6086L));
 
@@ -82,7 +79,5 @@ public class EventListenerMixinTest extends BaseAnalyticsModelUnitTest {
 
         // Checks serialization
         testSerialization(eventListeners, getClass());
-
     }
-
 }

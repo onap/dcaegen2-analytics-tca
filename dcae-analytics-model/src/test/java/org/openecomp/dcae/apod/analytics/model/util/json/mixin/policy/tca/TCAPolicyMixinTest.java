@@ -20,12 +20,12 @@
 
 package org.openecomp.dcae.apod.analytics.model.util.json.mixin.policy.tca;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import org.junit.Test;
 import org.openecomp.dcae.apod.analytics.model.BaseAnalyticsModelUnitTest;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.TCAPolicy;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 
 /**
  *
@@ -33,24 +33,19 @@ import static org.junit.Assert.assertThat;
  */
 public class TCAPolicyMixinTest extends BaseAnalyticsModelUnitTest {
 
-    final String tcaPolicyJsonFileLocation = "data/json/policy/tca_policy.json";
+    private static final String TCA_POLICY_JSON_FILE_LOCATION = "data/json/policy/tca_policy.json";
 
     @Test
     public void testTCAPolicyJsonConversions() throws Exception {
 
-        final TCAPolicy tcaPolicy = assertJsonConversions(tcaPolicyJsonFileLocation, TCAPolicy.class);
+        final TCAPolicy tcaPolicy = assertJsonConversions(TCA_POLICY_JSON_FILE_LOCATION, TCAPolicy.class);
 
         assertThat("TCA Policy Metrics Per functional role must be 2",
-                tcaPolicy.getMetricsPerFunctionalRole().size(), is(2));
+            tcaPolicy.getMetricsPerFunctionalRole().size(), is(2));
 
         assertThat("TCA Policy Thresholds for first functional role must be 2",
-                tcaPolicy.getMetricsPerFunctionalRole().get(0).getThresholds().size(), is(2));
+            tcaPolicy.getMetricsPerFunctionalRole().get(0).getThresholds().size(), is(2));
 
         testSerialization(tcaPolicy, getClass());
-
     }
-
-
-
-
 }

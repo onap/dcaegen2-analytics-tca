@@ -20,13 +20,13 @@
 
 package org.openecomp.dcae.apod.analytics.model.util.json.mixin.cef;
 
-import org.junit.Test;
-import org.openecomp.dcae.apod.analytics.model.BaseAnalyticsModelUnitTest;
-import org.openecomp.dcae.apod.analytics.model.domain.cef.AlertType;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.openecomp.dcae.apod.analytics.model.domain.cef.AlertType.CARD_ANOMALY;
+
+import org.junit.Test;
+import org.openecomp.dcae.apod.analytics.model.BaseAnalyticsModelUnitTest;
+import org.openecomp.dcae.apod.analytics.model.domain.cef.AlertType;
 
 /**
  *
@@ -41,11 +41,11 @@ public class AlertTypeMixinTest extends BaseAnalyticsModelUnitTest {
 
         final String alertTypeJson = serializeModelToJson(CARD_ANOMALY);
         assertThat("Alert Type Json for CARD ANOMALY must have hyphen in it", alertTypeJson,
-                is("\"CARD-ANOMALY\""));
+            is("\"CARD-ANOMALY\""));
         // convert parsed alert type back to enum
         final AlertType alertType = objectMapper.readValue(alertTypeJson, AlertType.class);
         LOG.debug(alertType.toString());
         assertThat("Json String for CARD ANOMALY with hyphen can be converted back to Alert Type", alertType,
-                is(CARD_ANOMALY));
+            is(CARD_ANOMALY));
     }
 }

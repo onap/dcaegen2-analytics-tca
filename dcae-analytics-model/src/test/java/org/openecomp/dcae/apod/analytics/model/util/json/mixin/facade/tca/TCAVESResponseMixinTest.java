@@ -20,12 +20,12 @@
 
 package org.openecomp.dcae.apod.analytics.model.util.json.mixin.facade.tca;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import org.junit.Test;
 import org.openecomp.dcae.apod.analytics.model.BaseAnalyticsModelUnitTest;
 import org.openecomp.dcae.apod.analytics.model.facade.tca.TCAVESResponse;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 
 /**
  *
@@ -33,25 +33,23 @@ import static org.junit.Assert.assertThat;
  */
 public class TCAVESResponseMixinTest extends BaseAnalyticsModelUnitTest {
 
-    final String tcaVESCEFResponseJsonFileLocation = "data/json/facade/tca_ves_cef_response.json";
+    private static final String TCA_VES_CEF_RESPONSE_JSON_FILE_LOCATION = "data/json/facade/tca_ves_cef_response.json";
 
     @Test
     public void testTCAPolicyJsonConversions() throws Exception {
 
         final TCAVESResponse vesCEFMessageResponse =
-                assertJsonConversions(tcaVESCEFResponseJsonFileLocation, TCAVESResponse.class);
+            assertJsonConversions(TCA_VES_CEF_RESPONSE_JSON_FILE_LOCATION, TCAVESResponse.class);
 
         assertThat("VES CEF Message Response AAI generics VNF Id must match",
-                vesCEFMessageResponse.getAai().getGenericVNFId(), is("vpp-test(?)"));
+            vesCEFMessageResponse.getAai().getGenericVNFId(), is("vpp-test(?)"));
 
         assertThat("VES CEF Message Response AAI generic Server Id must match",
-                vesCEFMessageResponse.getAai().getGenericServerId(), is("dfw1lb01lb01"));
+            vesCEFMessageResponse.getAai().getGenericServerId(), is("dfw1lb01lb01"));
 
         assertThat("VES CEF Message target type must be parsed correctly as VNF",
-                vesCEFMessageResponse.getTargetType(), is("VNF"));
+            vesCEFMessageResponse.getTargetType(), is("VNF"));
 
         testSerialization(vesCEFMessageResponse, getClass());
-
     }
-
 }

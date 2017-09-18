@@ -20,7 +20,8 @@
 
 package org.openecomp.dcae.apod.analytics.model.util.json;
 
-import com.fasterxml.jackson.core.Version;
+import static org.openecomp.dcae.apod.analytics.model.util.json.SimpleModuleUtil.getVersion;
+
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.AlertAction;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.AlertType;
@@ -57,8 +58,7 @@ public class CommonEventFormatModule extends SimpleModule {
     private static final long serialVersionUID = 1L;
 
     public CommonEventFormatModule() {
-        super("Common Event Format",
-                new Version(25, 0, 0, null, " org.openecomp.dcae.apod.analytics.model", "dcae-analytics-model"));
+        super("Common Event Format", getVersion());
     }
 
     @Override
@@ -73,12 +73,10 @@ public class CommonEventFormatModule extends SimpleModule {
         setupContext.setMixInAnnotations(Event.class, EventMixin.class);
         setupContext.setMixInAnnotations(EventSeverity.class, EventSeverityMixin.class);
         setupContext.setMixInAnnotations(MeasurementsForVfScalingFields.class,
-                MeasurementsForVfScalingFieldsMixin.class);
+            MeasurementsForVfScalingFieldsMixin.class);
         setupContext.setMixInAnnotations(PerformanceCounter.class, PerformanceCounterMixin.class);
         setupContext.setMixInAnnotations(Priority.class, PriorityMixin.class);
         setupContext.setMixInAnnotations(ThresholdCrossingAlertFields.class, ThresholdCrossingAlertFieldsMixin.class);
         setupContext.setMixInAnnotations(VNicUsageArray.class, VNicUsageArrayMixin.class);
-
     }
-
 }

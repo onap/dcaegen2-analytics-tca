@@ -20,29 +20,28 @@
 
 package org.openecomp.dcae.apod.analytics.model.util.json;
 
-import static org.openecomp.dcae.apod.analytics.model.util.json.SimpleModuleUtil.getVersion;
-
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import org.openecomp.dcae.apod.analytics.model.facade.tca.AAI;
-import org.openecomp.dcae.apod.analytics.model.facade.tca.TCAVESResponse;
-import org.openecomp.dcae.apod.analytics.model.util.json.mixin.facade.tca.AAIMixin;
-import org.openecomp.dcae.apod.analytics.model.util.json.mixin.facade.tca.VESCEFMessageResponseMixin;
+import com.fasterxml.jackson.core.Version;
 
 /**
- *
- * @author Rajiv Singla . Creation Date: 11/9/2016.
+ * Utility class for simple modules.
  */
-public class TCAFacadeModelModule extends SimpleModule {
+public final class SimpleModuleUtil {
 
-    private static final long serialVersionUID = 1L;
-
-    public TCAFacadeModelModule() {
-        super("Threshold Crossing Alert Facade", getVersion());
+    private SimpleModuleUtil() {
     }
 
-    @Override
-    public void setupModule(final SetupContext setupContext) {
-        setupContext.setMixInAnnotations(TCAVESResponse.class, VESCEFMessageResponseMixin.class);
-        setupContext.setMixInAnnotations(AAI.class, AAIMixin.class);
+    /**
+     * Returns version for dcae analytics model
+     * @return version
+     */
+    public static Version getVersion() {
+        return new Version( //version
+            25, //major version
+            0, //minor version
+            0, //patch level
+            null, //snapshot info
+            " org.openecomp.dcae.apod.analytics.model", //group id
+            "dcae-analytics-model" //artifact id
+        );
     }
 }

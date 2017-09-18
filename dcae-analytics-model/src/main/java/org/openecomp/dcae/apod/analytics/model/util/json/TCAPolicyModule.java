@@ -20,7 +20,8 @@
 
 package org.openecomp.dcae.apod.analytics.model.util.json;
 
-import com.fasterxml.jackson.core.Version;
+import static org.openecomp.dcae.apod.analytics.model.util.json.SimpleModuleUtil.getVersion;
+
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.BaseTCAPolicyModel;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Direction;
@@ -42,8 +43,7 @@ public class TCAPolicyModule extends SimpleModule {
     private static final long serialVersionUID = 1L;
 
     public TCAPolicyModule() {
-        super("Threshold Crossing Alert Policy",
-                new Version(1, 0, 0, null, " org.openecomp.dcae.apod.analytics.model", "dcae-analytics-model"));
+        super("Threshold Crossing Alert Policy", getVersion());
     }
 
     @Override
@@ -55,7 +55,5 @@ public class TCAPolicyModule extends SimpleModule {
         setupContext.setMixInAnnotations(MetricsPerFunctionalRole.class, MetricsPerFunctionalRoleMixin.class);
         setupContext.setMixInAnnotations(Threshold.class, ThresholdMixin.class);
         setupContext.setMixInAnnotations(TCAPolicy.class, TCAPolicyMixin.class);
-
-
     }
 }

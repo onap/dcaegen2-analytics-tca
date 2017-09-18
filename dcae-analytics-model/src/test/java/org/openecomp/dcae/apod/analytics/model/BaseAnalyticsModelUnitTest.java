@@ -20,20 +20,19 @@
 
 package org.openecomp.dcae.apod.analytics.model;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Suppliers;
+import java.io.IOException;
+import java.io.InputStream;
 import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.openecomp.dcae.apod.analytics.model.util.json.AnalyticsModelObjectMapperSupplier;
 import org.openecomp.dcae.apod.analytics.test.BaseDCAEAnalyticsUnitTest;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 
 /**
  * @author Rajiv Singla . Creation Date: 10/17/2016.
@@ -46,7 +45,7 @@ public abstract class BaseAnalyticsModelUnitTest extends BaseDCAEAnalyticsUnitTe
     @BeforeClass
     public static void beforeClass() {
         final AnalyticsModelObjectMapperSupplier analyticsModelObjectMapperSupplier =
-                new AnalyticsModelObjectMapperSupplier();
+            new AnalyticsModelObjectMapperSupplier();
         objectMapper = Suppliers.memoize(analyticsModelObjectMapperSupplier).get();
     }
 
@@ -57,17 +56,17 @@ public abstract class BaseAnalyticsModelUnitTest extends BaseDCAEAnalyticsUnitTe
      * @param jsonFileLocation Classpath location of the json file
      * @param modelClass       Model Class type
      * @param <T>              Json Model Type
-     * @return                  Deserialized Model Object
+     * @return Deserialized Model Object
      */
     public static <T> T deserializeJsonFileToModel(String jsonFileLocation, Class<T> modelClass) {
         final InputStream jsonFileInputStream =
-                BaseDCAEAnalyticsUnitTest.class.getClassLoader().getResourceAsStream(jsonFileLocation);
+            BaseDCAEAnalyticsUnitTest.class.getClassLoader().getResourceAsStream(jsonFileLocation);
         Assert.assertNotNull("Json File Location must be valid", jsonFileInputStream);
         try {
             return objectMapper.readValue(jsonFileInputStream, modelClass);
         } catch (IOException ex) {
             LOG.error("Error while doing assert Json for fileLocation: {}, modelClass: {}, Exception {}",
-                    jsonFileLocation, modelClass, ex);
+                jsonFileLocation, modelClass, ex);
             throw new RuntimeException(ex);
         } finally {
             try {
@@ -115,10 +114,9 @@ public abstract class BaseAnalyticsModelUnitTest extends BaseDCAEAnalyticsUnitTe
             return model;
         } catch (IOException | JSONException ex) {
             LOG.error("Error while doing assert Json serialization Assertion: model: {}, " +
-                    "expected Json File Location: {}, Exception {}", model, expectedJsonFileLocation, ex);
+                "expected Json File Location: {}, Exception {}", model, expectedJsonFileLocation, ex);
             throw new RuntimeException(ex);
         }
-
     }
 
 
@@ -143,6 +141,4 @@ public abstract class BaseAnalyticsModelUnitTest extends BaseDCAEAnalyticsUnitTe
 
         return actualValue;
     }
-
-
 }

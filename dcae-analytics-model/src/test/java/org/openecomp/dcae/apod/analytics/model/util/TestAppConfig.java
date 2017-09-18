@@ -36,5 +36,3 @@ public class TestAppConfig {
         return appDescription;
     }
 }
-
-

@@ -20,17 +20,16 @@
 
 package org.openecomp.dcae.apod.analytics.model.util;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import org.junit.Test;
-import org.openecomp.dcae.apod.analytics.model.BaseAnalyticsModelUnitTest;
-import org.openecomp.dcae.apod.analytics.model.domain.cef.EventListener;
-
-import java.io.InputStream;
-import java.util.List;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import java.io.InputStream;
+import java.util.List;
+import org.junit.Test;
+import org.openecomp.dcae.apod.analytics.model.BaseAnalyticsModelUnitTest;
+import org.openecomp.dcae.apod.analytics.model.domain.cef.EventListener;
 
 /**
  * @author Rajiv Singla . Creation Date: 12/16/2016.
@@ -38,8 +37,8 @@ import static org.junit.Assert.assertThat;
 public class AnalyticsModelJsonUtilsTest extends BaseAnalyticsModelUnitTest {
 
     private static final TypeReference<List<EventListener>> EVENT_LISTENER_TYPE_REFERENCE =
-            new TypeReference<List<EventListener>>() {
-            };
+        new TypeReference<List<EventListener>>() {
+        };
 
     final String cefMessagesJsonFileLocation = "data/json/cef/cef_messages.json";
     final String eventListenerJsonFileLocation = "data/json/cef/event_listener.json";
@@ -47,16 +46,16 @@ public class AnalyticsModelJsonUtilsTest extends BaseAnalyticsModelUnitTest {
     @Test
     public void testReadValueWithTypeReference() throws Exception {
         final InputStream resourceAsStream =
-                Thread.currentThread().getContextClassLoader().getResourceAsStream(cefMessagesJsonFileLocation);
+            Thread.currentThread().getContextClassLoader().getResourceAsStream(cefMessagesJsonFileLocation);
         List<EventListener> eventListeners = AnalyticsModelJsonUtils.readValue(resourceAsStream,
-                EVENT_LISTENER_TYPE_REFERENCE);
+            EVENT_LISTENER_TYPE_REFERENCE);
         assertThat("Event Listeners size must be 350", eventListeners.size(), is(350));
     }
 
     @Test
     public void testReadValueWithClassType() throws Exception {
         final InputStream resourceAsStream =
-                Thread.currentThread().getContextClassLoader().getResourceAsStream(eventListenerJsonFileLocation);
+            Thread.currentThread().getContextClassLoader().getResourceAsStream(eventListenerJsonFileLocation);
         final EventListener eventListener = AnalyticsModelJsonUtils.readValue(resourceAsStream, EventListener.class);
         assertNotNull("Event Listener event is not null", eventListener.getEvent());
     }
@@ -64,7 +63,7 @@ public class AnalyticsModelJsonUtilsTest extends BaseAnalyticsModelUnitTest {
     @Test
     public void testWriteValueAsString() throws Exception {
         final InputStream resourceAsStream =
-                Thread.currentThread().getContextClassLoader().getResourceAsStream(eventListenerJsonFileLocation);
+            Thread.currentThread().getContextClassLoader().getResourceAsStream(eventListenerJsonFileLocation);
         final EventListener eventListener = AnalyticsModelJsonUtils.readValue(resourceAsStream, EventListener.class);
         final String eventListenerString = AnalyticsModelJsonUtils.writeValueAsString(eventListener);
         assertJson(fromStream(eventListenerJsonFileLocation), eventListenerString);
@@ -73,8 +72,7 @@ public class AnalyticsModelJsonUtilsTest extends BaseAnalyticsModelUnitTest {
     @Test
     public void testReadValueWithJsonString() throws Exception {
         final EventListener eventListener =
-                AnalyticsModelJsonUtils.readValue(fromStream(eventListenerJsonFileLocation), EventListener.class);
+            AnalyticsModelJsonUtils.readValue(fromStream(eventListenerJsonFileLocation), EventListener.class);
         assertNotNull("Event Listener event is not null", eventListener.getEvent());
     }
-
 }

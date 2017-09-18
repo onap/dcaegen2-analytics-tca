@@ -20,19 +20,18 @@
 
 package org.openecomp.dcae.apod.analytics.model.util.json;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.junit.Assert.assertThat;
+
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.Option;
 import com.jayway.jsonpath.spi.json.JsonProvider;
 import com.jayway.jsonpath.spi.mapper.MappingProvider;
+import java.util.Set;
 import org.junit.Test;
 import org.openecomp.dcae.apod.analytics.model.BaseAnalyticsModelUnitTest;
-
-import java.util.Set;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.Assert.assertThat;
 
 
 /**
@@ -48,16 +47,15 @@ public class AnalyticsModelObjectMapperSupplierTest extends BaseAnalyticsModelUn
         final JsonProvider jsonProvider = configuration.jsonProvider();
         final String jsonProviderClassName = jsonProvider.getClass().getSimpleName();
         assertThat("Json Provider cass name must be JacksonJsonProvider",
-                jsonProviderClassName, is("JacksonJsonProvider"));
+            jsonProviderClassName, is("JacksonJsonProvider"));
 
         final MappingProvider mappingProvider = configuration.mappingProvider();
         final String mappingProviderClassName = mappingProvider.getClass().getSimpleName();
         assertThat("Mapping Provider cass name must be JacksonMappingProvider",
-                mappingProviderClassName, is("JacksonMappingProvider"));
+            mappingProviderClassName, is("JacksonMappingProvider"));
 
         final Set<Option> configurationOptions = configuration.getOptions();
         assertThat(configurationOptions,
-                containsInAnyOrder(Option.DEFAULT_PATH_LEAF_TO_NULL, Option.SUPPRESS_EXCEPTIONS));
+            containsInAnyOrder(Option.DEFAULT_PATH_LEAF_TO_NULL, Option.SUPPRESS_EXCEPTIONS));
     }
-
 }

@@ -20,15 +20,14 @@
 
 package org.openecomp.dcae.apod.analytics.model.domain;
 
-import lombok.Data;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
+import lombok.Data;
 
 /**
  * <p>
  *     Base Dynamic Provider provide functionality so that all the
- *     additional dynamic Properties can be accumalated in a map.
+ *     additional dynamic Properties can be accumulated in a map.
  * </p>
  *
  * @author Rajiv Singla . Creation Date: 11/5/2016.
@@ -37,12 +36,10 @@ import java.util.Map;
 public abstract class BaseDynamicPropertiesProvider implements DynamicPropertiesProvider {
 
     /**
-     * All non-required properties should be captured in additional properties
-     *
-     * @param dynamicProperties Dynamic properties
-     * @return dynamic properties
+     * All non-required properties should be captured in additional properties as
+     * dynamicProperties
      */
-    private Map<String, Object> dynamicProperties = new LinkedHashMap<>();
+    private final Map<String, Object> dynamicProperties = new LinkedHashMap<>();
 
 
     /**
@@ -62,8 +59,6 @@ public abstract class BaseDynamicPropertiesProvider implements DynamicProperties
      * @return return true if Dynamic Properties are present
      */
     public boolean isDynamicPropertiesPresent() {
-        return dynamicProperties.size() == 0;
+        return dynamicProperties.isEmpty();
     }
-
-
 }

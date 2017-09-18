@@ -20,10 +20,9 @@
 
 package org.openecomp.dcae.apod.analytics.model.domain.cef;
 
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.List;
 
 /**
  * Common Event Format - Fields Specific to threshold crossing alert events
@@ -37,125 +36,78 @@ public class ThresholdCrossingAlertFields extends BaseCEFModel {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Additional Performance counters
-     *
-     * @param additionalParameters New value for Additional Performance counters
-     * @return Additional Performance counters
+     * Additional performance counters parameters.
      */
     private List<PerformanceCounter> additionalParameters;
 
     /**
-     *  Event Action
-     *
-     *  @param alertAction New Event Action
-     *  @return Event Action
+     *  Event alert action
      */
     private AlertAction alertAction;
 
     /**
-     * Unique short alert description such as IF-SHUB-ERRDROP
-     *
-     * @param alertDescription New value for Unique short alert description
-     * @return Unique short alert description
+     * Unique short alert description such as IF-SHUB-ERRDROP.
      */
     private String alertDescription;
 
     /**
      * Alert type
-     *
-     * @param alertType New value for Alert Type
-     * @return Alert Type
      */
     private AlertType alertType;
 
     /**
-     * Calculated API value (if applicable)
-     *
-     * @param alertValue New Calculated API value
-     * @return Calculated API value (if applicable)
+     * Calculated API value (if applicable).
      */
     private String alertValue;
 
     /**
-     * List of eventIds associated with the event being reported
-     *
-     * @param associatedAlertIdList New value for eventIds associated with the event
-     * @return List of eventIds associated with the event being reported
+     * List of eventIds associated with the event being reported.
      */
     private List<String> associatedAlertIdList;
 
     /**
      * Time when the performance collector picked up the data; with RFC 2822 compliant format:
-     * ‘Sat, 13 Mar 2010 11:29:05 -0800’
-     *
-     * @param collectionTimestamp Set new value for time when the performance collector picked up the data
-     * @return Time when the performance collector picked up the data
+     * ‘Sat, 13 Mar 2010 11:29:05 -0800’.
      */
     private String collectionTimestamp;
 
     /**
-     * Specific performance collector instance used
-     *
-     * @param dataCollector New value for specific performance collector instance used
-     * @return Specific performance collector instance used
+     * Specific performance data collector instance used
      */
     private String dataCollector;
 
     /**
-     * Type of network element - internal field
-     *
-     * @param elementType New value for type of network element - internal field
-     * @return Type of network element - internal field
+     * Type of network element - internal field.
      */
     private String elementType;
 
     /**
-     * Event severity or priority
-     *
-     * @param eventSeverity New value for event severity or priority
-     * @return Event severity or priority
+     * Event severity or priority.
      */
     private EventSeverity eventSeverity;
 
     /**
-     * Time closest to when the measurement was made; with RFC 2822 compliant format: ‘Sat, 13 Mar 2010 11:29:05 -0800’
-     *
-     * @param eventStartTimestamp New value for time closest to when the measurement was made
-     * @return Time closest to when the measurement was made
+     * Time closest to when the measurement was made; with RFC 2822 compliant format: ‘Sat, 13 Mar 2010 11:29:05 -0800’.
      */
     private String eventStartTimestamp;
 
     /**
-     * Physical or logical port or card (if applicable)
-     *
-     * @param interfaceName New value for Physical or logical port or card (if applicable)
-     * @return Physical or logical port or card (if applicable)
+     * Physical or logical port or card (if applicable).
      */
     private String interfaceName;
 
     /**
-     * Network name - internal field
-     *
-     * @param networkService New value for network name - internal field
-     * @return Network name - internal field
+     * Network name - internal field.
      */
     private String networkService;
 
     /**
-     * Possible Root Cause (reserved for future use)
-     *
-     * @param possibleRootCause New value for possible root cause (reserved for future)
-     * @return Possible Root Cause (reserved for future use)
+     * Possible Root Cause (reserved for future use).
      */
     private String possibleRootCause;
 
     /**
-     * Version of the thresholdCrossingAlertFields block
-     *
-     * @param thresholdCrossingFieldsVersion New value for version of the thresholdCrossingAlertFields block
-     * @return Version of the thresholdCrossingAlertFields block
+     * Version of the thresholdCrossingAlertFields block.
      */
     private Integer thresholdCrossingFieldsVersion;
-
-
 }

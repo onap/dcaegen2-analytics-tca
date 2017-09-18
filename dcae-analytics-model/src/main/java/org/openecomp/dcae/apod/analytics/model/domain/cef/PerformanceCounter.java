@@ -35,31 +35,21 @@ public class PerformanceCounter extends BaseCEFModel {
     private static final long serialVersionUID = 1L;
     /**
      * Performance Counter Criticality
-     *
-     * @param criticality New value for Criticality
-     * @return Performance Counter Criticality
      */
     private Criticality criticality;
+
     /**
      * Performance Counter Name
-     *
-     * @param name New value for Performance counter name
-     * @return Performance Counter Name
      */
     private String name;
+
     /**
      * Performance Counter Threshold Crossed
-     *
-     * @param thresholdCrossed New value for Performance Counter Threshold Crossed
-     * @return Performance Counter Threshold Crossed
      */
     private String thresholdCrossed;
+
     /**
      * Performance Counter Value
-     *
-     * @param value New Performance Counter Value
-     * @return Performance Counter Value
      */
     private String value;
-
 }

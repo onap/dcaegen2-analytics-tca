@@ -36,44 +36,27 @@ public class VNicUsageArray extends BaseCEFModel {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Virtual Network Card - Bytes In
-     *
-     * @param bytesIn New value for Virtual Network Card - Bytes In
-     * @return Virtual Network Card - Bytes In
+     * Virtual Network Card - Bytes In.
      */
     private Long bytesIn;
 
     /**
-     * Virtual Network Card - Bytes Out
-     *
-     * @param bytesOut New value for Virtual Network Card - Bytes Out
-     * @return Virtual Network Card - Bytes Out
+     * Virtual Network Card - Bytes Out.
      */
     private Long bytesOut;
 
     /**
-     * Virtual Network Card - Packets In
-     *
-     * @param packetsIn New value for Virtual Network Card - Packets In
-     * @return Virtual Network Card - Packets In
+     * Virtual Network Card - Packets In.
      */
     private Long packetsIn;
 
     /**
-     * Virtual Network Card - Packets Out
-     *
-     * @param packetsOut New value for Virtual Network Card - Packets Out
-     * @return Virtual Network Card - Packets Out
+     * Virtual Network Card - Packets Out.
      */
     private Long packetsOut;
 
     /**
-     * Virtual Network Card Identifier
-     *
-     * @param vNicIdentifier New value for Virtual Network Card Identifier
-     * @return Virtual Network Card Identifier
+     * Virtual Network Card Identifier.
      */
     private String vNicIdentifier;
-
-
 }

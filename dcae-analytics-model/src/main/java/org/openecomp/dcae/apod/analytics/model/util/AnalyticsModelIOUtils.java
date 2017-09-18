@@ -22,15 +22,14 @@ package org.openecomp.dcae.apod.analytics.model.util;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.Properties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utility class containing methods for IO related operations
@@ -50,8 +49,9 @@ public abstract class AnalyticsModelIOUtils extends AnalyticsModelJsonUtils {
      * @param <T>  binding Class Type
      *
      * @return binding Class Object which properties populated from JSON File Location
+     * @throws IOException when fails to do IO operations
      */
-    public static final <T> T convertToJsonObject(String fileLocation, Class<T> bindingClass) {
+    public static final <T> T convertToJsonObject(String fileLocation, Class<T> bindingClass) throws IOException {
 
         // Load Resource from give path
         final InputStream resourceAsStream = loadResourceAsStream(fileLocation);
@@ -59,32 +59,28 @@ public abstract class AnalyticsModelIOUtils extends AnalyticsModelJsonUtils {
         // If resource is null throw an exception
         if (resourceAsStream == null) {
             final String errorMessage = String.format("Invalid File location: %s", fileLocation);
-            throw new RuntimeException(errorMessage, new FileNotFoundException(errorMessage));
+            throw new IOException(errorMessage, new FileNotFoundException(errorMessage));
         }
 
         // Parse input stream
         try (InputStreamReader inputStreamReader = new InputStreamReader(resourceAsStream, Charset.forName("UTF-8"))) {
 
             return ANALYTICS_MODEL_OBJECT_MAPPER.readValue(inputStreamReader, bindingClass);
-
         } catch (JsonMappingException | JsonParseException e) {
 
             // If parsing fails due to Invalid Json or Json IO Issues throw an exception
             final String errorMessage = String.format("Json parsing error while parsing Json File location: %s",
-                    fileLocation);
+                fileLocation);
 
             LOG.error(errorMessage);
-            throw new RuntimeException(errorMessage, e);
-
+            throw new IOException(errorMessage, e);
         } catch (IOException e) {
 
             // If parsing fails due to IO Issues throw an exception
             final String errorMessage = String.format("IO Error while parsing Json File location: %s", fileLocation);
             LOG.error(errorMessage);
-            throw new RuntimeException(errorMessage, e);
-
+            throw new IOException(errorMessage, e);
         }
-
     }
 
     /**
@@ -105,7 +101,8 @@ public abstract class AnalyticsModelIOUtils extends AnalyticsModelJsonUtils {
         // If properties file is not present throw an exception
         if (propertiesFileInputStream == null) {
             final String errorMessage = String.format("Invalid Properties File at location: %s",
-                    propertiesFileLocation);
+                propertiesFileLocation);
+            //TODO: discuss and change this excpeiton as well.
             throw new RuntimeException(errorMessage, new FileNotFoundException(errorMessage));
         }
 
@@ -113,12 +110,11 @@ public abstract class AnalyticsModelIOUtils extends AnalyticsModelJsonUtils {
             properties.load(propertiesFileInputStream);
         } catch (IOException e) {
             final String errorMessage = String.format("IO Exception while reading Properties File at location: %s",
-                    propertiesFileLocation);
+                propertiesFileLocation);
             throw new RuntimeException(errorMessage, e);
         }
 
         return properties;
-
     }
 
     /**
@@ -132,6 +128,4 @@ public abstract class AnalyticsModelIOUtils extends AnalyticsModelJsonUtils {
         // Load Resource from give path
         return Thread.currentThread().getContextClassLoader().getResourceAsStream(fileLocation);
     }
-
-
 }

@@ -27,6 +27,8 @@ package org.openecomp.dcae.apod.analytics.model.domain.cef;
  */
 public enum Priority implements CEFModel {
 
-    High, Medium, Normal, Low;
-
+    High,
+    Medium,
+    Normal,
+    Low
 }

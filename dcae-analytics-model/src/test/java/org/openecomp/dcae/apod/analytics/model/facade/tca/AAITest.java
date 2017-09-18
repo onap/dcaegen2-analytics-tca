@@ -20,12 +20,12 @@
 
 package org.openecomp.dcae.apod.analytics.model.facade.tca;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.openecomp.dcae.apod.analytics.model.BaseAnalyticsModelUnitTest;
-
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 
 /**
  * @author Rajiv Singla . Creation Date: 12/16/2016.
@@ -33,27 +33,25 @@ import static org.junit.Assert.assertThat;
 public class AAITest extends BaseAnalyticsModelUnitTest {
 
     private AAI aai;
+    private static final String GENERIC_VNF_ID = "testVNFID";
+    private static final String CHANGED_GENERIC_VNF_ID = "changedVNFID";
 
     @Before
     public void before() {
-        this.aai = new AAI();
+        aai = new AAI();
     }
 
     @Test
     public void getGenericVNFId() throws Exception {
-        final String genericVNFId = "testVNFID";
-        aai.setGenericVNFId(genericVNFId);
-        assertThat("VNFID must be same", aai.getGenericVNFId(), is(genericVNFId));
+        aai.setGenericVNFId(GENERIC_VNF_ID);
+        assertThat("VNFID must be same", aai.getGenericVNFId(), is(GENERIC_VNF_ID));
     }
 
     @Test
     public void setGenericVNFId() throws Exception {
         final String genericVNFId = "testVNFID";
-        aai.setGenericVNFId(genericVNFId);
-        final String changedGenericVNFId = "changedVNFID";
-        aai.setGenericVNFId(changedGenericVNFId);
-        assertThat("VNFID must be same as changed VNFID", aai.getGenericVNFId(), is(changedGenericVNFId));
-
+        aai.setGenericVNFId(GENERIC_VNF_ID);
+        aai.setGenericVNFId(CHANGED_GENERIC_VNF_ID);
+        assertThat("VNFID must be same as changed VNFID", aai.getGenericVNFId(), is(CHANGED_GENERIC_VNF_ID));
     }
-
 }

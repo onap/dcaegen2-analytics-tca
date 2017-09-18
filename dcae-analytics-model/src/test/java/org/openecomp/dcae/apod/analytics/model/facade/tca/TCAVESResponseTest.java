@@ -20,59 +20,56 @@
 
 package org.openecomp.dcae.apod.analytics.model.facade.tca;
 
-import org.junit.Test;
-import org.openecomp.dcae.apod.analytics.model.BaseAnalyticsModelUnitTest;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+
+import org.junit.Test;
+import org.openecomp.dcae.apod.analytics.model.BaseAnalyticsModelUnitTest;
 
 /**
  * @author Rajiv Singla . Creation Date: 12/16/2016.
  */
 public class TCAVESResponseTest extends BaseAnalyticsModelUnitTest {
 
-    final String tcaVESCEFResponseJsonFileLocation = "data/json/facade/tca_ves_cef_response.json";
-
+    private static final String TCA_VES_CEF_RESPONSE_JSON_FILE_LOCATION = "data/json/facade/tca_ves_cef_response.json";
 
     @Test
     public void testTCAPolicyJsonConversions() throws Exception {
 
         final TCAVESResponse vesCEFMessageResponse =
-                assertJsonConversions(tcaVESCEFResponseJsonFileLocation, TCAVESResponse.class);
+            assertJsonConversions(TCA_VES_CEF_RESPONSE_JSON_FILE_LOCATION, TCAVESResponse.class);
 
         assertThat("VES CEF Message Response AAI generics VNF Id must match",
-                vesCEFMessageResponse.getAai().getGenericVNFId(), is("vpp-test(?)"));
+            vesCEFMessageResponse.getAai().getGenericVNFId(), is("vpp-test(?)"));
 
         assertThat("VES CEF Message target type must be parsed correctly as VNF",
-                vesCEFMessageResponse.getTargetType(), is("VNF"));
+            vesCEFMessageResponse.getTargetType(), is("VNF"));
 
         assertThat("VES closed Loop Name must be CL-FRWL-LOW-TRAFFIC-SIG-d925ed73-8231-4d02-9545-db4e101f88f8",
-                vesCEFMessageResponse.getClosedLoopControlName(),
-                is("CL-FRWL-LOW-TRAFFIC-SIG-d925ed73-8231-4d02-9545-db4e101f88f8"));
+            vesCEFMessageResponse.getClosedLoopControlName(),
+            is("CL-FRWL-LOW-TRAFFIC-SIG-d925ed73-8231-4d02-9545-db4e101f88f8"));
 
         assertThat("version must be 1.0.2", vesCEFMessageResponse.getVersion(), is("1.0.2"));
 
         assertThat("closedLoopAlarmStart must be 1478189220547",
-                vesCEFMessageResponse.getClosedLoopAlarmStart(), is(1478189220547L));
+            vesCEFMessageResponse.getClosedLoopAlarmStart(), is(1478189220547L));
         assertThat("closedLoopEventClient must be tca.instance00001",
-                vesCEFMessageResponse.getClosedLoopEventClient(), is("tca.instance00001"));
+            vesCEFMessageResponse.getClosedLoopEventClient(), is("tca.instance00001"));
         assertThat("target_type must be VNF", vesCEFMessageResponse.getTargetType(), is("VNF"));
         assertThat("target must be VNF", vesCEFMessageResponse.getTarget(), is("generic-vnf.vnf-id"));
         assertThat("aai generic vnf id must be vpp-test(?)", vesCEFMessageResponse.getAai().getGenericVNFId(),
-                is("vpp-test(?)"));
+            is("vpp-test(?)"));
         assertThat("from must be DCAE", vesCEFMessageResponse.getFrom(), is("DCAE"));
         assertThat("policyScope must be resource=vFirewall;type=configuration",
-                vesCEFMessageResponse.getPolicyScope(), is("resource=vFirewall;type=configuration"));
+            vesCEFMessageResponse.getPolicyScope(), is("resource=vFirewall;type=configuration"));
 
         assertThat("policyName must be configuration.dcae.microservice.tca.xml",
-                vesCEFMessageResponse.getPolicyName(), is("configuration.dcae.microservice.tca.xml"));
+            vesCEFMessageResponse.getPolicyName(), is("configuration.dcae.microservice.tca.xml"));
 
         assertThat("policyVersion must be v0.0.1",
-                vesCEFMessageResponse.getPolicyVersion(), is("v0.0.1"));
+            vesCEFMessageResponse.getPolicyVersion(), is("v0.0.1"));
 
         assertThat("closedLoopEventStatus is ONSET",
-                vesCEFMessageResponse.getClosedLoopEventStatus(), is("ONSET"));
-
+            vesCEFMessageResponse.getClosedLoopEventStatus(), is("ONSET"));
     }
-
 }

@@ -34,13 +34,12 @@ public class EventListener extends BaseCEFModel {
 
 
     private static final long serialVersionUID = 1L;
-    /**
+
+  /**
      * Common Event Format - Event
      *
      * @param event New value for Event
      * @return Common Event Format Event
      */
     private Event event;
-
-
 }

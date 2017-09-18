@@ -20,10 +20,9 @@
 
 package org.openecomp.dcae.apod.analytics.model.domain.cef;
 
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.List;
 
 /**
  * Common Event Format - MeasurementsForVfScaling fields

@@ -32,5 +32,5 @@ public enum EventSeverity implements CEFModel {
     MAJOR,
     MINOR,
     WARNING,
-    NORMAL;
+    NORMAL
 }

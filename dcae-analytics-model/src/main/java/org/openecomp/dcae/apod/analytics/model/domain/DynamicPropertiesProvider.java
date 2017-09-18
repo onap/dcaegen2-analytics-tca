@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * <p>
  *      Problem: Many Entities have dynamic properties as well as known properties.
- *      Known properites can be binded explicitly with all dynamic properties need
+ *      Known properties can be bound explicitly with all dynamic properties need
  *      to be captured also ensuring that there must not be any loss in information
  *      during deserialization / serialization process.
  * </p>
@@ -37,7 +37,6 @@ import java.util.Map;
  * @author Rajiv Singla . Creation Date: 10/18/2016.
  */
 public interface DynamicPropertiesProvider extends DCAEAnalyticsModel {
-
 
     /**
      * Adds dynamic properties in a Map object

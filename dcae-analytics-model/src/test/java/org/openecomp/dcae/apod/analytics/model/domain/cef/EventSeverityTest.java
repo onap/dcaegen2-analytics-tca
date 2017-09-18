@@ -20,14 +20,19 @@
 
 package org.openecomp.dcae.apod.analytics.model.domain.cef;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.openecomp.dcae.apod.analytics.test.BaseDCAEAnalyticsUnitTest;
+import static org.openecomp.dcae.apod.analytics.model.domain.cef.EventSeverity.CRITICAL;
+import static org.openecomp.dcae.apod.analytics.model.domain.cef.EventSeverity.MAJOR;
+import static org.openecomp.dcae.apod.analytics.model.domain.cef.EventSeverity.MINOR;
+import static org.openecomp.dcae.apod.analytics.model.domain.cef.EventSeverity.NORMAL;
+import static org.openecomp.dcae.apod.analytics.model.domain.cef.EventSeverity.WARNING;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openecomp.dcae.apod.analytics.test.BaseDCAEAnalyticsUnitTest;
 
 /**
  *
@@ -47,25 +52,24 @@ public class EventSeverityTest extends BaseDCAEAnalyticsUnitTest {
 
         List<EventSeverity> eventSeverities = new LinkedList<>();
         Collections.addAll(eventSeverities,
-                EventSeverity.NORMAL,
-                EventSeverity.WARNING,
-                EventSeverity.MINOR,
-                EventSeverity.MAJOR,
-                EventSeverity.CRITICAL);
+            NORMAL,
+            WARNING,
+            MINOR,
+            MAJOR,
+            CRITICAL);
 
         Collections.sort(eventSeverities);
 
         List<EventSeverity> expectedEventSeverities = new LinkedList<>();
         Collections.addAll(expectedEventSeverities,
-                EventSeverity.CRITICAL,
-                EventSeverity.MAJOR,
-                EventSeverity.MINOR,
-                EventSeverity.WARNING,
-                EventSeverity.NORMAL
+            CRITICAL,
+            MAJOR,
+            MINOR,
+            WARNING,
+            NORMAL
         );
 
         Assert.assertTrue("Severity Order must be CRITICAL, MAJOR, MINOR, WARNING, NORMAL",
-                eventSeverities.equals(expectedEventSeverities));
-
+            eventSeverities.equals(expectedEventSeverities));
     }
 }

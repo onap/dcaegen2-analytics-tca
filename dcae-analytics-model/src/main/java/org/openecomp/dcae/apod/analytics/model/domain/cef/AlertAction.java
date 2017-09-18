@@ -27,6 +27,6 @@ package org.openecomp.dcae.apod.analytics.model.domain.cef;
  */
 public enum AlertAction implements CEFModel {
 
-    CLEAR, CONT, SET;
+    CLEAR, CONT, SET
 
 }

@@ -29,6 +29,4 @@ import org.openecomp.dcae.apod.analytics.model.domain.DCAEAnalyticsModel;
  * @author Rajiv Singla . Creation Date: 10/17/2016.
  */
 public interface CEFModel extends DCAEAnalyticsModel {
-
-
 }

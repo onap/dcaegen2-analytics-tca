@@ -1,7 +1,7 @@
 {
   "self": {
     "name": "cdap.tca.hi.lo.app",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "cdap tca hi lo application",
     "component_type": "cdap"
   },
@@ -9,8 +9,8 @@
     "subscribes": [
       {
         "config_key": "tca_handle_in",
-        "format": "Common Event Format Definition",
-        "version": "25.0.0",
+        "format": "VES_specification",
+        "version": "5.28.4",
         "type": "message router"
       }
     ],

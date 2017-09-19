@@ -38,7 +38,6 @@ import java.util.Map;
  */
 public interface DynamicPropertiesProvider extends DCAEAnalyticsModel {
 
-
     /**
      * Adds dynamic properties in a Map object
      *

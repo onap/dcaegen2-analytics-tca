@@ -28,6 +28,4 @@ import org.openecomp.dcae.apod.analytics.model.util.json.mixin.BaseDynamicProper
  * @author Rajiv Singla. Creation Date: 08/15/2017.
  */
 public abstract class BaseCEFModelMixin extends BaseDynamicPropertiesProviderMixin {
-
-
 }

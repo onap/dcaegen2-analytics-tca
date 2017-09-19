@@ -33,12 +33,12 @@ import static org.junit.Assert.assertThat;
  */
 public class TCAPolicyMixinTest extends BaseAnalyticsModelUnitTest {
 
-    final String tcaPolicyJsonFileLocation = "data/json/policy/tca_policy.json";
+    private static final String TCA_POLICY_JSON_FILE_LOCATION = "data/json/policy/tca_policy.json";
 
     @Test
     public void testTCAPolicyJsonConversions() throws Exception {
 
-        final TCAPolicy tcaPolicy = assertJsonConversions(tcaPolicyJsonFileLocation, TCAPolicy.class);
+        final TCAPolicy tcaPolicy = assertJsonConversions(TCA_POLICY_JSON_FILE_LOCATION, TCAPolicy.class);
 
         assertThat("TCA Policy Metrics Per Event Name must be 2",
                 tcaPolicy.getMetricsPerEventName().size(), is(2));
@@ -47,10 +47,5 @@ public class TCAPolicyMixinTest extends BaseAnalyticsModelUnitTest {
                 tcaPolicy.getMetricsPerEventName().get(0).getThresholds().size(), is(3));
 
         testSerialization(tcaPolicy, getClass());
-
     }
-
-
-
-
 }

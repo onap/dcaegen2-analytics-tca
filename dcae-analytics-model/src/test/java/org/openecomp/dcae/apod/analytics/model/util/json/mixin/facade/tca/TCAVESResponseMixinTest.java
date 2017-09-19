@@ -33,13 +33,13 @@ import static org.junit.Assert.assertThat;
  */
 public class TCAVESResponseMixinTest extends BaseAnalyticsModelUnitTest {
 
-    final String tcaVESCEFResponseJsonFileLocation = "data/json/facade/tca_ves_cef_response.json";
+    private static final String TCA_VES_CEF_RESPONSE_JSON_FILE_LOCATION = "data/json/facade/tca_ves_cef_response.json";
 
     @Test
     public void testTCAPolicyJsonConversions() throws Exception {
 
         final TCAVESResponse vesCEFMessageResponse =
-                assertJsonConversions(tcaVESCEFResponseJsonFileLocation, TCAVESResponse.class);
+            assertJsonConversions(TCA_VES_CEF_RESPONSE_JSON_FILE_LOCATION, TCAVESResponse.class);
 
         assertThat("VES CEF Message Response AAI generics VNF Id must match",
                 vesCEFMessageResponse.getAai().getGenericVNFId(), is("vpp-test(?)"));
@@ -51,7 +51,5 @@ public class TCAVESResponseMixinTest extends BaseAnalyticsModelUnitTest {
                 vesCEFMessageResponse.getTargetType(), is("VNF"));
 
         testSerialization(vesCEFMessageResponse, getClass());
-
     }
-
 }

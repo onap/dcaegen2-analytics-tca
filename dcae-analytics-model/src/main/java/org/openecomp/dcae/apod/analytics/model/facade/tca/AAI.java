@@ -31,8 +31,19 @@ public class AAI implements TCAFacadeModel {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Generic VNF identifier.
+     *
+     * @param genericVNFId new generic VNF identifier
+     * @return generic VNF identifier
+     */
     private String genericVNFId;
 
+    /**
+     * Generic server identifier.
+     *
+     * @param genericServerId new generic VNF identifier
+     * @return generic server identifier
+     */
     private String genericServerId;
-
 }

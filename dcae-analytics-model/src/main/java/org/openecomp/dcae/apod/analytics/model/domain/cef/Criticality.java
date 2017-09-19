@@ -27,5 +27,5 @@ package org.openecomp.dcae.apod.analytics.model.domain.cef;
  */
 public enum Criticality implements CEFModel {
 
-    CRIT, MAJ, UNKNOWN;
+    CRIT, MAJ, UNKNOWN
 }

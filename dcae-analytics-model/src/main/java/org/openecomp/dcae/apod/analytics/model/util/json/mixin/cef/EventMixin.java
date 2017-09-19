@@ -26,6 +26,4 @@ package org.openecomp.dcae.apod.analytics.model.util.json.mixin.cef;
  * @author Rajiv Singla. Creation Date: 08/15/2017.
  */
 public abstract class EventMixin extends BaseCEFModelMixin {
-
-
 }

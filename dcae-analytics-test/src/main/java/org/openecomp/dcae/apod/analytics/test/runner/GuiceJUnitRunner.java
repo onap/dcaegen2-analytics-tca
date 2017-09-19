@@ -40,7 +40,7 @@ public class GuiceJUnitRunner extends BlockJUnit4ClassRunner {
 
     private static final Logger LOG = LoggerFactory.getLogger(GuiceJUnitRunner.class);
 
-    private Injector injector;
+    private final Injector injector;
 
     public GuiceJUnitRunner(Class<?> klass) throws InitializationError {
         super(klass);
@@ -71,7 +71,7 @@ public class GuiceJUnitRunner extends BlockJUnit4ClassRunner {
         Module[] modules = new Module[classes.length];
         for (int i = 0; i < classes.length; i++) {
             try {
-                modules[i] = (Module) (classes[i]).newInstance();
+                modules[i] = (Module) classes[i].newInstance();
             } catch (InstantiationException | IllegalAccessException e) {
                 throw new InitializationError(e);
             }

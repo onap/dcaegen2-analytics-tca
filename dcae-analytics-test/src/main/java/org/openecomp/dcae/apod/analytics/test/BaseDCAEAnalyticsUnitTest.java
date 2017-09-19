@@ -26,6 +26,4 @@ package org.openecomp.dcae.apod.analytics.test;
  * @author Rajiv Singla . Creation Date: 10/6/2016.
  */
 public abstract class BaseDCAEAnalyticsUnitTest extends BaseDCAEAnalyticsCommonTest {
-
-
 }

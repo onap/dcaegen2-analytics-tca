@@ -44,7 +44,7 @@ public class Event extends BaseCEFModel {
     private CommonEventHeader commonEventHeader;
 
     /**
-     * MeasurementsForVfScaling fields
+     * Measurements for Vf scaling fields
      *
      * @param measurementsForVfScalingFields New value for MeasurementsForVfScaling
      * @return MeasurementsForVfScaling fields
@@ -52,12 +52,10 @@ public class Event extends BaseCEFModel {
     private MeasurementsForVfScalingFields measurementsForVfScalingFields;
 
     /**
-     * Threshold crossing Fields
+     * Threshold crossing alert Fields.
      *
      * @param thresholdCrossingAlertFields New value for Threshold crossing Fields
      * @return Threshold crossing Fields
      */
     private ThresholdCrossingAlertFields thresholdCrossingAlertFields;
-
-
 }

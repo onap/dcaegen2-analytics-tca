@@ -62,8 +62,6 @@ public abstract class BaseDynamicPropertiesProvider implements DynamicProperties
      * @return return true if Dynamic Properties are present
      */
     public boolean isDynamicPropertiesPresent() {
-        return dynamicProperties.size() == 0;
+        return dynamicProperties.isEmpty();
     }
-
-
 }

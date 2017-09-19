@@ -43,6 +43,9 @@ public abstract class BaseAnalyticsModelUnitTest extends BaseDCAEAnalyticsUnitTe
 
     protected static ObjectMapper objectMapper;
 
+    /**
+     * Before running test cases need to assign object mapper.
+     */
     @BeforeClass
     public static void beforeClass() {
         final AnalyticsModelObjectMapperSupplier analyticsModelObjectMapperSupplier =
@@ -52,7 +55,7 @@ public abstract class BaseAnalyticsModelUnitTest extends BaseDCAEAnalyticsUnitTe
 
 
     /**
-     * Deserialize given Json file location to given model class and returns it back without any validation check
+     * Deserialize given Json file location to given model class and returns it back without any validation check.
      *
      * @param jsonFileLocation Classpath location of the json file
      * @param modelClass       Model Class type
@@ -81,7 +84,7 @@ public abstract class BaseAnalyticsModelUnitTest extends BaseDCAEAnalyticsUnitTe
 
     /**
      * Deserialize given Json file location to given model class and then validates deserialization by comparing it
-     * with given expected Object
+     * with given expected Object.
      *
      * @param jsonFileLocation   Classpath location of the json file
      * @param modelClass         Model Class type
@@ -95,12 +98,18 @@ public abstract class BaseAnalyticsModelUnitTest extends BaseDCAEAnalyticsUnitTe
         return actualValue;
     }
 
+    /**
+     * Serialize model to json.
+     * @param model model
+     * @return json
+     * @throws JsonProcessingException when fails to process object
+     */
     public static String serializeModelToJson(Object model) throws JsonProcessingException {
         return objectMapper.writeValueAsString(model);
     }
 
     /**
-     * Converts given model to json string and compare it with json present at given file location
+     * Converts given model to json string and compare it with json present at given file location.
      *
      * @param model                    Model which needs to be compared
      * @param expectedJsonFileLocation Location of file containing expected json string
@@ -114,17 +123,16 @@ public abstract class BaseAnalyticsModelUnitTest extends BaseDCAEAnalyticsUnitTe
             assertJson(expectedModelString, actualModelString);
             return model;
         } catch (IOException | JSONException ex) {
-            LOG.error("Error while doing assert Json serialization Assertion: model: {}, " +
-                    "expected Json File Location: {}, Exception {}", model, expectedJsonFileLocation, ex);
+            LOG.error("Error while doing assert Json serialization Assertion: model: {}, "
+                + "expected Json File Location: {}, Exception {}", model, expectedJsonFileLocation, ex);
             throw new RuntimeException(ex);
         }
-
     }
 
 
     /**
      * Checks both serialization and deserialization.
-     *
+     * </p>
      * First checks deserialization and then serialize the deserialized object back to json
      * and check if matches the given json file location string
      *
@@ -143,6 +151,4 @@ public abstract class BaseAnalyticsModelUnitTest extends BaseDCAEAnalyticsUnitTe
 
         return actualValue;
     }
-
-
 }

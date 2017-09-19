@@ -86,8 +86,8 @@ abstract class BaseDCAEAnalyticsCommonTest {
             final String newLine = System.getProperty("line.separator");
             String line = reader.readLine();
             while (line != null) {
-                result.append(line);
-                result.append(newLine);
+                result.append(line)
+                    .append(newLine);
                 line = reader.readLine();
             }
             jsonFileInputStream.close();

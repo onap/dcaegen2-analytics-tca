@@ -20,10 +20,9 @@
 
 package org.openecomp.dcae.apod.analytics.model.domain.cef;
 
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.List;
 
 /**
  * Common Event Format - Fields Specific to threshold crossing alert events
@@ -37,7 +36,7 @@ public class ThresholdCrossingAlertFields extends BaseCEFModel {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Additional Performance counters
+     * Additional Performance counters parameters.
      *
      * @param additionalParameters New value for Additional Performance counters
      * @return Additional Performance counters
@@ -45,10 +44,10 @@ public class ThresholdCrossingAlertFields extends BaseCEFModel {
     private List<PerformanceCounter> additionalParameters;
 
     /**
-     *  Event Action
+     *  Event alert action
      *
      *  @param alertAction New Event Action
-     *  @return Event Action
+     *  @return Event alert action
      */
     private AlertAction alertAction;
 
@@ -156,6 +155,4 @@ public class ThresholdCrossingAlertFields extends BaseCEFModel {
      * @return Version of the thresholdCrossingAlertFields block
      */
     private Integer thresholdCrossingFieldsVersion;
-
-
 }

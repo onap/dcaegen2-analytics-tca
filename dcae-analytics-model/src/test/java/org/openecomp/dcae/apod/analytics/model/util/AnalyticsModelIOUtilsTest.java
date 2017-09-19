@@ -54,16 +54,15 @@ public class AnalyticsModelIOUtilsTest extends BaseAnalyticsModelUnitTest {
         assertEquals("App Description much with json settings file value", "Test App Description", appDescription);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = IOException.class)
     public void testConvertToJsonObjectWhenFileLocationIsInvValid() throws Exception {
         AnalyticsModelIOUtils.convertToJsonObject("InvalidFileLocation", ConfigHolder.class);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = IOException.class)
     public void testConvertToJsonObjectWhenJsonFileHasInvalidJson() throws Exception {
         AnalyticsModelIOUtils.convertToJsonObject(INVALID_TEST_CONFIG_FILE_LOCATION, ConfigHolder.class);
     }
-
 
     @Test
     public void testValidPropertiesFileLoading() throws Exception {
@@ -82,8 +81,6 @@ public class AnalyticsModelIOUtilsTest extends BaseAnalyticsModelUnitTest {
         final Properties mockProperties = Mockito.mock(Properties.class);
         doThrow(new IOException()).when(mockProperties).load(any(InputStream.class));
         AnalyticsModelIOUtils.loadPropertiesFile(TEST_PROPERTIES_FILE_LOCATION, mockProperties);
-
     }
-    
 }
 

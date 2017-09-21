@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a437d4f_e16c6dd2",
+        "filename": "dcae-analytics-model/src/main/java/org/openecomp/dcae/apod/analytics/model/facade/tca/AAI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1711
+      },
+      "writtenOn": "2017-09-21T20:45:40Z",
+      "side": 1,
+      "message": "In my view, these comments are superfluous - they don\u0027t add any more information to already well-chosen name. I would remove them.",
+      "revId": "6de451c3d01223c3ccb647e59d0f27a72fd4386d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_c17169a9",
+        "filename": "dcae-analytics-model/src/main/java/org/openecomp/dcae/apod/analytics/model/facade/tca/TCAVESResponse.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1711
+      },
+      "writtenOn": "2017-09-21T20:45:40Z",
+      "side": 1,
+      "message": "In my view, these comments are superfluous - they don\u0027t add any more information to already well-chosen name. I would remove them.",
+      "revId": "6de451c3d01223c3ccb647e59d0f27a72fd4386d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}

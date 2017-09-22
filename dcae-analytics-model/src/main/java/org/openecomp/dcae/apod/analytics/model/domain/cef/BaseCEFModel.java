@@ -36,6 +36,4 @@ import org.openecomp.dcae.apod.analytics.model.domain.BaseDynamicPropertiesProvi
 @Data
 @EqualsAndHashCode(callSuper = true)
 public abstract class BaseCEFModel extends BaseDynamicPropertiesProvider implements CEFModel {
-
-
 }

@@ -32,7 +32,7 @@ public enum AlertType implements CEFModel {
     SERVICE_ANOMALY("SERVICE-ANOMALY"),
     UNKNOWN(null);
 
-    private String name;
+    private final String name;
 
     AlertType(String name) {
         this.name = name;
@@ -41,5 +41,4 @@ public enum AlertType implements CEFModel {
     public String getName() {
         return name;
     }
-
 }

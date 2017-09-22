@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Rama SubbaReddy <rama.subba.reddy.s@huawei.com>
+Code-Review+1: Alexei Nekrassov <nekrassov@att.com>
+Code-Review+2: Tony Hansen <tony@att.com>
+Submitted-by: Tony Hansen <tony@att.com>
+Submitted-at: Fri, 22 Sep 2017 13:50:25 +0000
+Reviewed-on: http://gerrit.onap.org/r/13517
+Project: dcaegen2/analytics/tca
+Branch: refs/heads/master

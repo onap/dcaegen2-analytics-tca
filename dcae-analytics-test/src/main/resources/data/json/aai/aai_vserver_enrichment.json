@@ -1,0 +1,10 @@
+{
+  "vserver-id": "example-vserver-id-val-2",
+  "vserver-name": "example-vserver-name-val-2",
+  "vserver-name2": "example-vserver-name2-val-2",
+  "prov-status": "example-prov-status-val-2",
+  "vserver-selflink": "example-vserver-selflink-val-2",
+  "in-maint": true,
+  "is-closed-loop-disabled": true,
+  "resource-version": "1504912891060"
+}

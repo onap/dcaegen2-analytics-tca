@@ -49,7 +49,7 @@ public class Threshold extends BaseTCAPolicyModel {
      * @param closedLoopEventStatus New value for Closed Loop Event Status
      * @return Closed Loop Event Status
      */
-    private ControlLoopEventStatus closedLoopEventStatus;
+    private ClosedLoopEventStatus closedLoopEventStatus;
 
     /**
      * Threshold Version

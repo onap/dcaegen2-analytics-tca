@@ -22,7 +22,7 @@ package org.openecomp.dcae.apod.analytics.model.domain.policy.tca;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.openecomp.dcae.apod.analytics.model.domain.BaseDynamicPropertiesProvider;
+import org.openecomp.dcae.apod.analytics.model.BaseDynamicPropertiesProvider;
 
 /**
  * <p>

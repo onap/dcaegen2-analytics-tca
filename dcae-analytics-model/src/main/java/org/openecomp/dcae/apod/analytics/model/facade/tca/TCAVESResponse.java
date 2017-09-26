@@ -32,18 +32,19 @@ public class TCAVESResponse implements TCAFacadeModel {
 
     private static final long serialVersionUID = 1L;
 
-    private String closedLoopControlName;
-    private String version;
-    private String requestID;
-    private Long closedLoopAlarmStart;
-    private String closedLoopEventClient;
-    private String targetType;
     private AAI aai;
-    private String target;
-    private String from;
-    private String policyScope;
-    private String policyName;
-    private String policyVersion;
+    private Long closedLoopAlarmEnd;
+    private Long closedLoopAlarmStart;
+    private String closedLoopControlName;
+    private String closedLoopEventClient;
     private String closedLoopEventStatus;
+    private String from;
+    private String policyName;
+    private String policyScope;
+    private String policyVersion;
+    private String requestID;
+    private String target;
+    private String targetType;
+    private String version;
 
 }

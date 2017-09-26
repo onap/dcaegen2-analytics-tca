@@ -46,6 +46,7 @@ public class TCAAnalyticsApplication extends AbstractApplication<TCAAppConfig> {
     private static final Logger LOG = LoggerFactory.getLogger(TCAAnalyticsApplication.class);
 
     @Override
+    @SuppressWarnings("unchecked")
     public void configure() {
 
 

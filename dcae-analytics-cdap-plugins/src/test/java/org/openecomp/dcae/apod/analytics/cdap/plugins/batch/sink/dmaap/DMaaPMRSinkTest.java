@@ -81,6 +81,7 @@ public class DMaaPMRSinkTest extends BaseAnalyticsCDAPPluginsUnitTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testTransform() throws Exception {
         final StructuredRecord structuredRecord = Mockito.mock(StructuredRecord.class);
         final Emitter emitter = Mockito.mock(Emitter.class);

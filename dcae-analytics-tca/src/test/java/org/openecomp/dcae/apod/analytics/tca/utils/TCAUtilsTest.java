@@ -20,6 +20,7 @@
 
 package org.openecomp.dcae.apod.analytics.tca.utils;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Table;
@@ -35,12 +36,13 @@ import org.openecomp.dcae.apod.analytics.model.domain.cef.Domain;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.Event;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventListener;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventSeverity;
-import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ControlLoopEventStatus;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ClosedLoopEventStatus;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ControlLoopSchemaType;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Direction;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerEventName;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.TCAPolicy;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Threshold;
+import org.openecomp.dcae.apod.analytics.model.facade.tca.AAI;
 import org.openecomp.dcae.apod.analytics.model.facade.tca.TCAVESResponse;
 import org.openecomp.dcae.apod.analytics.tca.BaseAnalyticsTCAUnitTest;
 import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFProcessorContext;
@@ -82,8 +84,8 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
         final TCAPolicy sampleTCAPolicy = getSampleTCAPolicy();
         final List<String> eventNames = TCAUtils.getPolicyEventNames(sampleTCAPolicy);
 
-        assertThat("Policy event names must contain vFirewall and vLoadBalancer", eventNames,
-                containsInAnyOrder("Mfvs_eNodeB_RANKPI", "vLoadBalancer"));
+        assertThat("Policy event names must contain vFirewall, vLoadBalancer, virtualVMEventName", eventNames,
+                containsInAnyOrder("Mfvs_eNodeB_RANKPI", "vLoadBalancer", "virtualVMEventName"));
     }
 
     @Test
@@ -93,7 +95,7 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
                 (sampleTCAPolicy);
         final List<String> eventNames = policyEventNamesSupplier.get();
         assertThat("Policy event names must contain vFirewall and vLoadBalancer", eventNames,
-                containsInAnyOrder("Mfvs_eNodeB_RANKPI", "vLoadBalancer"));
+                containsInAnyOrder("Mfvs_eNodeB_RANKPI", "vLoadBalancer", "virtualVMEventName"));
     }
 
     @Test
@@ -328,7 +330,7 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
 
 
     @Test
-    public void testCreateTCAPolicyMetricsPerFunctionalRoleList() throws Exception {
+    public void testCreateTCAPolicyMetricsPerKeyName() throws Exception {
 
         final Map<String, String> tcaPolicyMap = TCAUtils.filterMapByKeyNamePrefix(getControllerRuntimeArguments(),
                 AnalyticsConstants.TCA_POLICY_METRICS_PER_FUNCTIONAL_ROLE_PATH);
@@ -401,7 +403,7 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
         violatedThreshold.setActualFieldValue(100L);
         violatedThreshold.setFieldPath("violatedThresholdFieldPath");
         violatedThreshold.setVersion("violatedThresholdVersion");
-        violatedThreshold.setClosedLoopEventStatus(ControlLoopEventStatus.ONSET);
+        violatedThreshold.setClosedLoopEventStatus(ClosedLoopEventStatus.ONSET);
         violatedThreshold.setThresholdValue(50L);
 
         final MetricsPerEventName violatedMetrics = new MetricsPerEventName();

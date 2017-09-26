@@ -20,7 +20,7 @@
 
 package org.openecomp.dcae.apod.analytics.model.domain.policy;
 
-import org.openecomp.dcae.apod.analytics.model.domain.DCAEAnalyticsModel;
+import org.openecomp.dcae.apod.analytics.model.DCAEAnalyticsModel;
 
 /**
  * <p>

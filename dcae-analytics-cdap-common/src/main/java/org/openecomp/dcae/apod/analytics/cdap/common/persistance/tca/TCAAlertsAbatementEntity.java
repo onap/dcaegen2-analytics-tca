@@ -33,7 +33,7 @@ import java.io.Serializable;
  * TCA Alerts Abatement Entity is used to persist information to determine if abatement event need to sent to downstream
  * systems
  *
- *  @author rs153v (Rajiv Singla) . Creation Date: 9/11/2017.
+ *  @author Rajiv Singla . Creation Date: 9/11/2017.
  */
 public class TCAAlertsAbatementEntity implements Writable, Serializable {
 

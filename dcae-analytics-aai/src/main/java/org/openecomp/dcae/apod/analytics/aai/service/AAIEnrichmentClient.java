@@ -18,15 +18,28 @@
  *  ============================LICENSE_END===========================================
  */
 
-package org.openecomp.dcae.apod.analytics.model.domain;
+package org.openecomp.dcae.apod.analytics.aai.service;
 
-import java.io.Serializable;
+import java.util.Map;
 
 /**
  * <p>
- *     Marker Interface for all DCAE Analytics Model implementations
+ * A client used to get enrichment details from A&AI
  * </p>
- * @author Rajiv Singla . Creation Date: 11/5/2016.
+ *
+ * @author Rajiv Singla . Creation Date: 9/15/2017.
  */
-public interface DCAEAnalyticsModel extends Serializable {
+public interface AAIEnrichmentClient {
+
+    /**
+     * Provides enrichment details from A&AI API and returns them as string. If no enrichment lookup fails returns null
+     *
+     * @param aaiAPIPath A&AI API Path
+     * @param queryParams A&AI Query Params map
+     * @param headers A&AI HTTP Headers
+     *
+     * @return Enrichment details from A&AI API and returns them as string. If enrichment lookup fails returns null
+     */
+    String getEnrichmentDetails(String aaiAPIPath, Map<String, String> queryParams, Map<String, String> headers);
+
 }

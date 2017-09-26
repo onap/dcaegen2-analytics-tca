@@ -60,6 +60,25 @@ public class TCAPreferencesValidator implements CDAPAppSettingsValidator<TCAAppP
             validationResponse.addErrorMessage("publisherTopicName", "Publisher topic name must be present");
         }
 
+        final Boolean enableAAIEnrichment = appPreferences.getEnableAAIEnrichment();
+
+        // if aai enrichment is enabled then do some aai validations
+        if (enableAAIEnrichment) {
+            final String aaiEnrichmentHost = appPreferences.getAaiEnrichmentHost();
+            if (isEmpty(aaiEnrichmentHost)) {
+                validationResponse.addErrorMessage("aaiEnrichmentHost", "AAI Enrichment Host must be present");
+            }
+            final String aaiVMEnrichmentAPIPath = appPreferences.getAaiVMEnrichmentAPIPath();
+            if (isEmpty(aaiVMEnrichmentAPIPath)) {
+                validationResponse.addErrorMessage("aaiVMEnrichmentAPIPath", "AAI VM Enrichment path must be present");
+            }
+            final String aaiVNFEnrichmentAPIPath = appPreferences.getAaiVNFEnrichmentAPIPath();
+            if (isEmpty(aaiVNFEnrichmentAPIPath)) {
+                validationResponse.addErrorMessage("aaiVNFEnrichmentAPIPath", "AAI VNF Enrichment path must be " +
+                        "present");
+            }
+        }
+
         return validationResponse;
     }
 }

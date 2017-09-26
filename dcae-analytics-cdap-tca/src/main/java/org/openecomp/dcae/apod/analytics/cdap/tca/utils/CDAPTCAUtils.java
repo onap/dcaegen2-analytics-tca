@@ -24,6 +24,8 @@ import co.cask.cdap.api.RuntimeContext;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
+import org.openecomp.dcae.apod.analytics.aai.domain.config.AAIHttpClientConfig;
+import org.openecomp.dcae.apod.analytics.aai.domain.config.AAIHttpClientConfigBuilder;
 import org.openecomp.dcae.apod.analytics.cdap.common.exception.CDAPSettingsException;
 import org.openecomp.dcae.apod.analytics.cdap.common.persistance.tca.TCAVESAlertEntity;
 import org.openecomp.dcae.apod.analytics.cdap.tca.settings.TCAAppPreferences;
@@ -97,6 +99,30 @@ public abstract class CDAPTCAUtils extends TCAUtils {
         validateSettings(tcaAppPreferences, new TCAPreferencesValidator());
 
         return tcaAppPreferences;
+    }
+
+    /**
+     * Creates an A&AI Http Client config from give {@link TCAAppPreferences}
+     *
+     * @param tcaAppPreferences TCA App Preferences
+     *
+     * @return A&AI Http Client config
+     */
+    public static AAIHttpClientConfig createAAIEnrichmentClientConfig(final TCAAppPreferences tcaAppPreferences) {
+        final String aaiEnrichmentProxyURLString = tcaAppPreferences.getAaiEnrichmentProxyURL();
+        URL aaiEnrichmentProxyURL = null;
+        if (StringUtils.isNotBlank(aaiEnrichmentProxyURLString)) {
+            aaiEnrichmentProxyURL = parseURL(aaiEnrichmentProxyURLString);
+        }
+
+        return new AAIHttpClientConfigBuilder(tcaAppPreferences.getAaiEnrichmentHost())
+                .setAaiProtocol(tcaAppPreferences.getAaiEnrichmentProtocol())
+                .setAaiHostPortNumber(tcaAppPreferences.getAaiEnrichmentPortNumber())
+                .setAaiUserName(tcaAppPreferences.getAaiEnrichmentUserName())
+                .setAaiUserPassword(tcaAppPreferences.getAaiEnrichmentUserPassword())
+                .setAaiProxyURL(aaiEnrichmentProxyURL)
+                .setAaiIgnoreSSLCertificateErrors(tcaAppPreferences.getAaiEnrichmentIgnoreSSLCertificateErrors())
+                .build();
     }
 
     /**

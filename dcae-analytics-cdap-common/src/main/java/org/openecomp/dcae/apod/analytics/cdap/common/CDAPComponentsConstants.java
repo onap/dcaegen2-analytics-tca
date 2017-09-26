@@ -173,6 +173,23 @@ public abstract class CDAPComponentsConstants {
      */
     public static final String TCA_FIXED_VES_ALERTS_ABATEMENT_NAME_OUTPUT = "TCAVESAlertsAbatementFlowletOutput";
 
+
+    /**
+     * Fixed Name for TCA VES A&AI Enrichment Flowlet
+     */
+    public static final String TCA_FIXED_VES_AAI_ENRICHMENT_NAME_FLOWLET = "TCAVESAAIEnrichmentFlowlet";
+
+    /**
+     * Fixed Description for TCA VES A&AI Enrichment Flowlet
+     */
+    public static final String TCA_FIXED_VES_AAI_ENRICHMENT_DESCRIPTION_FLOWLET =
+            "Performs A&AI Enrichment of non abated alerts";
+
+    /**
+     * Fixed Name for TCA VES A&AI Enrichment Flowlet output
+     */
+    public static final String TCA_FIXED_VES_AAI_ENRICHMENT_NAME_OUTPUT = "TCAVESAAIEnrichmentFlowletOutput";
+
     /**
      * Fixed Name for TCA VES Alerts Sink Flowlet
      */

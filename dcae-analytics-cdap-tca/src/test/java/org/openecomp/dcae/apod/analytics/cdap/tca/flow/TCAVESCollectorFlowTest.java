@@ -43,6 +43,7 @@ import static org.junit.Assert.assertThat;
 public class TCAVESCollectorFlowTest extends BaseAnalyticsCDAPTCAUnitTest {
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testConfigure() throws Exception {
 
         final TCAVESCollectorFlow tcavesCollectorFlow = new TCAVESCollectorFlow(getTCATestAppConfig());
@@ -64,12 +65,13 @@ public class TCAVESCollectorFlowTest extends BaseAnalyticsCDAPTCAUnitTest {
                 containsInAnyOrder(CDAPComponentsConstants.TCA_FIXED_VES_MESSAGE_ROUTER_NAME_FLOWLET,
                         CDAPComponentsConstants.TCA_FIXED_VES_THRESHOLD_VIOLATION_CALCULATOR_NAME_FLOWLET,
                         CDAPComponentsConstants.TCA_FIXED_VES_ALERTS_ABATEMENT_NAME_FLOWLET,
+                        CDAPComponentsConstants.TCA_FIXED_VES_AAI_ENRICHMENT_NAME_FLOWLET,
                         CDAPComponentsConstants.TCA_FIXED_VES_ALERTS_SINK_NAME_FLOWLET));
 
         final List<FlowletConnection> connections =
                 (List<FlowletConnection>) getPrivateFiledValue(configurer, "connections", ArrayList.class);
 
-        assertThat("There must be four connections in VES Collector Flow", connections.size(), is(4));
+        assertThat("There must be four connections in VES Collector Flow", connections.size(), is(5));
 
     }
 

@@ -1,20 +1,37 @@
+/*
+ * ===============================LICENSE_START======================================
+ *  dcae-analytics
+ * ================================================================================
+ *    Copyright © 2017 AT&T Intellectual Property. All rights reserved.
+ * ================================================================================
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *          http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *  ============================LICENSE_END===========================================
+ */
+
 package org.openecomp.dcae.apod.analytics.cdap.tca.flowlet;
 
 import co.cask.cdap.api.dataset.lib.ObjectMappedTable;
 import co.cask.cdap.api.flow.flowlet.FlowletContext;
 import co.cask.cdap.api.flow.flowlet.OutputEmitter;
 import com.google.common.collect.ImmutableList;
-import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.openecomp.dcae.apod.analytics.cdap.common.CDAPComponentsConstants;
 import org.openecomp.dcae.apod.analytics.cdap.common.domain.tca.ThresholdCalculatorOutput;
 import org.openecomp.dcae.apod.analytics.cdap.common.exception.CDAPSettingsException;
 import org.openecomp.dcae.apod.analytics.cdap.common.persistance.tca.TCAAlertsAbatementEntity;
-import org.openecomp.dcae.apod.analytics.cdap.common.persistance.tca.TCAVESAlertEntity;
 import org.openecomp.dcae.apod.analytics.cdap.tca.BaseAnalyticsCDAPTCAUnitTest;
 import org.openecomp.dcae.apod.analytics.cdap.tca.settings.TCAPolicyPreferences;
-import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ControlLoopEventStatus;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ClosedLoopEventStatus;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerEventName;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Threshold;
 import org.openecomp.dcae.apod.analytics.tca.utils.TCAUtils;
@@ -22,7 +39,6 @@ import org.openecomp.dcae.apod.analytics.tca.utils.TCAUtils;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
@@ -32,8 +48,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Author: rs153v (Rajiv Singla) . Creation Date: 9/12/2017.
+ * @author Rajiv Singla . Creation Date: 9/12/2017.
  */
+@SuppressWarnings("unchecked")
 public class TCAVESAlertsAbatementFlowletTest extends BaseAnalyticsCDAPTCAUnitTest {
 
     private static final TCAPolicyPreferences sampleTCAPolicyPreferences = getSampleTCAPolicyPreferences();
@@ -64,7 +81,7 @@ public class TCAVESAlertsAbatementFlowletTest extends BaseAnalyticsCDAPTCAUnitTe
 
         final TestTCAVESAlertsAbatementFlowlet tcaAlertsAbatementFlowlet =
                 new TestTCAVESAlertsAbatementFlowlet("testTCAAlertsAbatementTableName");
-        final Threshold violatedThreshold = getViolatedThreshold(ControlLoopEventStatus.ONSET);
+        final Threshold violatedThreshold = getViolatedThreshold(ClosedLoopEventStatus.ONSET);
         final ThresholdCalculatorOutput mockThresholdCalculatorOutput =
                 getMockThresholdCalculatorOutput(violatedThreshold);
         when(mockThresholdCalculatorOutput.getViolatedMetricsPerEventName()).thenReturn("");
@@ -86,7 +103,7 @@ public class TCAVESAlertsAbatementFlowletTest extends BaseAnalyticsCDAPTCAUnitTe
 
         doNothing().when(mockObjectMappedTable).write(any(String.class), any(TCAAlertsAbatementEntity.class));
 
-        final Threshold violatedThreshold = getViolatedThreshold(ControlLoopEventStatus.ONSET);
+        final Threshold violatedThreshold = getViolatedThreshold(ClosedLoopEventStatus.ONSET);
         final ThresholdCalculatorOutput mockThresholdCalculatorOutput =
                 getMockThresholdCalculatorOutput(violatedThreshold);
 
@@ -115,7 +132,7 @@ public class TCAVESAlertsAbatementFlowletTest extends BaseAnalyticsCDAPTCAUnitTe
         when(mockObjectMappedTable.read(any(String.class))).thenReturn(tcaAlertsAbatementEntity);
         when(tcaAlertsAbatementEntity.getAbatementSentTS()).thenReturn(null);
 
-        final Threshold violatedThreshold = getViolatedThreshold(ControlLoopEventStatus.ABATED);
+        final Threshold violatedThreshold = getViolatedThreshold(ClosedLoopEventStatus.ABATED);
         final ThresholdCalculatorOutput mockThresholdCalculatorOutput =
                 getMockThresholdCalculatorOutput(violatedThreshold);
 
@@ -145,7 +162,7 @@ public class TCAVESAlertsAbatementFlowletTest extends BaseAnalyticsCDAPTCAUnitTe
         final long time = new Date().getTime();
         when(tcaAlertsAbatementEntity.getAbatementSentTS()).thenReturn(Long.toString(time));
 
-        final Threshold violatedThreshold = getViolatedThreshold(ControlLoopEventStatus.ABATED);
+        final Threshold violatedThreshold = getViolatedThreshold(ClosedLoopEventStatus.ABATED);
         final ThresholdCalculatorOutput mockThresholdCalculatorOutput =
                 getMockThresholdCalculatorOutput(violatedThreshold);
 
@@ -173,7 +190,7 @@ public class TCAVESAlertsAbatementFlowletTest extends BaseAnalyticsCDAPTCAUnitTe
         doNothing().when(mockObjectMappedTable).write(any(String.class), any(TCAAlertsAbatementEntity.class));
         when(mockObjectMappedTable.read(any(String.class))).thenReturn(null);
 
-        final Threshold violatedThreshold = getViolatedThreshold(ControlLoopEventStatus.ABATED);
+        final Threshold violatedThreshold = getViolatedThreshold(ClosedLoopEventStatus.ABATED);
         final ThresholdCalculatorOutput mockThresholdCalculatorOutput =
                 getMockThresholdCalculatorOutput(violatedThreshold);
 
@@ -189,7 +206,7 @@ public class TCAVESAlertsAbatementFlowletTest extends BaseAnalyticsCDAPTCAUnitTe
             Exception {
         final TestTCAVESAlertsAbatementFlowlet tcaAlertsAbatementFlowlet =
                 new TestTCAVESAlertsAbatementFlowlet("testTCAAlertsAbatementTableName");
-        final Threshold violatedThreshold = getViolatedThreshold(ControlLoopEventStatus.CONTINUE);
+        final Threshold violatedThreshold = getViolatedThreshold(ClosedLoopEventStatus.CONTINUE);
         final ThresholdCalculatorOutput mockThresholdCalculatorOutput =
                 getMockThresholdCalculatorOutput(violatedThreshold);
 
@@ -197,9 +214,9 @@ public class TCAVESAlertsAbatementFlowletTest extends BaseAnalyticsCDAPTCAUnitTe
 
     }
 
-    private static Threshold getViolatedThreshold(final ControlLoopEventStatus controlLoopEventStatus) {
+    private static Threshold getViolatedThreshold(final ClosedLoopEventStatus closedLoopEventStatus) {
         final Threshold violatedThreshold = Threshold.copy(metricsPerEventNames.get(0).getThresholds().get(0));
-        violatedThreshold.setClosedLoopEventStatus(controlLoopEventStatus);
+        violatedThreshold.setClosedLoopEventStatus(closedLoopEventStatus);
         return violatedThreshold;
     }
 

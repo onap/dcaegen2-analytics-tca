@@ -24,7 +24,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Suppliers;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventListener;
-import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ControlLoopEventStatus;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ClosedLoopEventStatus;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Direction;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.TCAPolicy;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Threshold;
@@ -58,6 +58,8 @@ public abstract class BaseAnalyticsTCAUnitTest extends BaseDCAEAnalyticsUnitTest
 
     protected static final String TCA_CONTROLLER_POLICY_FILE_LOCATION =
             "data/properties/tca_controller_policy.properties";
+
+    protected static final String TCA_AAI_VNF_ENRICHMENT_FILE_LOCATION = "data/json/aai/aai_vnf_enrichment.json";
 
     protected static final String TCA_TEST_APP_CONFIG_NAME = "testTCAAppName";
     protected static final String TCA_TEST_APP_CONFIG_DESCRIPTION = "testTCAAppDescription";
@@ -124,14 +126,14 @@ public abstract class BaseAnalyticsTCAUnitTest extends BaseDCAEAnalyticsUnitTest
         majorThreshold.setFieldPath("$.event.measurementsForVfScalingFields.vNicUsageArray[*].packetsIn");
         majorThreshold.setVersion("Test Version");
         majorThreshold.setThresholdValue(500L);
-        majorThreshold.setClosedLoopEventStatus(ControlLoopEventStatus.ONSET);
+        majorThreshold.setClosedLoopEventStatus(ClosedLoopEventStatus.ONSET);
         majorThreshold.setDirection(Direction.LESS_OR_EQUAL);
 
         Threshold criticalThreshold = new Threshold();
         criticalThreshold.setClosedLoopControlName("CL-LBAL-LOW-TRAFFIC-SIG-FB480F95-A453-6F24-B767-FD703241AB1A");
         criticalThreshold.setThresholdValue(5000L);
         criticalThreshold.setFieldPath("$.event.measurementsForVfScalingFields.vNicUsageArray[*].packetsIn");
-        criticalThreshold.setClosedLoopEventStatus(ControlLoopEventStatus.ONSET);
+        criticalThreshold.setClosedLoopEventStatus(ClosedLoopEventStatus.ONSET);
         criticalThreshold.setDirection(Direction.GREATER_OR_EQUAL);
         return Arrays.asList(majorThreshold, criticalThreshold);
     }

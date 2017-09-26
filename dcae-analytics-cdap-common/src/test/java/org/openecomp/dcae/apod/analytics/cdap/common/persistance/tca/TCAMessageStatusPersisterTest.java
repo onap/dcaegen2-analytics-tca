@@ -60,10 +60,10 @@ public class TCAMessageStatusPersisterTest extends BaseAnalyticsCDAPCommonUnitTe
     private EventListener eventListener;
     private Event event;
     private CommonEventHeader commonEventHeader;
-    private String functionalRole;
 
 
     @Before
+    @SuppressWarnings("unchecked")
     public void before() {
         vesMessageStatusTable = mock(ObjectMappedTable.class);
         processorContext = mock(TCACEFProcessorContext.class);

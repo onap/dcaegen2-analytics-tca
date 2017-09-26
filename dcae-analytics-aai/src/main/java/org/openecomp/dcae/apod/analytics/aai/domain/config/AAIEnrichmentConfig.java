@@ -18,13 +18,16 @@
  *  ============================LICENSE_END===========================================
  */
 
-package org.openecomp.dcae.apod.analytics.model.util.json.mixin.policy.tca;
+package org.openecomp.dcae.apod.analytics.aai.domain.config;
 
-import org.openecomp.dcae.apod.analytics.model.util.json.mixin.JsonMixin;
+import java.io.Serializable;
 
 /**
+ * <p>
+ * Marker interface for all A&AI API Enrichment Configs
+ * </p>
  *
- * @author Rajiv Singla . Creation Date: 9/11/2017.
+ * @author Rajiv Singla . Creation Date: 9/14/2017.
  */
-public abstract class ControlLoopEventStatusMixin implements JsonMixin {
+public interface AAIEnrichmentConfig extends Serializable {
 }

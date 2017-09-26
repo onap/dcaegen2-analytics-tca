@@ -1,0 +1,39 @@
+{
+  "vnf-id": "63b31229-9a3a-444f-9159-04ce2dca3be9",
+  "vnf-name": "vCPEInfraVNF13",
+  "vnf-type": "vCPEInfraService10/vCPEInfraService10 0",
+  "service-id": "e8cb8968-5411-478b-906a-f28747de72cd",
+  "prov-status": "PREPROV",
+  "orchestration-status": "Created",
+  "in-maint": false,
+  "is-closed-loop-disabled": false,
+  "resource-version": "1504896046185",
+  "relationship-list": {
+    "relationship": [
+      {
+        "related-to": "service-instance",
+        "related-link": "/aai/v11/business/customers/customer/Demonstration3/service-subscriptions/service-subscription/vCPE/service-instances/service-instance/e8feceb6-28ae-480a-bfbc-1985ce333526",
+        "relationship-data": [
+          {
+            "relationship-key": "customer.global-customer-id",
+            "relationship-value": "Demonstration3"
+          },
+          {
+            "relationship-key": "service-subscription.service-type",
+            "relationship-value": "vCPE"
+          },
+          {
+            "relationship-key": "service-instance.service-instance-id",
+            "relationship-value": "e8feceb6-28ae-480a-bfbc-1985ce333526"
+          }
+        ],
+        "related-to-property": [
+          {
+            "property-key": "service-instance.service-instance-name",
+            "property-value": "vCPEInfraSI13"
+          }
+        ]
+      }
+    ]
+  }
+}

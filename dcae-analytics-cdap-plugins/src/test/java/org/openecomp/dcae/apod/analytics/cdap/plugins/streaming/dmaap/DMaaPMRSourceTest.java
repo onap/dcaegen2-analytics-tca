@@ -75,6 +75,7 @@ public class DMaaPMRSourceTest extends BaseAnalyticsCDAPPluginsUnitTest {
 
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testGetStream() throws Exception {
         final StreamingContext streamingContext = Mockito.mock(StreamingContext.class);
         final JavaStreamingContext javaStreamingContext = Mockito.mock(JavaStreamingContext.class);

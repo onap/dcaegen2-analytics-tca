@@ -23,7 +23,7 @@ package org.openecomp.dcae.apod.analytics.model.util.json.mixin;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.openecomp.dcae.apod.analytics.model.domain.BaseDynamicPropertiesProvider;
+import org.openecomp.dcae.apod.analytics.model.BaseDynamicPropertiesProvider;
 
 import java.util.Map;
 

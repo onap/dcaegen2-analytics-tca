@@ -71,4 +71,16 @@ public class TCAPreferencesValidatorTest extends BaseAnalyticsCDAPTCAUnitTest {
         assertTrue(validationResponse.getErrorMessages().size() == 2);
     }
 
+    @Test
+    public void validateAppSettingsWhenAAIEnrichmentIsEnabledAndAAIRequiredFieldsAreNotPresent() throws Exception {
+        tcaTestAppPreferences.setEnableAAIEnrichment(true);
+        tcaTestAppPreferences.setAaiEnrichmentHost(null);
+        tcaTestAppPreferences.setAaiVMEnrichmentAPIPath(null);
+        tcaTestAppPreferences.setAaiVNFEnrichmentAPIPath(null);
+        final GenericValidationResponse<TCAAppPreferences> validationResponse =
+                tcaPreferencesValidator.validateAppSettings(tcaTestAppPreferences);
+        assertTrue(validationResponse.hasErrors());
+        assertTrue(validationResponse.getErrorMessages().size() == 3);
+    }
+
 }

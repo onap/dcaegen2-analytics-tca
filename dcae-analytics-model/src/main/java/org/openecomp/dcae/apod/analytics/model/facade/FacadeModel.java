@@ -20,7 +20,7 @@
 
 package org.openecomp.dcae.apod.analytics.model.facade;
 
-import java.io.Serializable;
+import org.openecomp.dcae.apod.analytics.model.DCAEAnalyticsModel;
 
 /**
  * <p>
@@ -29,5 +29,5 @@ import java.io.Serializable;
  *
  * @author Rajiv Singla . Creation Date: 11/9/2016.
  */
-public interface FacadeModel extends Serializable {
+public interface FacadeModel extends DCAEAnalyticsModel {
 }

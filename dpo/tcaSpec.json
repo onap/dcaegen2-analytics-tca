@@ -1,7 +1,7 @@
 {
   "self": {
     "name": "cdap.tca.hi.lo.app",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "cdap tca hi lo application",
     "component_type": "cdap"
   },
@@ -159,152 +159,168 @@
       },
       {
         "name": "enableAlertCEFFormat",
-        "description": "",
+        "description": "Enable output alert to be in CEF Format",
         "value": "false"
       },
       {
-        "name": "tca_policy",
-        "description": "TCA Policy JSON",
-        "value": "{\"domain\":\"measurementsForVfScaling\",\"metricsPerEventName\":[{\"eventName\":\"Mfvs_eNodeB_RANKPI\",\"controlLoopSchemaType\":\"VNF\",\"policyScope\":\"resource=vFirewall;type=configuration\",\"policyName\":\"configuration.dcae.microservice.tca.xml\",\"policyVersion\":\"v0.0.1\",\"thresholds\":[{\"closedLoopControlName\":\"CL-FRWL-LOW-TRAFFIC-SIG-d925ed73-8231-4d02-9545-db4e101f88f8\",\"closedLoopEventStatus\":\"ONSET\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsAccumulated\",\"thresholdValue\":4000,\"direction\":\"LESS_OR_EQUAL\",\"severity\":\"MAJOR\"},{\"closedLoopControlName\":\"CL-FRWL-HIGH-TRAFFIC-SIG-EA36FE84-9342-5E13-A656-EC5F21309A09\",\"closedLoopEventStatus\":\"ONSET\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsAccumulated\",\"thresholdValue\":20000,\"direction\":\"GREATER_OR_EQUAL\",\"severity\":\"CRITICAL\"},{\"closedLoopControlName\":\"CL-FRWL-HIGH-TRAFFIC-SIG-EA36FE84-9342-5E13-A656-EC5F21309A09\",\"closedLoopEventStatus\":\"ABATED\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsAccumulated\",\"thresholdValue\":0,\"direction\":\"EQUAL\",\"severity\":\"CRITICAL\"}]},{\"eventName\":\"vLoadBalancer\",\"controlLoopSchemaType\":\"VNF\",\"policyScope\":\"resource=vLoadBalancer;type=configuration\",\"policyName\":\"configuration.dcae.microservice.tca.xml\",\"policyVersion\":\"v0.0.1\",\"thresholds\":[{\"closedLoopControlName\":\"CL-LBAL-LOW-TRAFFIC-SIG-FB480F95-A453-6F24-B767-FD703241AB1A\",\"closedLoopEventStatus\":\"ONSET\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsAccumulated\",\"thresholdValue\":500,\"direction\":\"LESS_OR_EQUAL\",\"severity\":\"MAJOR\"},{\"closedLoopControlName\":\"CL-LBAL-LOW-TRAFFIC-SIG-0C5920A6-B564-8035-C878-0E814352BC2B\",\"closedLoopEventStatus\":\"ONSET\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsAccumulated\",\"thresholdValue\":5000,\"direction\":\"GREATER_OR_EQUAL\",\"severity\":\"CRITICAL\"}]}]}"
-      }
-    ],
-    "program_preferences": [],
-    "policy_schema": [
-      {
-        "name": "domain",
-        "description": "Domain name to which TCA needs to be applied",
-        "type": "string",
-        "value": "measurementsForVfScaling",
-        "constraints": [
-          {
-            "equal": "measurementsForVfScaling"
-          }
-        ]
+        "name": "enableAAIEnrichment",
+        "description": "Enable A&AI Enrichment of generated TCA Alerts",
+        "value": "true"
       },
       {
-        "name": "metricsPerEventName",
-        "description": "Contains eventName and threshold details that need to be applied to given eventName",
-        "type": "list",
-        "entry_schema": [
-          {
+        "name": "aaiEnrichmentHost",
+        "description": "A&AI Enrichment API Host name",
+        "value": "123.123.123.123"
+      },
+      {
+        "name": "aaiEnrichmentPortNumber",
+        "description": "A&AI Enrichment API Host port number",
+        "value": 8443
+      },
+      {
+        "name": "aaiEnrichmentProtocol",
+        "description": "A&AI Enrichment API protocol",
+        "value": "https"
+      },
+      {
+        "name": "aaiEnrichmentUserName",
+        "description": "A&AI Enrichment API username",
+        "value": "DCAE"
+      },
+      {
+        "name": "aaiEnrichmentUserPassword",
+        "description": "A&AI Enrichment API password",
+        "value": "DCAE"
+      },
+      {
+        "name": "aaiEnrichmentIgnoreSSLCertificateErrors",
+        "description": "A&AI Ignore SSL Certification Errors",
+        "value": "true"
+      },
+      {
+        "name": "aaiVNFEnrichmentAPIPath",
+        "description": "A&AI VNF Enrichment API Path",
+        "value": "/aai/v11/network/generic-vnfs/generic-vnf"
+      },
+      {
+        "name": "aaiVMEnrichmentAPIPath",
+        "description": "A&AI VM Enrichment API Path",
+        "value": "/aai/v11/search/nodes-query"
+      },
+      {
+        "name": "aaiEnrichmentProxyURL",
+        "description": "A&AI Enrichment API Proxy URL",
+        "value": "http://username:password@proxyhost.com:8080"
+      },      
+      {
+        "name": "tca_policy",
+        "description": "TCA Policy JSON",
+        "value": "{\"domain\":\"measurementsForVfScaling\",\"metricsPerEventName\":[{\"eventName\":\"Mfvs_eNodeB_RANKPI\",\"controlLoopSchemaType\":\"VNF\",\"policyScope\":\"resource=vFirewall;type=configuration\",\"policyName\":\"configuration.dcae.microservice.tca.xml\",\"policyVersion\":\"v0.0.1\",\"thresholds\":[{\"closedLoopControlName\":\"CL-FRWL-LOW-TRAFFIC-SIG-d925ed73-8231-4d02-9545-db4e101f88f8\",\"closedLoopEventStatus\":\"ONSET\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsAccumulated\",\"thresholdValue\":4000,\"direction\":\"LESS_OR_EQUAL\",\"severity\":\"MAJOR\"},{\"closedLoopControlName\":\"CL-FRWL-HIGH-TRAFFIC-SIG-EA36FE84-9342-5E13-A656-EC5F21309A09\",\"closedLoopEventStatus\":\"ONSET\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsAccumulated\",\"thresholdValue\":20000,\"direction\":\"GREATER_OR_EQUAL\",\"severity\":\"CRITICAL\"},{\"closedLoopControlName\":\"CL-FRWL-HIGH-TRAFFIC-SIG-EA36FE84-9342-5E13-A656-EC5F21309A09\",\"closedLoopEventStatus\":\"ABATED\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsAccumulated\",\"thresholdValue\":0,\"direction\":\"EQUAL\",\"severity\":\"CRITICAL\"}]},{\"eventName\":\"vLoadBalancer\",\"controlLoopSchemaType\":\"VNF\",\"policyScope\":\"resource=vLoadBalancer;type=configuration\",\"policyName\":\"configuration.dcae.microservice.tca.xml\",\"policyVersion\":\"v0.0.1\",\"thresholds\":[{\"closedLoopControlName\":\"CL-LBAL-LOW-TRAFFIC-SIG-FB480F95-A453-6F24-B767-FD703241AB1A\",\"closedLoopEventStatus\":\"ONSET\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsAccumulated\",\"thresholdValue\":500,\"direction\":\"LESS_OR_EQUAL\",\"severity\":\"MAJOR\"},{\"closedLoopControlName\":\"CL-LBAL-LOW-TRAFFIC-SIG-0C5920A6-B564-8035-C878-0E814352BC2B\",\"closedLoopEventStatus\":\"ONSET\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsAccumulated\",\"thresholdValue\":5000,\"direction\":\"GREATER_OR_EQUAL\",\"severity\":\"CRITICAL\"}]}]}",
+        "policy_editable": true,
+        "policy_schema": [{
+          "name": "domain",
+          "description": "Domain name to which TCA needs to be applied",
+          "type": "string",
+          "value": "measurementsForVfScaling",
+          "constraints": [{
+            "equal": "measurementsForVfScaling"
+          }]
+        }, {
+          "name": "metricsPerEventName",
+          "description": "Contains eventName and threshold details that need to be applied to given eventName",
+          "type": "list",
+          "entry_schema": [{
             "name": "eventName",
             "description": "Event name to which thresholds need to be applied",
             "type": "string",
             "value": ""
-          },
-          {
+          }, {
             "name": "controlLoopSchemaType",
             "description": "Specifies Control Loop Schema Type for the event Name e.g. VNF, VM",
             "type": "string",
             "value": "",
-            "constraints": [
-              {
-                "valid_value": [
-                  "VM",
-                  "VNF"
-                ]
-              }
-            ]
-          },
-          {
+            "constraints": [{
+              "valid_values": ["VM", "VNF"]
+            }]
+          }, {
             "name": "policyScope",
             "description": "TCA Policy Scope",
             "type": "string",
             "value": ""
-          },
-          {
+          }, {
             "name": "policyName",
             "description": "TCA Policy Scope Name",
             "type": "string",
             "value": ""
-          },
-          {
+          }, {
             "name": "policyVersion",
             "description": "TCA Policy Scope Version",
             "type": "string",
             "value": ""
-          },
-          {
+          }, {
             "name": "thresholds",
             "description": "Thresholds associated with eventName",
             "type": "list",
-            "entry_schema": [
-              {
-                "name": "closedLoopControlName",
-                "description": "Closed Loop Control Name associated with the threshold",
-                "type": "string",
-                "value": ""
-              },
-              {
-                "name": "version",
-                "description": "Version number associated with the threshold",
-                "type": "string",
-                "value": ""
-              },
-              {
-                "name": "fieldPath",
-                "description": "Json field Path as per CEF message which needs to be analyzed for TCA",
-                "type": "string",
-                "value": ""
-              },
-              {
-                "name": "thresholdValue",
-                "description": "Threshold value for the field Path inside CEF message",
-                "type": "number",
-                "value": ""
-              },
-              {
-                "name": "direction",
-                "description": "Direction of the threshold",
-                "type": "string",
-                "value": "",
-                "constraints": [
-                  {
-                    "valid_value": [
+            "entry_schema": [{
+              "name": "closedLoopControlName",
+              "description": "Closed Loop Control Name associated with the threshold",
+              "type": "string",
+              "value": ""
+            }, {
+              "name": "version",
+              "description": "Version number associated with the threshold",
+              "type": "string",
+              "value": ""
+            }, {
+              "name": "fieldPath",
+              "description": "Json field Path as per CEF message which needs to be analyzed for TCA",
+              "type": "string",
+              "value": ""
+            }, {
+              "name": "thresholdValue",
+              "description": "Threshold value for the field Path inside CEF message",
+              "type": "number",
+              "value": ""
+            }, {
+              "name": "direction",
+              "description": "Direction of the threshold",
+              "type": "string",
+              "value": "",
+              "constraints": [{
+                "valid_values": [
                       "LESS",
                       "LESS_OR_EQUAL",
                       "GREATER",
                       "GREATER_OR_EQUAL"
-                    ]
-                  }
                 ]
-              },
-              {
-                "name": "closedLoopEventStatus",
-                "description": "Closed Loop Event Status of the threshold",
-                "type": "string",
-                "value": "",
-                "constraints": [
-                  {
-                    "valid_value": [
-                      "ONSET",
-                      "ABATED"
-                    ]
-                  }
+              }]
+            }, {
+              "name": "closedLoopEventStatus",
+              "description": "Closed Loop Event Status of the threshold",
+              "type": "string",
+              "value": "",
+              "constraints": [{
+                "valid_values": ["ONSET", "ABATED"]
+              }]
+            }, {
+              "name": "severity",
+              "description": "Threshold Event Severity",
+              "value": "",
+              "type": "string",
+              "constraints": [{
+                "valid_values": [
+                  "CRITICAL",
+                  "MAJOR",
+                  "MINOR",
+                  "WARNING",
+                  "NORMAL"
                 ]
-              },
-              {
-                "name": "severity",
-                "description": "Threshold Event Severity",
-                "value": "",
-                "type": "string",
-                "constraints": [
-                  {
-                    "valid_value": [
-                      "CRITICAL",
-                      "MAJOR",
-                      "MINOR",
-                      "WARNING",
-                      "NORMAL"
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
+              }]
+            }]
+          }]
+        }]
       }
-    ]
+    ],
+    "program_preferences": []
   }
 }
-

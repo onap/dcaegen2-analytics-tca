@@ -137,4 +137,40 @@ public class TCATestAppPreferences extends TCAAppPreferences {
     public void setEnableAlertCEFFormat(Boolean enableAlertCEFFormat) {
         this.enableAlertCEFFormat = enableAlertCEFFormat;
     }
+
+    public void setEnableAAIEnrichment(Boolean enableAAIEnrichment) {
+        this.enableAAIEnrichment = enableAAIEnrichment;
+    }
+
+    public void setAaiEnrichmentHost(String aaiEnrichmentHost) {
+        this.aaiEnrichmentHost = aaiEnrichmentHost;
+    }
+
+    public void setAaiEnrichmentPortNumber(Integer aaiEnrichmentPortNumber) {
+        this.aaiEnrichmentPortNumber = aaiEnrichmentPortNumber;
+    }
+
+    public void setAaiEnrichmentProtocol(String aaiEnrichmentProtocol) {
+        this.aaiEnrichmentProtocol = aaiEnrichmentProtocol;
+    }
+
+    public void setAaiEnrichmentUserName(String aaiEnrichmentUserName) {
+        this.aaiEnrichmentUserName = aaiEnrichmentUserName;
+    }
+
+    public void setAaiEnrichmentUserPassword(String aaiEnrichmentUserPassword) {
+        this.aaiEnrichmentUserPassword = aaiEnrichmentUserPassword;
+    }
+
+    public void setAaiEnrichmentIgnoreSSLCertificateErrors(Boolean aaiEnrichmentIgnoreSSLCertificateErrors) {
+        this.aaiEnrichmentIgnoreSSLCertificateErrors = aaiEnrichmentIgnoreSSLCertificateErrors;
+    }
+
+    public void setAaiVNFEnrichmentAPIPath(String aaiVNFEnrichmentAPIPath) {
+        this.aaiVNFEnrichmentAPIPath = aaiVNFEnrichmentAPIPath;
+    }
+
+    public void setAaiVMEnrichmentAPIPath(String aaiVMEnrichmentAPIPath) {
+        this.aaiVMEnrichmentAPIPath = aaiVMEnrichmentAPIPath;
+    }
 }

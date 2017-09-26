@@ -63,6 +63,24 @@
           "severity": "CRITICAL"
         }
       ]
+    },
+    {
+      "eventName": "virtualVMEventName",
+      "controlLoopSchemaType" : "VM",
+      "policyScope": "resource=virtualVM;type=configuration",
+      "policyName": "configuration.dcae.microservice.tca.xml",
+      "policyVersion": "v0.0.1",
+      "thresholds": [
+        {
+          "closedLoopControlName": "CL-LBAL-LOW-TRAFFIC-SIG-FB480F95-A453-6F24-B767-FD703241AB1A",
+          "closedLoopEventStatus" : "ONSET",
+          "version": "1.0.2",
+          "fieldPath": "$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsAccumulated",
+          "thresholdValue": 500,
+          "direction": "LESS_OR_EQUAL",
+          "severity": "MAJOR"
+        }
+      ]
     }
   ]
 }

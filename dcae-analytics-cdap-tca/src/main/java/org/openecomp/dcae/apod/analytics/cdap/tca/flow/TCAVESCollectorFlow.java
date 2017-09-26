@@ -22,6 +22,7 @@ package org.openecomp.dcae.apod.analytics.cdap.tca.flow;
 
 import co.cask.cdap.api.flow.AbstractFlow;
 import org.openecomp.dcae.apod.analytics.cdap.common.CDAPComponentsConstants;
+import org.openecomp.dcae.apod.analytics.cdap.tca.flowlet.TCAVESAAIEnrichmentFlowlet;
 import org.openecomp.dcae.apod.analytics.cdap.tca.flowlet.TCAVESAlertsAbatementFlowlet;
 import org.openecomp.dcae.apod.analytics.cdap.tca.flowlet.TCAVESAlertsSinkFlowlet;
 import org.openecomp.dcae.apod.analytics.cdap.tca.flowlet.TCAVESMessageRouterFlowlet;
@@ -58,6 +59,9 @@ public class TCAVESCollectorFlow extends AbstractFlow {
                 new TCAVESAlertsAbatementFlowlet(tcaAppConfig.getTcaAlertsAbatementTableName());
         addFlowlet(tcavesAlertsAbatementFlowlet);
 
+        final TCAVESAAIEnrichmentFlowlet tcavesaaiEnrichmentFlowlet = new TCAVESAAIEnrichmentFlowlet();
+        addFlowlet(tcavesaaiEnrichmentFlowlet);
+
         final TCAVESAlertsSinkFlowlet alertsSinkFlowlet =
                 new TCAVESAlertsSinkFlowlet(tcaAppConfig.getTcaVESAlertsTableName());
         addFlowlet(alertsSinkFlowlet);
@@ -69,8 +73,10 @@ public class TCAVESCollectorFlow extends AbstractFlow {
         connect(messageRouterFlowlet, thresholdViolationCalculatorFlowlet);
         // connect VES threshold calculator flowlet to Alerts Abatement Flowlet
         connect(thresholdViolationCalculatorFlowlet, tcavesAlertsAbatementFlowlet);
-        // connect Alerts Abatement flowlet to Alerts Sink Flowlet
-        connect(tcavesAlertsAbatementFlowlet, alertsSinkFlowlet);
+        // connect Alerts Abatement flowlet to AAI Enrichment Flowlet
+        connect(tcavesAlertsAbatementFlowlet, tcavesaaiEnrichmentFlowlet);
+        // connect A&AI Enrichment flowlet to Alerts Sink Flowlet
+        connect(tcavesaaiEnrichmentFlowlet,  alertsSinkFlowlet);
 
     }
 }

@@ -22,7 +22,6 @@ package org.openecomp.dcae.apod.analytics.dmaap.service.publisher;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.After;
@@ -56,11 +55,11 @@ import static org.mockito.Mockito.verify;
 public class DMaaPMRPublisherImplTest extends BaseAnalyticsDMaaPUnitTest {
 
     @Mock
-    DMaaPMRPublisherQueueFactory dmaapMRPublisherQueueFactory;
+    private DMaaPMRPublisherQueueFactory dmaapMRPublisherQueueFactory;
     @Mock
-    CloseableHttpClient closeableHttpClient;
+    private CloseableHttpClient closeableHttpClient;
     @Mock
-    DMaaPMRPublisherQueue dmaapMRPublisherQueue;
+    private DMaaPMRPublisherQueue dmaapMRPublisherQueue;
 
     @Before
     public void setUp() throws Exception {
@@ -117,7 +116,6 @@ public class DMaaPMRPublisherImplTest extends BaseAnalyticsDMaaPUnitTest {
                 .setMaxRecoveryQueueSize(PUBLISHER_MAX_RECOVERY_QUEUE_SIZE)
                 .setMaxBatchSize(PUBLISHER_MAX_BATCH_QUEUE_SIZE).build();
 
-        HttpPost httpPost = Mockito.mock(HttpPost.class);
         Mockito.when(closeableHttpClient.execute(
                 Mockito.any(HttpUriRequest.class), Mockito.any(ResponseHandler.class)))
                 .thenReturn(new ImmutablePair<>(200, "Message successfully posted"));
@@ -154,7 +152,7 @@ public class DMaaPMRPublisherImplTest extends BaseAnalyticsDMaaPUnitTest {
 
         DMaaPMRPublisherImpl dmaapMRPublisherImpl = new DMaaPMRPublisherImpl(
                 getPublisherConfig(), dmaapMRPublisherQueueFactory, closeableHttpClient);
-        DMaaPMRPublisherResponse response = dmaapMRPublisherImpl.forcePublish(getTwoSampleMessages());
+        dmaapMRPublisherImpl.forcePublish(getTwoSampleMessages());
     }
 
     @Test
@@ -173,7 +171,7 @@ public class DMaaPMRPublisherImplTest extends BaseAnalyticsDMaaPUnitTest {
 
     @Test
     public void testFlushEmptyList() throws Exception {
-        Mockito.when(dmaapMRPublisherQueue.getMessageForPublishing()).thenReturn(new ArrayList());
+        Mockito.when(dmaapMRPublisherQueue.getMessageForPublishing()).thenReturn(new ArrayList<String>());
 
         DMaaPMRPublisherImpl dmaapMRPublisherImpl = new DMaaPMRPublisherImpl(
                 getPublisherConfig(), dmaapMRPublisherQueueFactory, closeableHttpClient);
@@ -183,7 +181,7 @@ public class DMaaPMRPublisherImplTest extends BaseAnalyticsDMaaPUnitTest {
 
     @Test
     public void testClose() throws Exception {
-        Mockito.when(dmaapMRPublisherQueue.getMessageForPublishing()).thenReturn(new ArrayList());
+        Mockito.when(dmaapMRPublisherQueue.getMessageForPublishing()).thenReturn(new ArrayList<String>());
         Mockito.when(closeableHttpClient.execute(
                 Mockito.any(HttpUriRequest.class), Mockito.any(ResponseHandler.class)))
                 .thenReturn(new ImmutablePair<>(200, "Message successfully posted"));
@@ -197,7 +195,7 @@ public class DMaaPMRPublisherImplTest extends BaseAnalyticsDMaaPUnitTest {
 
     @Test
     public void testCloseUnsuccessful() throws Exception {
-        Mockito.when(dmaapMRPublisherQueue.getMessageForPublishing()).thenReturn(new ArrayList());
+        Mockito.when(dmaapMRPublisherQueue.getMessageForPublishing()).thenReturn(new ArrayList<String>());
         Mockito.when(closeableHttpClient.execute(
                 Mockito.any(HttpUriRequest.class), Mockito.any(ResponseHandler.class)))
                 .thenReturn(new ImmutablePair<>(400, "Message successfully posted"));

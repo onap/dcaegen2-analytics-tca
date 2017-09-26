@@ -27,7 +27,7 @@
         "lastEpochMicrosec": 1493393250722,
         "priority": "Normal",
         "sequence": 0,
-        "sourceName": "BRHMALM02001",
+        "sourceName": "vCPEInfraVNF12",
         "domain": "measurementsForVfScaling",
         "eventName": "Mfvs_eNodeB_RANKPI",
         "reportingEntityId": ""
@@ -62,7 +62,7 @@
         "lastEpochMicrosec": 1493393250722,
         "priority": "Normal",
         "sequence": 0,
-        "sourceName": "BRHMALM02001",
+        "sourceName": "vCPEInfraVNF12",
         "domain": "measurementsForVfScaling",
         "eventName": "Mfvs_eNodeB_RANKPI",
         "reportingEntityId": ""
@@ -97,7 +97,7 @@
         "lastEpochMicrosec": 1493393250722,
         "priority": "Normal",
         "sequence": 0,
-        "sourceName": "BRHMALM02001",
+        "sourceName": "vCPEInfraVNF12",
         "domain": "measurementsForVfScaling",
         "eventName": "Mfvs_eNodeB_RANKPI",
         "reportingEntityId": ""
@@ -132,7 +132,7 @@
         "lastEpochMicrosec": 1493393250722,
         "priority": "Normal",
         "sequence": 0,
-        "sourceName": "BRHMALM02001",
+        "sourceName": "vCPEInfraVNF12",
         "domain": "measurementsForVfScaling",
         "eventName": "Mfvs_eNodeB_RANKPI",
         "reportingEntityId": ""
@@ -167,7 +167,7 @@
         "lastEpochMicrosec": 1493393250722,
         "priority": "Normal",
         "sequence": 0,
-        "sourceName": "BRHMALM02001",
+        "sourceName": "vCPEInfraVNF12",
         "domain": "measurementsForVfScaling",
         "eventName": "Mfvs_eNodeB_RANKPI",
         "reportingEntityId": ""
@@ -202,7 +202,7 @@
         "lastEpochMicrosec": 1493393250722,
         "priority": "Normal",
         "sequence": 0,
-        "sourceName": "BRHMALM02001",
+        "sourceName": "vCPEInfraVNF12",
         "domain": "measurementsForVfScaling",
         "eventName": "Mfvs_eNodeB_RANKPI",
         "reportingEntityId": ""
@@ -237,7 +237,7 @@
         "lastEpochMicrosec": 1493393250722,
         "priority": "Normal",
         "sequence": 0,
-        "sourceName": "BRHMALM02001",
+        "sourceName": "vCPEInfraVNF12",
         "domain": "measurementsForVfScaling",
         "eventName": "Mfvs_eNodeB_RANKPI",
         "reportingEntityId": ""
@@ -272,7 +272,7 @@
         "lastEpochMicrosec": 1493393250722,
         "priority": "Normal",
         "sequence": 0,
-        "sourceName": "BRHMALM02001",
+        "sourceName": "vCPEInfraVNF12",
         "domain": "measurementsForVfScaling",
         "eventName": "Mfvs_eNodeB_RANKPI",
         "reportingEntityId": ""
@@ -308,7 +308,7 @@
         "lastEpochMicrosec": 1493393250722,
         "priority": "Normal",
         "sequence": 0,
-        "sourceName": "BRHMALM02001",
+        "sourceName": "vCPEInfraVNF12",
         "domain": "measurementsForVfScaling",
         "eventName": "Mfvs_eNodeB_RANKPI",
         "reportingEntityId": ""
@@ -343,9 +343,44 @@
         "lastEpochMicrosec": 1493393250722,
         "priority": "Normal",
         "sequence": 0,
-        "sourceName": "BRHMALM02001",
+        "sourceName": "vCPEInfraVNF12",
         "domain": "measurementsForVfScaling",
         "eventName": "Mfvs_eNodeB_RANKPI",
+        "reportingEntityId": ""
+      }
+    }
+  },
+  {
+    "event": {
+      "measurementsForVfScalingFields": {
+        "vNicPerformanceArray": [
+          {
+            "receivedBroadcastPacketsAccumulated": 500,
+            "receivedBroadcastPacketsDelta": 5,
+            "receivedDiscardedPacketsAccumulated": 12,
+            "receivedDiscardedPacketsDelta": 2,
+            "receivedErrorPacketsAccumulated": 2,
+            "receivedErrorPacketsDelta": 1,
+            "valuesAreSuspect": false,
+            "vNicIdentifier": "someVNicIdentifier"
+          }
+        ],
+        "measurementInterval": 600,
+        "measurementsForVfScalingVersion": 2.0
+      },
+      "commonEventHeader": {
+        "nfNamingCode": "MEAP",
+        "version": 3.0,
+        "sourceId": "network1",
+        "reportingEntityName": "1085190",
+        "startEpochMicrosec": 1493393250722,
+        "eventId": "UC22",
+        "lastEpochMicrosec": 1493393250722,
+        "priority": "Normal",
+        "sequence": 0,
+        "sourceName": "example-vserver-name-val-2",
+        "domain": "measurementsForVfScaling",
+        "eventName": "virtualVMEventName",
         "reportingEntityId": ""
       }
     }

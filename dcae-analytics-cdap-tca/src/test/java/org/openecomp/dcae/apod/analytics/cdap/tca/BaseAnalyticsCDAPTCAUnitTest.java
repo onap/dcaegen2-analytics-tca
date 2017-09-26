@@ -211,6 +211,16 @@ public abstract class BaseAnalyticsCDAPTCAUnitTest extends BaseDCAEAnalyticsUnit
         tcaTestAppPreferences.setPublisherMaxBatchSize(100);
         tcaTestAppPreferences.setPublisherMaxRecoveryQueueSize(100);
         tcaTestAppPreferences.setPublisherPollingInterval(6000);
+
+        tcaTestAppPreferences.setEnableAAIEnrichment(true);
+        tcaTestAppPreferences.setAaiEnrichmentHost("AAI_ENRICHMENT_HOST");
+        tcaTestAppPreferences.setAaiEnrichmentPortNumber(8443);
+        tcaTestAppPreferences.setAaiEnrichmentProtocol("https");
+        tcaTestAppPreferences.setAaiEnrichmentUserName("AAI_USERNAME");
+        tcaTestAppPreferences.setAaiEnrichmentUserPassword("AAI_USERPASSWORD");
+        tcaTestAppPreferences.setAaiEnrichmentIgnoreSSLCertificateErrors(true);
+        tcaTestAppPreferences.setAaiVMEnrichmentAPIPath("VM_ENRICHMENT_PATH");
+        tcaTestAppPreferences.setAaiVNFEnrichmentAPIPath("VNF_ENRICHMENT_PATH");
         return tcaTestAppPreferences;
     }
 

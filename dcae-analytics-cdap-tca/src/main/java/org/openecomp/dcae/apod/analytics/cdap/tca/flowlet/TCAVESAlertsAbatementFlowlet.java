@@ -34,7 +34,7 @@ import org.openecomp.dcae.apod.analytics.cdap.common.exception.CDAPSettingsExcep
 import org.openecomp.dcae.apod.analytics.cdap.common.persistance.tca.TCAAlertsAbatementEntity;
 import org.openecomp.dcae.apod.analytics.cdap.common.persistance.tca.TCAAlertsAbatementPersister;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventListener;
-import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ControlLoopEventStatus;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ClosedLoopEventStatus;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerEventName;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Threshold;
 import org.openecomp.dcae.apod.analytics.model.facade.tca.TCAVESResponse;
@@ -42,12 +42,13 @@ import org.openecomp.dcae.apod.analytics.tca.utils.TCAUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.Date;
 
 /**
  * Flowlet responsible to sending out abatement alerts
  *
- * @author rs153v (Rajiv Singla) . Creation Date: 9/11/2017.
+ * @author Rajiv Singla . Creation Date: 9/11/2017.
  */
 public class TCAVESAlertsAbatementFlowlet extends AbstractFlowlet {
 
@@ -78,7 +79,7 @@ public class TCAVESAlertsAbatementFlowlet extends AbstractFlowlet {
     }
 
     @ProcessInput(CDAPComponentsConstants.TCA_FIXED_VES_TCA_CALCULATOR_NAME_OUTPUT)
-    public void determineAbatementAlerts(final ThresholdCalculatorOutput thresholdCalculatorOutput) throws Exception {
+    public void determineAbatementAlerts(final ThresholdCalculatorOutput thresholdCalculatorOutput) throws IOException {
 
         final String cefMessage = thresholdCalculatorOutput.getCefMessage();
         final String alertMessageString = thresholdCalculatorOutput.getAlertMessage();
@@ -97,7 +98,7 @@ public class TCAVESAlertsAbatementFlowlet extends AbstractFlowlet {
         final EventListener eventListener = TCAUtils.readValue(cefMessage, EventListener.class);
         final TCAVESResponse tcavesResponse = TCAUtils.readValue(alertMessageString, TCAVESResponse.class);
         final Threshold violatedThreshold = violatedMetricsPerEventName.getThresholds().get(0);
-        final ControlLoopEventStatus closedLoopEventStatus = violatedThreshold.getClosedLoopEventStatus();
+        final ClosedLoopEventStatus closedLoopEventStatus = violatedThreshold.getClosedLoopEventStatus();
 
         switch (closedLoopEventStatus) {
 
@@ -106,7 +107,7 @@ public class TCAVESAlertsAbatementFlowlet extends AbstractFlowlet {
                 LOG.debug("Saving information for ONSET event for cefMessage: {}", cefMessage);
                 TCAAlertsAbatementPersister.persist(eventListener, violatedMetricsPerEventName, tcavesResponse,
                         null, tcaAlertsAbatementTable);
-                LOG.info("Emitting ONSET alert: {}", alertMessageString);
+                LOG.debug("Emitting ONSET alert: {}", alertMessageString);
                 alertsAbatementOutputEmitter.emit(alertMessageString);
                 break;
 
@@ -136,8 +137,13 @@ public class TCAVESAlertsAbatementFlowlet extends AbstractFlowlet {
                         // save new Abatement alert sent timestamp in table
                         TCAAlertsAbatementPersister.persist(eventListener, violatedMetricsPerEventName, tcavesResponse,
                                 Long.toString(newAbatementSentTS), tcaAlertsAbatementTable);
-                        LOG.info("Emitting ABATED alert: {}", alertMessageString);
-                        alertsAbatementOutputEmitter.emit(alertMessageString);
+
+                        // Set request id to be same as previous ONSET event request ID
+                        tcavesResponse.setRequestID(previousAlertsAbatementEntry.getRequestId());
+                        final String abatedAlertString = TCAUtils.writeValueAsString(tcavesResponse);
+
+                        LOG.info("Emitting ABATED alert: {}", abatedAlertString);
+                        alertsAbatementOutputEmitter.emit(abatedAlertString);
 
                     }
 

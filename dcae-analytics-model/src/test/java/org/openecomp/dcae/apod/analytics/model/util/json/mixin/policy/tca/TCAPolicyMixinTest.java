@@ -40,8 +40,8 @@ public class TCAPolicyMixinTest extends BaseAnalyticsModelUnitTest {
 
         final TCAPolicy tcaPolicy = assertJsonConversions(TCA_POLICY_JSON_FILE_LOCATION, TCAPolicy.class);
 
-        assertThat("TCA Policy Metrics Per Event Name must be 2",
-                tcaPolicy.getMetricsPerEventName().size(), is(2));
+        assertThat("TCA Policy Metrics Per Event Name must be 3",
+                tcaPolicy.getMetricsPerEventName().size(), is(3));
 
         assertThat("TCA Policy Thresholds for first event name must be 3",
                 tcaPolicy.getMetricsPerEventName().get(0).getThresholds().size(), is(3));

@@ -21,13 +21,16 @@
 package org.openecomp.dcae.apod.analytics.model.facade.tca;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.openecomp.dcae.apod.analytics.model.BaseDynamicPropertiesProvider;
 
 /**
  *
  * @author Rajiv Singla . Creation Date: 11/9/2016.
  */
 @Data
-public class AAI implements TCAFacadeModel {
+@EqualsAndHashCode(callSuper = true)
+public class AAI extends BaseDynamicPropertiesProvider implements TCAFacadeModel {
 
     private static final long serialVersionUID = 1L;
 

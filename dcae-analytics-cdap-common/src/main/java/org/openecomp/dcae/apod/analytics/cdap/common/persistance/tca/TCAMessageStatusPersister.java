@@ -156,9 +156,8 @@ public abstract class TCAMessageStatusPersister {
      * @param tcaMessageStatusEntity message entity that needs to be populated with threshold fields
      * @param processorContext processor context
      *
-     * @return entity with populated threshold field values if present
      */
-    public static TCAMessageStatusEntity addViolatedThreshold(final TCAMessageStatusEntity tcaMessageStatusEntity,
+    private static void addViolatedThreshold(final TCAMessageStatusEntity tcaMessageStatusEntity,
                                                                final TCACEFProcessorContext processorContext) {
 
         final MetricsPerEventName metricsPerEventName = processorContext.getMetricsPerEventName();
@@ -174,7 +173,6 @@ public abstract class TCAMessageStatusPersister {
             tcaMessageStatusEntity.setThresholdValue(threshold.getThresholdValue());
         }
 
-        return tcaMessageStatusEntity;
     }
 
 
@@ -184,9 +182,9 @@ public abstract class TCAMessageStatusPersister {
      * @param tcaMessageStatusEntity message entity that needs to be populated with message processor fields
      * @param processorContext processor context
      *
-     * @return entity with populated message process status information
      */
-    public static TCAMessageStatusEntity addMessageProcessorMessages(
+    @SuppressWarnings("unchecked")
+    private static void addMessageProcessorMessages(
             final TCAMessageStatusEntity tcaMessageStatusEntity, final TCACEFProcessorContext processorContext) {
         final List<? super MessageProcessor<? extends ProcessorContext>> messageProcessors = processorContext
                 .getMessageProcessors();
@@ -221,7 +219,6 @@ public abstract class TCAMessageStatusPersister {
 
             }
         }
-        return tcaMessageStatusEntity;
     }
 
     /**
@@ -233,7 +230,7 @@ public abstract class TCAMessageStatusPersister {
      *
      * @return row key string
      */
-    public static String createKey(final TCACalculatorMessageType calculatorMessageType) {
+    private static String createKey(final TCACalculatorMessageType calculatorMessageType) {
 
         final List<String> keyList = new LinkedList<>();
         keyList.add(calculatorMessageType.name());

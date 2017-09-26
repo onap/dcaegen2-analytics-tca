@@ -22,13 +22,13 @@ package org.openecomp.dcae.apod.analytics.model.util.json.mixin.facade.tca;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import org.openecomp.dcae.apod.analytics.model.util.json.mixin.JsonMixin;
+import org.openecomp.dcae.apod.analytics.model.util.json.mixin.BaseDynamicPropertiesProviderMixin;
 
 /**
  *
  * @author Rajiv Singla . Creation Date: 11/9/2016.
  */
-public abstract class AAIMixin implements JsonMixin {
+public abstract class AAIMixin extends BaseDynamicPropertiesProviderMixin {
 
     private String genericVNFId;
     private String genericServerId;

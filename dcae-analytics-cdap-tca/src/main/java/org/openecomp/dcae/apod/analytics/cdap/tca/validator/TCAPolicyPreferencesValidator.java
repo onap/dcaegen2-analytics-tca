@@ -24,7 +24,7 @@ import org.openecomp.dcae.apod.analytics.cdap.common.validation.CDAPAppSettingsV
 import org.openecomp.dcae.apod.analytics.cdap.tca.settings.TCAPolicyPreferences;
 import org.openecomp.dcae.apod.analytics.common.validation.GenericValidationResponse;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventSeverity;
-import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ControlLoopEventStatus;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ClosedLoopEventStatus;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ControlLoopSchemaType;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Direction;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerEventName;
@@ -99,7 +99,7 @@ public class TCAPolicyPreferencesValidator implements CDAPAppSettingsValidator<T
                     final Long thresholdValue = eventNameThreshold.getThresholdValue();
                     final Direction direction = eventNameThreshold.getDirection();
                     final EventSeverity severity = eventNameThreshold.getSeverity();
-                    final ControlLoopEventStatus closedLoopEventStatus = eventNameThreshold.getClosedLoopEventStatus();
+                    final ClosedLoopEventStatus closedLoopEventStatus = eventNameThreshold.getClosedLoopEventStatus();
                     if (isEmpty(fieldPath) || thresholdValue == null || direction == null || severity == null ||
                             closedLoopEventStatus == null) {
                         validationResponse.addErrorMessage("threshold",

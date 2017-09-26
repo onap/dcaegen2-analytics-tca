@@ -46,7 +46,7 @@ import static org.openecomp.dcae.apod.analytics.common.utils.PersistenceUtils.TA
 /**
  * Utility methods to persist TCA Alerts Abatement information
  *
- * @author rs153v (Rajiv Singla) . Creation Date: 9/11/2017.
+ * @author Rajiv Singla . Creation Date: 9/11/2017.
  */
 public abstract class TCAAlertsAbatementPersister {
 

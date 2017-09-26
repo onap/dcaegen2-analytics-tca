@@ -24,11 +24,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-  		<groupId>org.onap.dcaegen2</groupId>
-  		<artifactId>root</artifactId>
-  		<version>1.0.0-SNAPSHOT</version>
-  	</parent>
+    <parent>
+      <groupId>org.onap.dcaegen2</groupId>
+      <artifactId>root</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </parent>
 
     <groupId>org.onap.dcaegen2.analytics.tca</groupId>
     <artifactId>dcae-analytics</artifactId>
@@ -121,9 +121,9 @@
         <checkstyle.suppression.file.name>suppressions.xml</checkstyle.suppression.file.name>       
         <dependency.locations.enabled>false</dependency.locations.enabled>
         <nexusproxy>https://nexus.onap.org</nexusproxy>
-		<snapshots.path>content/repositories/snapshots/</snapshots.path>
-  		<releases.path>content/repositories/releases/</releases.path>
-  		<site.path>content/sites/site/org/onap/dcaegen2/analytics/tca/${project.artifactId}/${project.version}</site.path>
+    <snapshots.path>content/repositories/snapshots/</snapshots.path>
+      <releases.path>content/repositories/releases/</releases.path>
+      <site.path>content/sites/site/org/onap/dcaegen2/analytics/tca/${project.artifactId}/${project.version}</site.path>
     </properties>
 
     <dependencyManagement>
@@ -472,6 +472,12 @@
                 <artifactId>cdap-unit-test</artifactId>
                 <version>${cdap.version}</version>
                 <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>co.cask.cdap</groupId>
+                        <artifactId>cdap-explore-jdbc</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
@@ -895,6 +901,9 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>${deploy.plugin.version}</version>
+                    <configuration>
+                        <deployAtEnd>true</deployAtEnd>
+                    </configuration>
                 </plugin>
 
                 <plugin>
@@ -1023,6 +1032,26 @@
         </plugins>
     </reporting>
 
+    <profiles>
+        <profile>
+            <id>doclint-java8-disable</id>
+            <activation>
+                <jdk>[1.8,)</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <configuration>
+                            <additionalparam>-Xdoclint:none</additionalparam>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <modules>
         <module>dcae-analytics-test</module>
         <module>dcae-analytics-model</module>
@@ -1033,6 +1062,7 @@
         <module>dcae-analytics-cdap-tca</module>
         <module>dcae-analytics-cdap-plugins</module>
         <module>dcae-analytics-it</module>
+        <module>dcae-analytics-aai</module>
     </modules>
 
 </project>

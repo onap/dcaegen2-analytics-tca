@@ -142,6 +142,7 @@ public class SimpleTCAPluginCDAPIT extends HydratorTestBase {
     }
 
     @Test
+    @SuppressWarnings("deprecation")
     public void testTransform() throws Exception {
 
         LOG.info("Starting Test Transform");
@@ -218,7 +219,7 @@ public class SimpleTCAPluginCDAPIT extends HydratorTestBase {
 
     }
 
-    private static final String getFileContentAsString(final String fileLocation) throws Exception {
+    private static String getFileContentAsString(final String fileLocation) throws Exception {
         final URI tcaPolicyURI =
                 SimpleTCAPluginCDAPIT.class.getResource(fileLocation).toURI();
         List<String> lines = Files.readAllLines(Paths.get(tcaPolicyURI), Charset.defaultCharset());

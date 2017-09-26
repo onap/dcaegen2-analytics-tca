@@ -21,6 +21,7 @@
 package org.openecomp.dcae.apod.analytics.tca.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
@@ -29,6 +30,7 @@ import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -39,6 +41,7 @@ import com.jayway.jsonpath.TypeRef;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.openecomp.dcae.apod.analytics.aai.service.AAIEnrichmentClient;
 import org.openecomp.dcae.apod.analytics.common.AnalyticsConstants;
 import org.openecomp.dcae.apod.analytics.common.exception.MessageProcessingException;
 import org.openecomp.dcae.apod.analytics.common.service.processor.AbstractMessageProcessor;
@@ -51,7 +54,7 @@ import org.openecomp.dcae.apod.analytics.model.domain.cef.EventListener;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventSeverity;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.PerformanceCounter;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.ThresholdCrossingAlertFields;
-import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ControlLoopEventStatus;
+import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ClosedLoopEventStatus;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.ControlLoopSchemaType;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Direction;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerEventName;
@@ -79,11 +82,13 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -502,10 +507,13 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
         tcavesResponse.setVersion(violatedThreshold.getVersion());
         // Generate a UUID for this output message
         tcavesResponse.setRequestID(UUID.randomUUID().toString());
-        // commonEventHeader.startEpochMicrosec from the received VES measurementsForVfScaling message
+        // commonEventHeader.startEpochMicrosec from the received VES message
         tcavesResponse.setClosedLoopAlarmStart(commonEventHeader.getStartEpochMicrosec());
+        // commonEventHeader.lastEpochMicrosec from the received VES message for abated alerts
+        if (violatedThreshold.getClosedLoopEventStatus() == ClosedLoopEventStatus.ABATED) {
+            tcavesResponse.setClosedLoopAlarmEnd(commonEventHeader.getLastEpochMicrosec());
+        }
         // Concatenate name of this DCAE instance and name for this TCA instance, separated by dot
-        // TODO: Find out how to get this field
         tcavesResponse.setClosedLoopEventClient("DCAE_INSTANCE_ID." + tcaAppName);
 
         final AAI aai = new AAI();
@@ -517,16 +525,16 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
             tcavesResponse.setTargetType(AnalyticsConstants.TCA_VES_RESPONSE_VM_TARGET_TYPE);
             // Hard Coded - "vserver.vserver-name"
             tcavesResponse.setTarget(AnalyticsConstants.TCA_VES_RESPONSE_VM_TARGET);
-            aai.setGenericServerId(commonEventHeader.getReportingEntityName());
+            // commonEventHeader.sourceName from the received VES message
+            aai.setGenericServerId(commonEventHeader.getSourceName());
         } else {
             // VNF specific settings
             // Hard Coded - "VNF"
             tcavesResponse.setTargetType(AnalyticsConstants.TCA_VES_RESPONSE_VNF_TARGET_TYPE);
             // Hard Coded - "generic-vnf.vnf-id"
             tcavesResponse.setTarget(AnalyticsConstants.TCA_VES_RESPONSE_VNF_TARGET);
-            // commonEventHeader.reportingEntityName from the received VES measurementsForVfScaling message (value for
-            // the data element used in A&AI)
-            aai.setGenericVNFId(commonEventHeader.getReportingEntityName());
+            // commonEventHeader.sourceName from the received VES message
+            aai.setGenericVNFId(commonEventHeader.getSourceName());
         }
 
         // Hard Coded - "DCAE"
@@ -541,6 +549,39 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
         tcavesResponse.setClosedLoopEventStatus(violatedThreshold.getClosedLoopEventStatus().name());
 
         return tcavesResponse;
+    }
+
+
+    /**
+     * Determines {@link ControlLoopSchemaType} for given {@link TCAVESResponse} alert
+     *
+     * @param tcavesResponse alert
+     *
+     * @return control Loop Schema Type
+     */
+    public static ControlLoopSchemaType determineControlLoopSchemaType(final TCAVESResponse tcavesResponse) {
+        final AAI aai = tcavesResponse.getAai();
+        if (aai.getGenericServerId() != null) {
+            return ControlLoopSchemaType.VM;
+        } else {
+            return ControlLoopSchemaType.VNF;
+        }
+    }
+
+    /**
+     * Determines {@link ControlLoopSchemaType} for given {@link TCAVESResponse} alert
+     *
+     * @param tcavesResponse {@link TCAVESResponse} TCA alert
+     *
+     * @return Source name
+     */
+    public static String determineSourceName(final TCAVESResponse tcavesResponse) {
+        final AAI aai = tcavesResponse.getAai();
+        if (aai.getGenericServerId() != null) {
+            return aai.getGenericServerId();
+        } else {
+            return aai.getGenericVNFId();
+        }
     }
 
 
@@ -633,7 +674,7 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
         threshold.setSeverity(EventSeverity.valueOf(thresholdMap.get("policy.severity")));
         threshold.setThresholdValue(Long.valueOf(thresholdMap.get("policy.thresholdValue")));
         threshold.setClosedLoopEventStatus(
-                ControlLoopEventStatus.valueOf(thresholdMap.get("policy.closedLoopEventStatus")));
+                ClosedLoopEventStatus.valueOf(thresholdMap.get("policy.closedLoopEventStatus")));
         return threshold;
     }
 
@@ -660,7 +701,7 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
         metricsPerEventName.setPolicyVersion(metricsPerEventNameThresholdsMap.get("policyVersion"));
         metricsPerEventName.setPolicyScope(metricsPerEventNameThresholdsMap.get("policyScope"));
         metricsPerEventName.setControlLoopSchemaType(ControlLoopSchemaType.valueOf(
-                metricsPerEventNameThresholdsMap.get("closedLoopControlName")));
+                metricsPerEventNameThresholdsMap.get("controlLoopSchemaType")));
         return metricsPerEventName;
     }
 
@@ -779,6 +820,183 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
         scheduler.scheduleJob(jobDetail, simpleTrigger);
         LOG.info("Scheduler Initialized successfully for JobName: {}", quartzJobClass.getSimpleName());
         return scheduler;
+    }
+
+
+    /**
+     * Does A&AI Enrichment for VM
+     *
+     * @param tcavesResponse Outgoing alert object
+     * @param aaiEnrichmentClient A&AI Enrichment client
+     * @param aaiVMEnrichmentAPIPath A&AI VM Enrichment API Path
+     * @param alertString alert String
+     * @param vmSourceName vm source name
+     */
+    public static void doAAIVMEnrichment(final TCAVESResponse tcavesResponse,
+                                         final AAIEnrichmentClient aaiEnrichmentClient,
+                                         final String aaiVMEnrichmentAPIPath,
+                                         final String alertString,
+                                         final String vmSourceName) {
+
+        final String filterString = "vserver-name:EQUALS:" + vmSourceName;
+        final ImmutableMap<String, String> queryParams = ImmutableMap.of(
+                "search-node-type", "vserver", "filter", filterString);
+
+        // fetch vm object resource Link from A&AI
+        final String vmAAIResourceLinkDetails = aaiEnrichmentClient.getEnrichmentDetails(
+                aaiVMEnrichmentAPIPath, queryParams, createAAIEnrichmentHeaders());
+        final String vmObjectResourceLink = getVMObjectResourceLink(vmAAIResourceLinkDetails);
+
+        if (vmObjectResourceLink == null) {
+            LOG.warn("No A&AI Enrichment possible for alert message: {}.VM Object resource Link cannot be " +
+                    "determined for vmSourceName: {}.", alertString, vmSourceName);
+        } else {
+
+            LOG.debug("Fetching VM A&AI Enrichment Details for VM Source Name: {}, Object resource Link: {}",
+                    vmSourceName, vmObjectResourceLink);
+
+            // fetch vm A&AI Enrichment
+            final String vmEnrichmentDetails = aaiEnrichmentClient.getEnrichmentDetails(
+                    vmObjectResourceLink, Collections.<String, String>emptyMap(), createAAIEnrichmentHeaders());
+
+            // enrich AAI
+            enrichAAI(tcavesResponse.getAai(), vmEnrichmentDetails, alertString,
+                    AnalyticsConstants.AAI_VSERVER_KEY_PREFIX);
+        }
+
+
+    }
+
+
+    /**
+     * Does A&AI Enrichment for VNF
+     *
+     * @param tcavesResponse Outgoing alert object
+     * @param aaiEnrichmentClient A&AI Enrichment client
+     * @param aaiVNFEnrichmentAPIPath A&AI VNF Enrichment API Path
+     * @param alertString alert String
+     * @param vnfSourceName vnf source name
+     */
+    public static void doAAIVNFEnrichment(final TCAVESResponse tcavesResponse,
+                                          final AAIEnrichmentClient aaiEnrichmentClient,
+                                          final String aaiVNFEnrichmentAPIPath,
+                                          final String alertString,
+                                          final String vnfSourceName) {
+        final ImmutableMap<String, String> queryParams = ImmutableMap.of("vnf-name", vnfSourceName);
+
+        // fetch vnf A&AI Enrichment
+        final String vnfEnrichmentDetails = aaiEnrichmentClient.getEnrichmentDetails(
+                aaiVNFEnrichmentAPIPath, queryParams, createAAIEnrichmentHeaders());
+
+        // enrich alert AAI
+        enrichAAI(tcavesResponse.getAai(), vnfEnrichmentDetails, alertString, AnalyticsConstants.AAI_VNF_KEY_PREFIX);
+    }
+
+    /**
+     * Fetches VM Object Resource Link from A&AI Resource Link Json
+     *
+     * @param vmAAIResourceLinkDetails VM Object Resource Link from A&AI Resource Link Json
+     *
+     * @return object resource link String
+     */
+    private static String getVMObjectResourceLink(final String vmAAIResourceLinkDetails) {
+        if (StringUtils.isNotBlank(vmAAIResourceLinkDetails)) {
+            try {
+                final JsonNode jsonNode = ANALYTICS_MODEL_OBJECT_MAPPER.readTree(vmAAIResourceLinkDetails);
+                final JsonNode resourceLinkJsonNode = jsonNode.findPath("resource-link");
+                if (!resourceLinkJsonNode.isMissingNode()) {
+                    return resourceLinkJsonNode.asText();
+                }
+            } catch (IOException e) {
+                LOG.warn("Unable to determine VM Object link inside AAI Resource Link Response JSON: {}. Exception: {}",
+                        vmAAIResourceLinkDetails, e);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Creates Http Headers for A&AI Enrichment client
+     *
+     * @return Http Headers Map for A&AI Enrichment client
+     */
+    private static Map<String, String> createAAIEnrichmentHeaders() {
+        final Map<String, String> aaiEnrichmentHeaders = new LinkedHashMap<>();
+        final String transactionId = Long.toString(new Date().getTime());
+        aaiEnrichmentHeaders.put("X-FromAppId", "dcae-analytics-tca");
+        aaiEnrichmentHeaders.put("X-TransactionId", transactionId);
+        aaiEnrichmentHeaders.put("Accept", "application/json");
+        aaiEnrichmentHeaders.put("Real-Time", "true");
+        aaiEnrichmentHeaders.put("Content-Type", "application/json");
+        return aaiEnrichmentHeaders;
+    }
+
+
+    /**
+     * Populates A&AI details retrieved from A&AI Enrichment API into Alerts A&AI Object
+     *
+     * @param preEnrichmentAAI A&AI Alert object which needs to be populated with A&AI Enrichment Details
+     * @param aaiEnrichmentDetails A&AI Enrichment API fetched JSON String
+     * @param alertString Alert String
+     * @param keyPrefix Key prefix that needs to be added to each fetched A&AI Enrichment record
+     */
+    private static void enrichAAI(final AAI preEnrichmentAAI, final String aaiEnrichmentDetails,
+                                  final String alertString, final String keyPrefix) {
+
+        if (aaiEnrichmentDetails == null) {
+            LOG.warn("No A&AI Enrichment possible for AAI: {}. A&AI Enrichment details are absent." +
+                    "Skipping Enrichment for alert message:{}", preEnrichmentAAI, alertString);
+
+        } else {
+
+            final AAI enrichmentDetailsAAI = getEnrichmentDetailsAAI(aaiEnrichmentDetails);
+
+            if (enrichmentDetailsAAI != null) {
+                final Set<Map.Entry<String, Object>> enrichedAAIEntrySet =
+                        enrichmentDetailsAAI.getDynamicProperties().entrySet();
+                final Map<String, Object> preEnrichmentAAIDynamicProperties = preEnrichmentAAI.getDynamicProperties();
+
+                // populate A&AI Enrichment details and add prefix to key
+                for (Map.Entry<String, Object> enrichedAAIEntry : enrichedAAIEntrySet) {
+                    preEnrichmentAAIDynamicProperties.put(keyPrefix + enrichedAAIEntry.getKey(),
+                            enrichedAAIEntry.getValue());
+                }
+
+                LOG.debug("A&AI Enrichment was completed successfully for alert message: {}. Enriched AAI: {}",
+                        alertString, preEnrichmentAAI);
+            } else {
+                LOG.warn("No A&AI Enrichment possible for AAI: {}. Invalid A&AI Response: {}." +
+                                "Skipping Enrichment for alert message: {}",
+                        preEnrichmentAAI, aaiEnrichmentDetails, alertString);
+            }
+        }
+
+    }
+
+    /**
+     * Creates a new A&AI object with only top level A&AI Enrichment details
+     *
+     * @param aaiEnrichmentDetails A&AI Enrichment details
+     *
+     * @return new A&AI with only top level A&AI Enrichment details
+     */
+    private static AAI getEnrichmentDetailsAAI(final String aaiEnrichmentDetails) {
+        try {
+            final JsonNode rootNode = ANALYTICS_MODEL_OBJECT_MAPPER.readTree(aaiEnrichmentDetails);
+            final Iterator<Map.Entry<String, JsonNode>> fieldsIterator = rootNode.fields();
+            while (fieldsIterator.hasNext()) {
+                final Map.Entry<String, JsonNode> fieldEntry = fieldsIterator.next();
+                final JsonNode jsonNode = fieldEntry.getValue();
+                // remove all arrays, objects from A&AI Enrichment Json
+                if (jsonNode.isPojo() || jsonNode.isObject() || jsonNode.isArray()) {
+                    fieldsIterator.remove();
+                }
+            }
+            return ANALYTICS_MODEL_OBJECT_MAPPER.treeToValue(rootNode, AAI.class);
+        } catch (IOException e) {
+            LOG.error("Failed to Parse AAI Enrichment Details from JSON: {}, Exception: {}.", aaiEnrichmentDetails, e);
+        }
+        return null;
     }
 
 }

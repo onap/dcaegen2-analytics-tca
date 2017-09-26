@@ -39,6 +39,7 @@ import static org.mockito.Mockito.when;
 /**
  * @author Rajiv Singla . Creation Date: 2/20/2017.
  */
+@SuppressWarnings("unchecked")
 public class MockDMaaPMRSourceTest extends BaseAnalyticsCDAPPluginsUnitTest {
 
     @Test

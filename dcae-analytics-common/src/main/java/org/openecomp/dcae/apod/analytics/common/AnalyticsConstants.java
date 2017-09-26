@@ -105,10 +105,12 @@ public abstract class AnalyticsConstants {
     // TCA VES Response Constants
     // VNF Constants
     public static final String TCA_VES_RESPONSE_VNF_TARGET_TYPE = "VNF";
-    public static final String TCA_VES_RESPONSE_VNF_TARGET = "generic-vnf.vnf-id";
+    public static final String AAI_VNF_KEY_PREFIX = "generic-vnf.";
+    public static final String TCA_VES_RESPONSE_VNF_TARGET = AAI_VNF_KEY_PREFIX + "vnf-id";
     // VM Constants
     public static final String TCA_VES_RESPONSE_VM_TARGET_TYPE = "VM";
-    public static final String TCA_VES_RESPONSE_VM_TARGET = "vserver.vserver-name";
+    public static final String AAI_VSERVER_KEY_PREFIX = "vserver.";
+    public static final String TCA_VES_RESPONSE_VM_TARGET =  AAI_VSERVER_KEY_PREFIX + "vserver-name";
     // VNF & VM - Common Constants
     public static final String TCA_VES_RESPONSE_FROM = "DCAE";
 
@@ -145,6 +147,18 @@ public abstract class AnalyticsConstants {
 
     public static final String TCA_POLICY_JSON_KEY = "tca_policy";
     public static final String TCA_POLICY_STRING_DELIMITER = "\"";
+
+    // TCA Alert output format by default is not CEF
+    public static final Boolean TCA_DEFAULT_ENABLE_CEF_FORMATTED_ALERT = false;
+
+    // TCA A&AI Enrichment is disabled by default
+    public static final Boolean TCA_DEFAULT_ENABLE_AAI_ENRICHMENT = false;
+    // TCA A&AI SSL Certificate errors by default are *NOT* ignored
+    public static final Boolean TCA_DEFAULT_AAI_ENRICHMENT_IGNORE_SSL_CERTIFICATE_ERRORS = false;
+    // TCA A&AI proxy is disabled by default
+    public static final String TCA_DEFAULT_AAI_ENRICHMENT_PROXY_URL = null;
+
+
 
     private AnalyticsConstants() {
 

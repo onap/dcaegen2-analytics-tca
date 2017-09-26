@@ -1,0 +1,8 @@
+{
+  "result-data": [
+    {
+      "resource-type": "vserver",
+      "resource-link": "/aai/v11/cloud-infrastructure/cloud-regions/cloud-region/Rackspace/DFW/tenants/tenant/1031120/vservers/vserver/example-vserver-id-val-2"
+    }
+  ]
+}

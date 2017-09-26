@@ -27,16 +27,16 @@ import java.io.Serializable;
 /**
  * Simple POJO emitted by threshold calculator
  *
- * @author rs153v (Rajiv Singla) . Creation Date: 9/11/2017.
+ * @author Rajiv Singla . Creation Date: 9/11/2017.
  */
 public class ThresholdCalculatorOutput implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String cefMessage;
-    private String tcaPolicy;
-    private String violatedMetricsPerEventName;
-    private String alertMessage;
+    protected String cefMessage;
+    protected String tcaPolicy;
+    protected String violatedMetricsPerEventName;
+    protected String alertMessage;
 
     public ThresholdCalculatorOutput() {
         // no arg constructor

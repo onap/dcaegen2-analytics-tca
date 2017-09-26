@@ -22,11 +22,7 @@ package org.openecomp.dcae.apod.analytics.cdap.tca.settings;
 
 import com.google.common.base.Objects;
 import org.openecomp.dcae.apod.analytics.cdap.common.settings.CDAPAppPreferences;
-
-import static org.openecomp.dcae.apod.analytics.common.AnalyticsConstants.TCA_DEFAULT_PUBLISHER_MAX_BATCH_QUEUE_SIZE;
-import static org.openecomp.dcae.apod.analytics.common.AnalyticsConstants.TCA_DEFAULT_PUBLISHER_MAX_RECOVERY_QUEUE_SIZE;
-import static org.openecomp.dcae.apod.analytics.common.AnalyticsConstants.TCA_DEFAULT_PUBLISHER_POLLING_INTERVAL_MS;
-import static org.openecomp.dcae.apod.analytics.common.AnalyticsConstants.TCA_DEFAULT_SUBSCRIBER_POLLING_INTERVAL_MS;
+import org.openecomp.dcae.apod.analytics.common.AnalyticsConstants;
 
 /**
  * <p>
@@ -86,20 +82,51 @@ public class TCAAppPreferences implements CDAPAppPreferences {
 
     protected Boolean enableAlertCEFFormat;
 
+
+    // A&AI Enrichment
+
+    protected Boolean enableAAIEnrichment;
+
+    protected String aaiEnrichmentHost;
+
+    protected Integer aaiEnrichmentPortNumber;
+
+    protected String aaiEnrichmentProtocol;
+
+    protected String aaiEnrichmentUserName;
+
+    protected String aaiEnrichmentUserPassword;
+
+    protected Boolean aaiEnrichmentIgnoreSSLCertificateErrors;
+
+    protected String aaiVNFEnrichmentAPIPath;
+
+    protected String aaiVMEnrichmentAPIPath;
+
+
+    // A&AI Enrichment Proxy
+
+    protected String aaiEnrichmentProxyURL;
+
     /**
      * Default constructor to setup default values for TCA App Preferences
      */
     public TCAAppPreferences() {
 
         // subscriber defaults
-        subscriberPollingInterval = TCA_DEFAULT_SUBSCRIBER_POLLING_INTERVAL_MS;
+        subscriberPollingInterval = AnalyticsConstants.TCA_DEFAULT_SUBSCRIBER_POLLING_INTERVAL_MS;
 
         // publisher defaults
-        publisherMaxBatchSize = TCA_DEFAULT_PUBLISHER_MAX_BATCH_QUEUE_SIZE;
-        publisherMaxRecoveryQueueSize = TCA_DEFAULT_PUBLISHER_MAX_RECOVERY_QUEUE_SIZE;
-        publisherPollingInterval = TCA_DEFAULT_PUBLISHER_POLLING_INTERVAL_MS;
+        publisherMaxBatchSize = AnalyticsConstants.TCA_DEFAULT_PUBLISHER_MAX_BATCH_QUEUE_SIZE;
+        publisherMaxRecoveryQueueSize = AnalyticsConstants.TCA_DEFAULT_PUBLISHER_MAX_RECOVERY_QUEUE_SIZE;
+        publisherPollingInterval = AnalyticsConstants.TCA_DEFAULT_PUBLISHER_POLLING_INTERVAL_MS;
 
-        enableAlertCEFFormat = false;
+        enableAlertCEFFormat = AnalyticsConstants.TCA_DEFAULT_ENABLE_CEF_FORMATTED_ALERT;
+
+        enableAAIEnrichment = AnalyticsConstants.TCA_DEFAULT_ENABLE_AAI_ENRICHMENT;
+        aaiEnrichmentIgnoreSSLCertificateErrors =
+                AnalyticsConstants.TCA_DEFAULT_AAI_ENRICHMENT_IGNORE_SSL_CERTIFICATE_ERRORS;
+        aaiEnrichmentProxyURL = AnalyticsConstants.TCA_DEFAULT_AAI_ENRICHMENT_PROXY_URL;
 
     }
 
@@ -244,6 +271,46 @@ public class TCAAppPreferences implements CDAPAppPreferences {
         this.publisherUserPassword = publisherUserPassword;
     }
 
+    public Boolean getEnableAAIEnrichment() {
+        return enableAAIEnrichment;
+    }
+
+    public String getAaiEnrichmentHost() {
+        return aaiEnrichmentHost;
+    }
+
+    public Integer getAaiEnrichmentPortNumber() {
+        return aaiEnrichmentPortNumber;
+    }
+
+    public String getAaiEnrichmentProtocol() {
+        return aaiEnrichmentProtocol;
+    }
+
+    public String getAaiEnrichmentUserName() {
+        return aaiEnrichmentUserName;
+    }
+
+    public String getAaiEnrichmentUserPassword() {
+        return aaiEnrichmentUserPassword;
+    }
+
+    public Boolean getAaiEnrichmentIgnoreSSLCertificateErrors() {
+        return aaiEnrichmentIgnoreSSLCertificateErrors;
+    }
+
+    public String getAaiVNFEnrichmentAPIPath() {
+        return aaiVNFEnrichmentAPIPath;
+    }
+
+    public String getAaiVMEnrichmentAPIPath() {
+        return aaiVMEnrichmentAPIPath;
+    }
+
+    public String getAaiEnrichmentProxyURL() {
+        return aaiEnrichmentProxyURL;
+    }
+
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
@@ -267,6 +334,16 @@ public class TCAAppPreferences implements CDAPAppPreferences {
                 .add("publisherMaxBatchSize", publisherMaxBatchSize)
                 .add("publisherMaxRecoveryQueueSize", publisherMaxRecoveryQueueSize)
                 .add("publisherPollingInterval", publisherPollingInterval)
+                .add("enableAlertCEFFormat", enableAlertCEFFormat)
+                .add("enableAAIEnrichment", enableAAIEnrichment)
+                .add("aaiEnrichmentHost", aaiEnrichmentHost)
+                .add("aaiEnrichmentPortNumber", aaiEnrichmentPortNumber)
+                .add("aaiEnrichmentProtocol", aaiEnrichmentProtocol)
+                .add("aaiEnrichmentUserName", aaiEnrichmentUserName)
+                .add("aaiEnrichmentIgnoreSSLCertificateErrors", aaiEnrichmentIgnoreSSLCertificateErrors)
+                .add("aaiVNFEnrichmentAPIPath", aaiVNFEnrichmentAPIPath)
+                .add("aaiVMEnrichmentAPIPath", aaiVMEnrichmentAPIPath)
+                .add("aaiEnrichmentProxyEnabled", aaiEnrichmentProxyURL == null ? "false" : "true")
                 .toString();
     }
 }

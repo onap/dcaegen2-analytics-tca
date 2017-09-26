@@ -113,7 +113,7 @@ public abstract class CDAPPluginUtils extends AnalyticsModelJsonUtils {
 
 
     /**
-     * Creates output {@link StructuredRecord.Builder} which has copied values from input {@link StructuredRecord}
+     * Creates output StructuredRecord Builder which has copied values from input StructuredRecord
      *
      * @param outputSchema output Schema
      * @param inputStructuredRecord input Structured Record
@@ -142,7 +142,7 @@ public abstract class CDAPPluginUtils extends AnalyticsModelJsonUtils {
 
 
     /**
-     * Adds Field value to {@link StructuredRecord.Builder} if schema contains that field Name
+     * Adds Field value to StructuredRecord Builder if schema contains that field Name
      *
      * @param structuredRecordBuilder structured record builder
      * @param structuredRecordSchema schema for structured record builder

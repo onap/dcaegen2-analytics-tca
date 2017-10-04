@@ -136,6 +136,7 @@ public abstract class CDAPTCAUtils extends TCAUtils {
 
         if (null != tcaAppPreferences.getSubscriberHostName() || null != tcaAppPreferences.getPublisherHostName()) {
             LOG.info("DMaaP Information is set from runtime preferences. Skipping getting DMaaP info from App Config");
+            return;
         }
 
         LOG.info("Fetching DMaaP information from App Configuration String: {}", appConfigString);

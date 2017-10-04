@@ -28,6 +28,8 @@ import org.openecomp.dcae.apod.analytics.cdap.tca.BaseAnalyticsCDAPTCAUnitTest;
 import org.openecomp.dcae.apod.analytics.cdap.tca.settings.TCAAppPreferences;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.TCAPolicy;
 
+import java.util.Map;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -42,7 +44,10 @@ public class CDAPTCAUtilsTest extends BaseAnalyticsCDAPTCAUnitTest {
     @Test
     public void testGetValidatedTCAAppPreferences() throws Exception {
         RuntimeContext runtimeContext = mock(RuntimeContext.class);
-        when(runtimeContext.getRuntimeArguments()).thenReturn(getPreferenceMap());
+        final Map<String, String> preferenceMap = getPreferenceMap();
+        preferenceMap.remove("subscriberHostName");
+        preferenceMap.remove("publisherHostName");
+        when(runtimeContext.getRuntimeArguments()).thenReturn(preferenceMap);
         ApplicationSpecification mockApplicationSpecification = Mockito.mock(ApplicationSpecification.class);
         when(mockApplicationSpecification.getConfiguration()).thenReturn(fromStream(TCA_APP_CONFIG_FILE_LOCATION));
         when(runtimeContext.getApplicationSpecification()).thenReturn(mockApplicationSpecification);

@@ -69,8 +69,9 @@ public class DMaaPMRPublisherImpl extends BaseDMaaPMRComponent implements DMaaPM
                                 CloseableHttpClient closeableHttpClient) {
 
         this.publisherConfig = publisherConfig;
+        final int maxBatchSize = publisherConfig.getMaxBatchSize() > 0 ? publisherConfig.getMaxBatchSize() : 1;
         this.publisherQueue = dMaaPMRPublisherQueueFactory.create(
-                publisherConfig.getMaxBatchSize(), publisherConfig.getMaxRecoveryQueueSize());
+                maxBatchSize, publisherConfig.getMaxRecoveryQueueSize());
         this.closeableHttpClient = closeableHttpClient;
         this.publisherUri = createPublisherURI(publisherConfig);
         this.publisherCreationTime = new Date();

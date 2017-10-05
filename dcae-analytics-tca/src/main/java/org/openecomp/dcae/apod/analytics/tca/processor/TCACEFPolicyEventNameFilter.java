@@ -67,22 +67,22 @@ public class TCACEFPolicyEventNameFilter extends AbstractTCAECEFPolicyProcessor 
 
         // Determine Policy Functional Roles
         final TCAPolicy tcaPolicy = processorContext.getTCAPolicy();
-        final List<String> policyFunctionalRoles = getPolicyEventNamesSupplier(tcaPolicy).get();
-        final String policyFunctionalRolesString = Joiner.on(",").join(policyFunctionalRoles);
+        final List<String> policyEventNames = getPolicyEventNamesSupplier(tcaPolicy).get();
+        final String policyEventNamesString = Joiner.on(",").join(policyEventNames);
 
-        // If Policy functional Roles contains CEF message Functional Role then continue processing
-        if (policyFunctionalRoles.contains(cefMessageEventName)) {
+        // If Policy event names contains CEF message event names then continue processing
+        if (policyEventNames.contains(cefMessageEventName)) {
             final String finishMessage = String.format(
-                    "Policy Functional Roles and CEF Message Functional match successful." +
-                            "Message Functional Role: %s, Policy Functional Roles: %s",
-                    cefMessageEventName, policyFunctionalRolesString);
+                    "Policy Event Name and CEF Message Event Name match successful." +
+                            "Message EventName: %s, Policy Event Names: %s",
+                    cefMessageEventName, policyEventNamesString);
             setFinishedProcessingMessage(finishMessage, processorContext);
         } else {
-            // If Policy functional Roles does not contain CEF message Functiona Role then terminate processing
+            // If Policy event names does not contain CEF message event names then terminate processing
             final String terminatingMessage = String.format(
-                    "Policy Domain and CEF Message Domain match unsuccessful." +
-                            "Message Functional Role: %s, Policy Functional Roles: %s",
-                    cefMessageEventName, policyFunctionalRolesString);
+                    "Policy Event name and CEF Message Event name match unsuccessful." +
+                            "Message EventName: %s, Policy Event Names: %s",
+                    cefMessageEventName, policyEventNamesString);
             setTerminatingProcessingMessage(terminatingMessage, processorContext);
         }
 

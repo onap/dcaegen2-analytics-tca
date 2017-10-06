@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a437d4f_e57af5bb",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2017-10-06T21:10:18Z",
+      "side": 1,
+      "message": "Pls change it to localhost as current VM is temporary workaround.",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 31
+      },
+      "revId": "cf41be53ed7de422c5af0215e238f23e6926b278",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_e561d505",
+        "filename": "dpo/tcaSpec.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2017-10-06T21:10:18Z",
+      "side": 1,
+      "message": "This link will get propagated into blueprint, correct? pls check if platform can support it and use env variables from oparent whereever applicable.",
+      "range": {
+        "startLine": 52,
+        "startChar": 14,
+        "endLine": 53,
+        "endChar": 19
+      },
+      "revId": "cf41be53ed7de422c5af0215e238f23e6926b278",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_c55c914d",
+        "filename": "dpo/tcaSpec.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2017-10-06T21:10:18Z",
+      "side": 1,
+      "message": "hostname, user, pwd shld be masked from att references",
+      "range": {
+        "startLine": 113,
+        "startChar": 19,
+        "endLine": 113,
+        "endChar": 49
+      },
+      "revId": "cf41be53ed7de422c5af0215e238f23e6926b278",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}

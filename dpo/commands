@@ -15,3 +15,5 @@ dcae_cli component undeploy cdap.tca.hi.lo.app
 dcae_cli component show cdap.tca.hi.lo.app
 dcae_cli component list
 dcae_cli component list --deployed
+
+dcae_cli catalog list --expanded

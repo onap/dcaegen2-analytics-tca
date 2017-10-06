@@ -1,7 +1,7 @@
 {
   "self": {
     "name": "TCA Alert Definition",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "The format of the output event from TCA"
   },
   "dataformatversion": "1.0.0",
@@ -9,23 +9,62 @@
     "name": "TCA Alert",
     "version": "1.0.0",
     "properties": {
-      "closedLoopControlame": {
-        "type": "string"
-      },
       "version": {
-        "type": "string"
+        "type": "string",
+        "enum": [
+          "1.0.2"
+        ]
+      },
+      "closedLoopControlName": {
+        "type": "string",
+        "description" : "This is the unique ID for the Control Loop. It is created by the CLAMP platform during Control Loop design"
       },
       "requestID": {
-        "type": "string"
+        "type": "string",
+        "description" : "For the control loop, when an instance of the Control Loop occurs, this unique ID must be created. The same ID must be forwarded for both the ONSET and the ABATED control loop messages"
+      },
+      "closedLoopEventStatus": {
+        "type": "string",
+        "description" : "This is the status of the closedLoopControlName/requestID pair",
+        "enum": [
+          "ONSET",
+          "ABATED"
+        ]
       },
       "closedLoopAlarmStart": {
-        "type": "string"
+        "type": "string",
+        "description" : "When the alarm was first detected"
+      },
+      "closedLoopAlarmEnd" : {
+        "type" : "string",
+        "description" : "When the alarm was cleared. This field need only be present in the ABATED message"
       },
       "closedLoopEventClient": {
-        "type": "string"
+        "type": "string",
+        "description" : "For monitoring/logging/auditing purposes, if there is an instance ID of the DCAE micro service this field should be populated with it"
+      },
+      "policyVersion": {
+        "type": "string",
+        "description" : "The version of the Policy driving the DCAE Micro service. Should be a part of the configuration policy setup by CLAMP and passed by DCAE controller"
+      },
+      "policyName": {
+        "type": "string",
+        "description" : "The name of the Policy driving the DCAE micro service. Should be a part of the configuration policy setup by CLAMP and passed by DCAE controller"
+      },
+      "policyScope": {
+        "type": "string",
+        "description" : "The scope of the Policy driving the DCAE micro service. Should be a part of the configuration policy setup by CLAMP and passed by DCAE controller"
+      },      
+      "from": {
+        "type": "string",
+        "description" : "The ONAP platform component publishing this message",
+        "enum": [
+          "DCAE"
+        ]
       },
       "target_type": {
         "type": "string",
+        "description" : "The type of the target: VM or VNF",
         "enum": [
           "VNF",
           "VM"
@@ -33,12 +72,14 @@
       },
       "target": {
         "type": "string",
+        "description" : "This is the name of the field within the A&AI sub-tag that indicates the actual entity Node details. There should be a matching node field within the A&AI subtag holding this value",
         "enum": [
           "generic-vnf.vnf-id",
           "vserver.vserver-name"
         ]
       },
       "AAI": {
+        "description" : "Contains the A&AI Node-Attribute list",
         "anyOf": [
           {
             "generic-vnf.vnf-id": {
@@ -51,28 +92,8 @@
             }
           }
         ]
-      },
-      "from": {
-        "type": "string",
-        "enum": [
-          "DCAE"
-        ]
-      },
-      "policyScope": {
-        "type": "string"
-      },
-      "policyName": {
-        "type": "string"
-      },
-      "policyVersion": {
-        "type": "string"
-      },
-      "closedLoopEventStatus": {
-        "type": "string",
-        "enum": [
-          "ONSET"
-        ]
       }
-    }
+    },
+    "required": ["version", "closedLoopControlName", "requestID", "closedLoopEventStatus", "closedLoopAlarmStart", "from", "target_type", "target", "AAI"]
   }
 }

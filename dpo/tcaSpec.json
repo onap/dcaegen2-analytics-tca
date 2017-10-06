@@ -49,7 +49,7 @@
   },
   "artifacts": [
     {
-      "uri": "${nexusproxy}/repository/dcae-dev-raw/jar_files/dcae-analytics-tca-2.0.0.jar",
+      "uri": "https://nexus.onap.org/service/local/artifact/maven/redirect?r=snapshots&g=org.onap.dcaegen2.analytics.tca&a=dcae-analytics-cdap-tca&v=LATEST",
       "type": "jar"
     }
   ],
@@ -108,6 +108,36 @@
     ],
     "app_preferences": [
       {
+        "name" :  "subscriberHostName",
+        "description" :  "",
+        "value" : "zldcmtc1njmsrt00.homer.att.com"
+      },
+      {
+        "name" :  "subscriberHostPort",
+        "description" :  "",
+        "value" : 3905
+      },
+      {
+        "name" :  "subscriberTopicName",
+        "description" :  "",
+        "value" : "com.att.dcae.dmaap.mtnje2.DcaeTestVESSub"
+      },
+      {
+        "name" :  "subscriberProtocol",
+        "description" :  "",
+        "value" : "https"
+      },
+      {
+        "name" :  "subscriberUserName",
+        "description" :  "",
+        "value" : "m00502@tca.af.dcae.att.com"
+      },
+      {
+        "name" :  "subscriberUserPassword",
+        "description" :  "",
+        "value" : "Te5021abc"
+      },
+      {
         "name": "subscriberContentType",
         "description": "Subscriber Content Type",
         "value": "application/json"
@@ -136,6 +166,36 @@
         "name": "subscriberPollingInterval",
         "description": "Subscriber Polling Interval in milliseconds",
         "value": 30000
+      },
+      {
+        "name" :  "publisherHostName",
+        "description" :  "",
+        "value" : "zldcmtc1njmsrt00.homer.att.com"
+      },
+      {
+        "name" :  "publisherHostPort",
+        "description" :  "",
+        "value" : 3905
+      },
+      {
+        "name" :  "publisherTopicName",
+        "description" :  "",
+        "value" : "com.att.dcae.dmaap.mtnje2.DcaeTestVESPub"
+      },
+      {
+        "name" :  "publisherProtocol",
+        "description" :  "",
+        "value" : "https"
+      },
+      {
+        "name" :  "publisherUserName",
+        "description" :  "",
+        "value" : "m00502@tca.af.dcae.att.com"
+      },
+      {
+        "name" :  "publisherUserPassword",
+        "description" :  "",
+        "value" : "Te5021abc"
       },
       {
         "name": "publisherContentType",
@@ -291,7 +351,8 @@
                       "LESS",
                       "LESS_OR_EQUAL",
                       "GREATER",
-                      "GREATER_OR_EQUAL"
+                      "GREATER_OR_EQUAL",
+                      "EQUAL"
                 ]
               }]
             }, {

@@ -49,7 +49,7 @@
   },
   "artifacts": [
     {
-      "uri": "${nexusproxy}/repository/dcae-dev-raw/jar_files/dcae-analytics-tca-2.0.0.jar",
+      "uri": "https://nexus.onap.org/service/local/repositories/snapshots/content/org/onap/dcaegen2/analytics/tca/dcae-analytics-cdap-tca/2.0.0-SNAPSHOT/dcae-analytics-cdap-tca-2.0.0-20171006.155007-46.jar",
       "type": "jar"
     }
   ],
@@ -108,6 +108,36 @@
     ],
     "app_preferences": [
       {
+        "name" :  "subscriberHostName",
+        "description" :  "",
+        "value" : "HOSTNAME"
+      },
+      {
+        "name" :  "subscriberHostPort",
+        "description" :  "",
+        "value" : 1234
+      },
+      {
+        "name" :  "subscriberTopicName",
+        "description" :  "",
+        "value" : "com.att.dcae.dmaap.mtnje2.DcaeTestVESSub"
+      },
+      {
+        "name" :  "subscriberProtocol",
+        "description" :  "",
+        "value" : "https"
+      },
+      {
+        "name" :  "subscriberUserName",
+        "description" :  "",
+        "value" : "USERNAME"
+      },
+      {
+        "name" :  "subscriberUserPassword",
+        "description" :  "",
+        "value" : "PASSWORD"
+      },
+      {
         "name": "subscriberContentType",
         "description": "Subscriber Content Type",
         "value": "application/json"
@@ -136,6 +166,36 @@
         "name": "subscriberPollingInterval",
         "description": "Subscriber Polling Interval in milliseconds",
         "value": 30000
+      },
+      {
+        "name" :  "publisherHostName",
+        "description" :  "",
+        "value" : "HOSTNAME"
+      },
+      {
+        "name" :  "publisherHostPort",
+        "description" :  "",
+        "value" : 1234
+      },
+      {
+        "name" :  "publisherTopicName",
+        "description" :  "",
+        "value" : "com.att.dcae.dmaap.mtnje2.DcaeTestVESPub"
+      },
+      {
+        "name" :  "publisherProtocol",
+        "description" :  "",
+        "value" : "https"
+      },
+      {
+        "name" :  "publisherUserName",
+        "description" :  "",
+        "value" : "USERNAME"
+      },
+      {
+        "name" :  "publisherUserPassword",
+        "description" :  "",
+        "value" : "PASSWORD"
       },
       {
         "name": "publisherContentType",
@@ -185,12 +245,12 @@
       {
         "name": "aaiEnrichmentUserName",
         "description": "A&AI Enrichment API username",
-        "value": "DCAE"
+        "value": "USERNAME"
       },
       {
         "name": "aaiEnrichmentUserPassword",
         "description": "A&AI Enrichment API password",
-        "value": "DCAE"
+        "value": "PASSWORD"
       },
       {
         "name": "aaiEnrichmentIgnoreSSLCertificateErrors",
@@ -210,7 +270,7 @@
       {
         "name": "aaiEnrichmentProxyURL",
         "description": "A&AI Enrichment API Proxy URL",
-        "value": "http://username:password@proxyhost.com:8080"
+        "value": "URL"
       },      
       {
         "name": "tca_policy",
@@ -291,7 +351,8 @@
                       "LESS",
                       "LESS_OR_EQUAL",
                       "GREATER",
-                      "GREATER_OR_EQUAL"
+                      "GREATER_OR_EQUAL",
+                      "EQUAL"
                 ]
               }]
             }, {

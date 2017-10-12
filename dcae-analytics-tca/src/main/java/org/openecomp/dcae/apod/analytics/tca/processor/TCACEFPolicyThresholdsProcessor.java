@@ -32,6 +32,7 @@ import org.openecomp.dcae.apod.analytics.tca.utils.TCAUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,11 +94,11 @@ public class TCACEFPolicyThresholdsProcessor extends AbstractTCAECEFPolicyProces
         final Set<String> policyFieldPaths = policyFieldPathsMap.keySet();
 
         // Get Json Values for Policy Fields
-        final Map<String, List<Long>> messageFieldValuesMap = TCAUtils.getJsonPathValue(cefMessage, policyFieldPaths);
+        final Map<String, List<BigDecimal>> messageFieldValuesMap = TCAUtils.getJsonPathValue(cefMessage, policyFieldPaths);
 
         // Determine all violated thresholds per message field Path
         final Map<String, Threshold> violatedThresholdsMap = new HashMap<>();
-        for (Map.Entry<String, List<Long>> messageFieldValuesMapEntry : messageFieldValuesMap.entrySet()) {
+        for (Map.Entry<String, List<BigDecimal>> messageFieldValuesMapEntry : messageFieldValuesMap.entrySet()) {
             final String messageFieldPath = messageFieldValuesMapEntry.getKey();
             final List<Threshold> messageFieldAssociatedPolicyThresholds = policyFieldPathsMap.get(messageFieldPath);
             if (messageFieldAssociatedPolicyThresholds != null) {

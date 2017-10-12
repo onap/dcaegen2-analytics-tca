@@ -20,6 +20,8 @@
 
 package org.openecomp.dcae.apod.analytics.model.domain.policy.tca;
 
+import java.math.BigDecimal;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -32,32 +34,32 @@ public enum Direction implements TCAPolicyModel {
 
     EQUAL {
         @Override
-        public Boolean operate(@Nonnull Long value1, @Nonnull Long value2) {
-            return value1.equals(value2);
+        public Boolean operate(@Nonnull BigDecimal value1, @Nonnull BigDecimal value2) {
+            return value1.compareTo(value2) == 0;
         }
     },
     LESS {
         @Override
-        public Boolean operate(@Nonnull Long value1, @Nonnull Long value2) {
-            return value1 < value2;
+        public Boolean operate(@Nonnull BigDecimal value1, @Nonnull BigDecimal value2) {
+            return value1.compareTo(value2) < 0;
         }
     },
     LESS_OR_EQUAL {
         @Override
-        public Boolean operate(@Nonnull Long value1, @Nonnull Long value2) {
-            return value1 <= value2;
+        public Boolean operate(@Nonnull BigDecimal value1, @Nonnull BigDecimal value2) {
+            return value1.compareTo(value2) <= 0;
         }
     },
     GREATER {
         @Override
-        public Boolean operate(@Nonnull Long value1, @Nonnull Long value2) {
-            return value1 > value2;
+        public Boolean operate(@Nonnull BigDecimal value1, @Nonnull BigDecimal value2) {
+            return value1.compareTo(value2) > 0;
         }
     },
     GREATER_OR_EQUAL {
         @Override
-        public Boolean operate(@Nonnull Long value1, @Nonnull Long value2) {
-            return value1 >= value2;
+        public Boolean operate(@Nonnull BigDecimal value1, @Nonnull BigDecimal value2) {
+            return value1.compareTo(value2) >= 0;
         }
     };
 
@@ -69,6 +71,6 @@ public enum Direction implements TCAPolicyModel {
      *
      * @return result of operation for the direction logic
      */
-    public abstract Boolean operate(@Nonnull Long value1, @Nonnull Long value2);
+    public abstract Boolean operate(@Nonnull BigDecimal value1, @Nonnull BigDecimal value2);
 
 }

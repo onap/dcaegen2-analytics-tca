@@ -53,6 +53,7 @@ import org.quartz.Scheduler;
 import org.quartz.SimpleTrigger;
 import org.quartz.impl.StdSchedulerFactory;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -147,8 +148,9 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
         final String jsonPath =
                 "$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsAccumulated";
         final ImmutableSet<String> fieldPaths = ImmutableSet.of(jsonPath);
-        final Map<String, List<Long>> jsonPathValueMap = TCAUtils.getJsonPathValue(cefMessageString, fieldPaths);
-        assertThat("Json Path value must match", jsonPathValueMap.get(jsonPath).get(0), is(5000L));
+        final Map<String, List<BigDecimal>> jsonPathValueMap = TCAUtils.getJsonPathValue(cefMessageString, fieldPaths);
+        assertThat("Json Path value must match",
+                jsonPathValueMap.get(jsonPath).get(0), is(new BigDecimal(5000)));
 
     }
 
@@ -157,7 +159,7 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
         final String cefMessageString = fromStream(CEF_MESSAGE_JSON_FILE_LOCATION);
         final String jsonPath = "$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].invalid";
         final ImmutableSet<String> fieldPaths = ImmutableSet.of(jsonPath);
-        final Map<String, List<Long>> jsonPathValueMap = TCAUtils.getJsonPathValue(cefMessageString, fieldPaths);
+        final Map<String, List<BigDecimal>> jsonPathValueMap = TCAUtils.getJsonPathValue(cefMessageString, fieldPaths);
         assertThat("Json path value must be empty", jsonPathValueMap.size(), is(0));
 
     }
@@ -400,7 +402,7 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
         violatedThreshold.setSeverity(severity);
         violatedThreshold.setDirection(Direction.GREATER);
         violatedThreshold.setClosedLoopControlName("violatedThresholdClosedLoopName");
-        violatedThreshold.setActualFieldValue(100L);
+        violatedThreshold.setActualFieldValue(new BigDecimal(100L));
         violatedThreshold.setFieldPath("violatedThresholdFieldPath");
         violatedThreshold.setVersion("violatedThresholdVersion");
         violatedThreshold.setClosedLoopEventStatus(ClosedLoopEventStatus.ONSET);

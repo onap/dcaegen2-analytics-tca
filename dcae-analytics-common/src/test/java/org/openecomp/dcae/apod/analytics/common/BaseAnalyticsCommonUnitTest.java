@@ -20,9 +20,13 @@
 
 package org.openecomp.dcae.apod.analytics.common;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Suppliers;
+import org.junit.BeforeClass;
 import org.openecomp.dcae.apod.analytics.common.service.processor.TestEarlyTerminatingProcessor;
 import org.openecomp.dcae.apod.analytics.common.service.processor.TestMessageProcessor1;
 import org.openecomp.dcae.apod.analytics.common.service.processor.TestMessageProcessor2;
+import org.openecomp.dcae.apod.analytics.model.util.json.AnalyticsModelObjectMapperSupplier;
 import org.openecomp.dcae.apod.analytics.test.BaseDCAEAnalyticsUnitTest;
 
 /**
@@ -36,6 +40,18 @@ public abstract class BaseAnalyticsCommonUnitTest extends BaseDCAEAnalyticsUnitT
     protected static final String TEST_MESSAGE_PROCESSOR_MESSAGE = "Test Processor Message";
 
     protected static final String CEF_MESSAGE_FILE_PATH = "data/json/cef/cef_message.json";
+
+    protected static ObjectMapper objectMapper;
+
+    /**
+     * Before running test cases need to assign object mapper.
+     */
+    @BeforeClass
+    public static void beforeClass() {
+        final AnalyticsModelObjectMapperSupplier analyticsModelObjectMapperSupplier =
+                new AnalyticsModelObjectMapperSupplier();
+        objectMapper = Suppliers.memoize(analyticsModelObjectMapperSupplier).get();
+    }
 
     /*
      * Test implementation for {@link CDAPAppSettings}

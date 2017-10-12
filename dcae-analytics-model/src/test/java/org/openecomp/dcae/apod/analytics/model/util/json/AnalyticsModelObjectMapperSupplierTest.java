@@ -57,7 +57,8 @@ public class AnalyticsModelObjectMapperSupplierTest extends BaseAnalyticsModelUn
 
         final Set<Option> configurationOptions = configuration.getOptions();
         assertThat(configurationOptions,
-                containsInAnyOrder(Option.DEFAULT_PATH_LEAF_TO_NULL, Option.SUPPRESS_EXCEPTIONS));
+                containsInAnyOrder(Option.DEFAULT_PATH_LEAF_TO_NULL, Option.SUPPRESS_EXCEPTIONS,
+                        Option.ALWAYS_RETURN_LIST));
     }
 
 }

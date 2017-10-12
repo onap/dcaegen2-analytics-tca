@@ -104,7 +104,8 @@ public class AnalyticsModelObjectMapperSupplier implements Supplier<ObjectMapper
             public Set<Option> options() {
 
                 // Json Path exceptions are suppressed, also missing properties are tolerated
-                return EnumSet.of(Option.DEFAULT_PATH_LEAF_TO_NULL, Option.SUPPRESS_EXCEPTIONS);
+                return EnumSet.of(Option.DEFAULT_PATH_LEAF_TO_NULL, Option.SUPPRESS_EXCEPTIONS,
+                        Option.ALWAYS_RETURN_LIST);
             }
         });
 

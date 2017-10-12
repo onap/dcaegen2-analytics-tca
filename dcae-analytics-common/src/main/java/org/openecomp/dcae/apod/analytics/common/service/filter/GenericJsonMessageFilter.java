@@ -29,6 +29,7 @@ import org.openecomp.dcae.apod.analytics.common.service.processor.AbstractMessag
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -77,7 +78,9 @@ public class GenericJsonMessageFilter extends AbstractMessageProcessor<JsonMessa
             final DocumentContext documentContext = JsonPath.parse(jsonMessage);
             String jsonPathValue = null;
             try {
-                jsonPathValue = documentContext.read(jsonPath, String.class);
+                final List jsonPathValues = documentContext.read(jsonPath);
+                final Object pathValue = jsonPathValues.isEmpty() ? null :  jsonPathValues.get(0);
+                jsonPathValue = pathValue instanceof Number ? pathValue.toString() : (String) pathValue;
             } catch (PathNotFoundException ex) {
                 LOG.info("Unable to find json Path: {}. Exception: {}, Json Message: {}", jsonPath, ex, jsonMessage);
             }

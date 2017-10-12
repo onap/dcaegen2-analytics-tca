@@ -43,6 +43,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.openecomp.dcae.apod.analytics.aai.service.AAIEnrichmentClient;
 import org.openecomp.dcae.apod.analytics.common.AnalyticsConstants;
+import org.openecomp.dcae.apod.analytics.common.exception.DCAEAnalyticsRuntimeException;
 import org.openecomp.dcae.apod.analytics.common.exception.MessageProcessingException;
 import org.openecomp.dcae.apod.analytics.common.service.processor.AbstractMessageProcessor;
 import org.openecomp.dcae.apod.analytics.common.service.processor.GenericMessageChainProcessor;
@@ -83,6 +84,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -266,20 +268,30 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
      * @param jsonFieldPaths Json Field Paths
      * @return Map containing key as json path and values as values associated with that json path
      */
-    public static Map<String, List<Long>> getJsonPathValue(@Nonnull String message, @Nonnull Set<String>
+    public static Map<String, List<BigDecimal>> getJsonPathValue(@Nonnull String message, @Nonnull Set<String>
             jsonFieldPaths) {
 
-        final Map<String, List<Long>> jsonFieldPathMap = new HashMap<>();
+        final Map<String, List<BigDecimal>> jsonFieldPathMap = new HashMap<>();
         final DocumentContext documentContext = JsonPath.parse(message);
 
         for (String jsonFieldPath : jsonFieldPaths) {
-            final List<Long> jsonFieldValues = documentContext.read(jsonFieldPath, new TypeRef<List<Long>>() {
-            });
+            List<BigDecimal> jsonFieldValues = null;
+
+            try {
+                jsonFieldValues = documentContext.read(jsonFieldPath, new TypeRef<List<BigDecimal>>() {
+                });
+            } catch (Exception e) {
+                final String errorMessage = String.format(
+                        "Unable to convert jsonFieldPath: %s value to valid number. " +
+                                "Json Path value is not in a valid number format. Incoming message: %s",
+                        jsonFieldPath, message);
+                throw new DCAEAnalyticsRuntimeException(errorMessage, LOG, e);
+            }
             // If Json Field Values are not or empty
             if (jsonFieldValues != null && !jsonFieldValues.isEmpty()) {
                 // Filter out all null values in the filed values list
-                final List<Long> nonNullValues = Lists.newLinkedList(Iterables.filter(jsonFieldValues,
-                        Predicates.<Long>notNull()));
+                final List<BigDecimal> nonNullValues = Lists.newLinkedList(Iterables.filter(jsonFieldValues,
+                        Predicates.<BigDecimal>notNull()));
                 // If there are non null values put them in the map
                 if (!nonNullValues.isEmpty()) {
                     jsonFieldPathMap.put(jsonFieldPath, nonNullValues);
@@ -298,15 +310,17 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
      * @param fieldThresholds Policy Thresholds for Field Path
      * @return Optional of violated threshold for a field path
      */
-    public static Optional<Threshold> thresholdCalculator(final List<Long> messageFieldValues, final List<Threshold>
+    public static Optional<Threshold> thresholdCalculator(final List<BigDecimal> messageFieldValues, final
+    List<Threshold>
             fieldThresholds) {
         // order thresholds by severity
         Collections.sort(fieldThresholds, THRESHOLD_COMPARATOR);
         // Now apply each threshold to field values
         for (Threshold fieldThreshold : fieldThresholds) {
-            for (Long messageFieldValue : messageFieldValues) {
+            for (BigDecimal messageFieldValue : messageFieldValues) {
                 final Boolean isThresholdViolated =
-                        fieldThreshold.getDirection().operate(messageFieldValue, fieldThreshold.getThresholdValue());
+                        fieldThreshold.getDirection().operate(messageFieldValue, new BigDecimal(fieldThreshold
+                                .getThresholdValue()));
                 if (isThresholdViolated) {
                     final Threshold violatedThreshold = Threshold.copy(fieldThreshold);
                     violatedThreshold.setActualFieldValue(messageFieldValue);

@@ -24,6 +24,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.openecomp.dcae.apod.analytics.model.domain.cef.EventSeverity;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Rajiv Singla . Creation Date: 11/5/2016.
@@ -100,7 +102,7 @@ public class Threshold extends BaseTCAPolicyModel {
      * @param actualFieldValue new value for actual Field value that caused the violation
      * @return actual field value that caused the violation
      */
-    private Long actualFieldValue;
+    private BigDecimal actualFieldValue;
 
     /**
      * Creates a deep copy of give {@link Threshold}

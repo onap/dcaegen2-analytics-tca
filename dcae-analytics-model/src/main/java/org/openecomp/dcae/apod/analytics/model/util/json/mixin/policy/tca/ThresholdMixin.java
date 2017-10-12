@@ -23,6 +23,8 @@ package org.openecomp.dcae.apod.analytics.model.util.json.mixin.policy.tca;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Rajiv Singla . Creation Date: 11/5/2016.
@@ -30,15 +32,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public abstract class ThresholdMixin extends BaseTCAPolicyModelMixin {
 
     @JsonIgnore
-    private Long actualFieldValue;
+    private BigDecimal actualFieldValue;
 
     @JsonIgnore
-    public Long getActualFieldValue() {
+    public BigDecimal getActualFieldValue() {
         return actualFieldValue;
     }
 
     @JsonProperty
-    public void setActualFieldValue(Long actualFieldValue) {
+    public void setActualFieldValue(BigDecimal actualFieldValue) {
         this.actualFieldValue = actualFieldValue;
     }
 }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a2f8d8d_46962a96",
+        "filename": "dpo/tcaSpec.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2017-10-13T02:39:05Z",
+      "side": 1,
+      "message": "can this be created from an environment variable and a template that generates the json object?",
+      "revId": "684630e635506cbcec28067337f8df0e3ad57242",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}

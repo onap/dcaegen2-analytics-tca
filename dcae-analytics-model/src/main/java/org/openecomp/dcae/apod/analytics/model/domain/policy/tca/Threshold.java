@@ -119,6 +119,7 @@ public class Threshold extends BaseTCAPolicyModel {
         newThreshold.setThresholdValue(threshold.getThresholdValue());
         newThreshold.setDirection(threshold.getDirection());
         newThreshold.setSeverity(threshold.getSeverity());
+        newThreshold.setVersion(threshold.getVersion());
         newThreshold.setActualFieldValue(threshold.getActualFieldValue());
         return newThreshold;
     }

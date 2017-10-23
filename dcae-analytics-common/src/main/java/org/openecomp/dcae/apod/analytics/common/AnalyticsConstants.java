@@ -106,7 +106,7 @@ public abstract class AnalyticsConstants {
     // VNF Constants
     public static final String TCA_VES_RESPONSE_VNF_TARGET_TYPE = "VNF";
     public static final String AAI_VNF_KEY_PREFIX = "generic-vnf.";
-    public static final String TCA_VES_RESPONSE_VNF_TARGET = AAI_VNF_KEY_PREFIX + "vnf-id";
+    public static final String TCA_VES_RESPONSE_VNF_TARGET = AAI_VNF_KEY_PREFIX + "vnf-name";
     // VM Constants
     public static final String TCA_VES_RESPONSE_VM_TARGET_TYPE = "VM";
     public static final String AAI_VSERVER_KEY_PREFIX = "vserver.";

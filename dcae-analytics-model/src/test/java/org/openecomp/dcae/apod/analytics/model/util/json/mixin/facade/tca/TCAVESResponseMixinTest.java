@@ -42,10 +42,10 @@ public class TCAVESResponseMixinTest extends BaseAnalyticsModelUnitTest {
             assertJsonConversions(TCA_VES_CEF_RESPONSE_JSON_FILE_LOCATION, TCAVESResponse.class);
 
         assertThat("VES CEF Message Response AAI generics VNF Id must match",
-                vesCEFMessageResponse.getAai().getGenericVNFId(), is("vpp-test(?)"));
+                vesCEFMessageResponse.getAai().getGenericVNFName(), is("vpp-test(?)"));
 
         assertThat("VES CEF Message Response AAI generic Server Id must match",
-                vesCEFMessageResponse.getAai().getGenericServerId(), is("dfw1lb01lb01"));
+                vesCEFMessageResponse.getAai().getGenericServerName(), is("dfw1lb01lb01"));
 
         assertThat("VES CEF Message target type must be parsed correctly as VNF",
                 vesCEFMessageResponse.getTargetType(), is("VNF"));

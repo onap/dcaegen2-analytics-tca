@@ -30,26 +30,26 @@ import org.openecomp.dcae.apod.analytics.model.util.json.mixin.BaseDynamicProper
  */
 public abstract class AAIMixin extends BaseDynamicPropertiesProviderMixin {
 
-    private String genericVNFId;
-    private String genericServerId;
+    private String genericVNFName;
+    private String genericServerName;
 
-    @JsonGetter("generic-vnf.vnf-id")
-    public String getGenericVNFId() {
-        return genericVNFId;
+    @JsonGetter("generic-vnf.vnf-name")
+    public String getGenericVNFName() {
+        return genericVNFName;
     }
 
-    @JsonSetter("generic-vnf.vnf-id")
-    public void setGenericVNFId(String genericVNFId) {
-        this.genericVNFId = genericVNFId;
+    @JsonSetter("generic-vnf.vnf-name")
+    public void setGenericVNFName(String genericVNFName) {
+        this.genericVNFName = genericVNFName;
     }
 
     @JsonGetter("vserver.vserver-name")
-    public String getGenericServerId() {
-        return genericServerId;
+    public String getGenericServerName() {
+        return genericServerName;
     }
 
     @JsonSetter("vserver.vserver-name")
-    public void setGenericServerId(String genericServerId) {
-        this.genericServerId = genericServerId;
+    public void setGenericServerName(String genericServerName) {
+        this.genericServerName = genericServerName;
     }
 }

@@ -34,8 +34,8 @@ public class AAI extends BaseDynamicPropertiesProvider implements TCAFacadeModel
 
     private static final long serialVersionUID = 1L;
 
-    private String genericVNFId;
+    private String genericVNFName;
 
-    private String genericServerId;
+    private String genericServerName;
 
 }

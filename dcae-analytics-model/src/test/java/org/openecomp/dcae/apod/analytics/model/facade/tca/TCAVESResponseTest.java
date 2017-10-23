@@ -40,7 +40,7 @@ public class TCAVESResponseTest extends BaseAnalyticsModelUnitTest {
             assertJsonConversions(TCA_VES_CEF_RESPONSE_JSON_FILE_LOCATION, TCAVESResponse.class);
 
         assertThat("VES CEF Message Response AAI generics VNF Id must match",
-                vesCEFMessageResponse.getAai().getGenericVNFId(), is("vpp-test(?)"));
+                vesCEFMessageResponse.getAai().getGenericVNFName(), is("vpp-test(?)"));
 
         assertThat("VES CEF Message target type must be parsed correctly as VNF",
                 vesCEFMessageResponse.getTargetType(), is("VNF"));
@@ -56,8 +56,8 @@ public class TCAVESResponseTest extends BaseAnalyticsModelUnitTest {
         assertThat("closedLoopEventClient must be tca.instance00001",
                 vesCEFMessageResponse.getClosedLoopEventClient(), is("tca.instance00001"));
         assertThat("target_type must be VNF", vesCEFMessageResponse.getTargetType(), is("VNF"));
-        assertThat("target must be VNF", vesCEFMessageResponse.getTarget(), is("generic-vnf.vnf-id"));
-        assertThat("aai generic vnf id must be vpp-test(?)", vesCEFMessageResponse.getAai().getGenericVNFId(),
+        assertThat("target must be VNF", vesCEFMessageResponse.getTarget(), is("generic-vnf.vnf-name"));
+        assertThat("aai generic vnf id must be vpp-test(?)", vesCEFMessageResponse.getAai().getGenericVNFName(),
                 is("vpp-test(?)"));
         assertThat("from must be DCAE", vesCEFMessageResponse.getFrom(), is("DCAE"));
         assertThat("policyScope must be resource=vFirewall;type=configuration",

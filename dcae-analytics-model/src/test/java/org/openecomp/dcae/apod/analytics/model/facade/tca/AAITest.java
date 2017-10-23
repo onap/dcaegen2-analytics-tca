@@ -43,15 +43,15 @@ public class AAITest extends BaseAnalyticsModelUnitTest {
 
     @Test
     public void getGenericVNFId() throws Exception {
-        aai.setGenericVNFId(GENERIC_VNF_ID);
-        assertThat("VNFID must be same", aai.getGenericVNFId(), is(GENERIC_VNF_ID));
+        aai.setGenericVNFName(GENERIC_VNF_ID);
+        assertThat("VNFID must be same", aai.getGenericVNFName(), is(GENERIC_VNF_ID));
     }
 
     @Test
     public void setGenericVNFId() throws Exception {
         final String genericVNFId = "testVNFID";
-        aai.setGenericVNFId(GENERIC_VNF_ID);
-        aai.setGenericVNFId(CHANGED_GENERIC_VNF_ID);
-        assertThat("VNFID must be same as changed VNFID", aai.getGenericVNFId(), is(CHANGED_GENERIC_VNF_ID));
+        aai.setGenericVNFName(GENERIC_VNF_ID);
+        aai.setGenericVNFName(CHANGED_GENERIC_VNF_ID);
+        assertThat("VNFID must be same as changed VNFID", aai.getGenericVNFName(), is(CHANGED_GENERIC_VNF_ID));
     }
 }

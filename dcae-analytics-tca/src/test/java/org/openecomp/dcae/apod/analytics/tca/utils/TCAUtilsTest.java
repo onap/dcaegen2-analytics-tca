@@ -20,7 +20,6 @@
 
 package org.openecomp.dcae.apod.analytics.tca.utils;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Table;
@@ -42,7 +41,6 @@ import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Direction;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.MetricsPerEventName;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.TCAPolicy;
 import org.openecomp.dcae.apod.analytics.model.domain.policy.tca.Threshold;
-import org.openecomp.dcae.apod.analytics.model.facade.tca.AAI;
 import org.openecomp.dcae.apod.analytics.model.facade.tca.TCAVESResponse;
 import org.openecomp.dcae.apod.analytics.tca.BaseAnalyticsTCAUnitTest;
 import org.openecomp.dcae.apod.analytics.tca.processor.TCACEFProcessorContext;
@@ -184,8 +182,8 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
                 is("CL-LBAL-LOW-TRAFFIC-SIG-FB480F95-A453-6F24-B767-FD703241AB1A"));
         assertThat(tcaVESResponse.getVersion(), is("Test Version"));
         assertThat(tcaVESResponse.getPolicyScope(), is("Test Policy scope"));
-        assertNull(tcaVESResponse.getAai().getGenericVNFId());
-        assertNotNull(tcaVESResponse.getAai().getGenericServerId());
+        assertNull(tcaVESResponse.getAai().getGenericVNFName());
+        assertNotNull(tcaVESResponse.getAai().getGenericServerName());
     }
 
     @Test
@@ -206,8 +204,9 @@ public class TCAUtilsTest extends BaseAnalyticsTCAUnitTest {
                 is("CL-LBAL-LOW-TRAFFIC-SIG-FB480F95-A453-6F24-B767-FD703241AB1A"));
         assertThat(tcaVESResponse.getVersion(), is("Test Version"));
         assertThat(tcaVESResponse.getPolicyScope(), is("Test Policy scope"));
-        assertNotNull(tcaVESResponse.getAai().getGenericVNFId());
-        assertNull(tcaVESResponse.getAai().getGenericServerId());
+        assertNotNull(tcaVESResponse.getAai().getGenericVNFName());
+        assertNull(tcaVESResponse.getAai().getGenericServerName());
+
     }
 
     @Rule

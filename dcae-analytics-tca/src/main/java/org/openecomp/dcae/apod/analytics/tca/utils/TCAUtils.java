@@ -540,15 +540,15 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
             // Hard Coded - "vserver.vserver-name"
             tcavesResponse.setTarget(AnalyticsConstants.TCA_VES_RESPONSE_VM_TARGET);
             // commonEventHeader.sourceName from the received VES message
-            aai.setGenericServerId(commonEventHeader.getSourceName());
+            aai.setGenericServerName(commonEventHeader.getSourceName());
         } else {
             // VNF specific settings
             // Hard Coded - "VNF"
             tcavesResponse.setTargetType(AnalyticsConstants.TCA_VES_RESPONSE_VNF_TARGET_TYPE);
-            // Hard Coded - "generic-vnf.vnf-id"
+            // Hard Coded - "generic-vnf.vnf-name"
             tcavesResponse.setTarget(AnalyticsConstants.TCA_VES_RESPONSE_VNF_TARGET);
             // commonEventHeader.sourceName from the received VES message
-            aai.setGenericVNFId(commonEventHeader.getSourceName());
+            aai.setGenericVNFName(commonEventHeader.getSourceName());
         }
 
         // Hard Coded - "DCAE"
@@ -575,7 +575,7 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
      */
     public static ControlLoopSchemaType determineControlLoopSchemaType(final TCAVESResponse tcavesResponse) {
         final AAI aai = tcavesResponse.getAai();
-        if (aai.getGenericServerId() != null) {
+        if (aai.getGenericServerName() != null) {
             return ControlLoopSchemaType.VM;
         } else {
             return ControlLoopSchemaType.VNF;
@@ -591,10 +591,10 @@ public abstract class TCAUtils extends AnalyticsModelJsonUtils {
      */
     public static String determineSourceName(final TCAVESResponse tcavesResponse) {
         final AAI aai = tcavesResponse.getAai();
-        if (aai.getGenericServerId() != null) {
-            return aai.getGenericServerId();
+        if (aai.getGenericServerName() != null) {
+            return aai.getGenericServerName();
         } else {
-            return aai.getGenericVNFId();
+            return aai.getGenericVNFName();
         }
     }
 

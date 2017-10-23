@@ -109,7 +109,7 @@ public class TCAVESAAIEnrichmentFlowlet extends AbstractFlowlet {
 
                 final String aaiEnrichedAlert = TCAUtils.writeValueAsString(tcavesResponse);
                 LOG.debug("Emitting Alert after A&AI Enrichment: {}", aaiEnrichedAlert);
-                aaiEnrichmentOutputEmitter.emit(alertMessageString);
+                aaiEnrichmentOutputEmitter.emit(aaiEnrichedAlert);
 
                 // skip A&AI Enrichment of alerts with closed Loop Event Status - ABATED
             } else if (closedLoopEventStatus == ClosedLoopEventStatus.ABATED) {

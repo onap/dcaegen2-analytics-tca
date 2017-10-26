@@ -1,12 +1,12 @@
 {
   "self": {
-    "name": "TCA Alert Definition",
+    "name": "DCAE_CL_Output",
     "version": "1.0.1",
-    "description": "The format of the output event from TCA"
+    "description": "The format of the output CL event from DCAE to Policy"
   },
   "dataformatversion": "1.0.0",
   "jsonschema": {
-    "name": "TCA Alert",
+    "name": "CL Alert",
     "version": "1.0.0",
     "properties": {
       "version": {

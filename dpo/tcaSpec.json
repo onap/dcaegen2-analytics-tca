@@ -17,8 +17,8 @@
     "publishes": [
       {
         "config_key": "tca_handle_out",
-        "format": "TCA Alert Definition",
-        "version": "1.0.0",
+        "format": "DCAE_CL_Output",
+        "version": "1.0.1",
         "type": "message router"
       }
     ]

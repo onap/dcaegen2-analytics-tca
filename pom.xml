@@ -103,6 +103,7 @@
         <jar.plugin.version>2.4</jar.plugin.version>
         <lombok.plugin.version>1.16.10.0</lombok.plugin.version>
         <jgitflow.plugin.version>1.0-m5.1</jgitflow.plugin.version>
+        <gitcommitid.plugin.version>2.2.3</gitcommitid.plugin.version>
         <maven.site.plugin>3.5.1</maven.site.plugin>
         <jxr.plugin.version>2.5</jxr.plugin.version>
         <project.info.reports.plugin.version>2.7</project.info.reports.plugin.version>
@@ -121,9 +122,11 @@
         <checkstyle.suppression.file.name>suppressions.xml</checkstyle.suppression.file.name>       
         <dependency.locations.enabled>false</dependency.locations.enabled>
         <nexusproxy>https://nexus.onap.org</nexusproxy>
-    <snapshots.path>content/repositories/snapshots/</snapshots.path>
-      <releases.path>content/repositories/releases/</releases.path>
-      <site.path>content/sites/site/org/onap/dcaegen2/analytics/tca/${project.artifactId}/${project.version}</site.path>
+        <snapshots.path>content/repositories/snapshots/</snapshots.path>
+        <releases.path>content/repositories/releases/</releases.path>
+        <site.path>
+            content/sites/site/org/onap/dcaegen2/analytics/tca/${project.artifactId}/${project.version}
+        </site.path>
     </properties>
 
     <dependencyManagement>
@@ -543,6 +546,15 @@
 
     <build>
 
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>${project.build.directory}/git</directory>
+            </resource>
+        </resources>
+
         <extensions>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
@@ -838,6 +850,28 @@
                     </executions>
                 </plugin>
 
+                <!-- GIT COMMIT ID PLUGIN -->
+                <plugin>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>${gitcommitid.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>generate-git-properties</id>
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>revision</goal>
+                            </goals>
+                            <configuration>
+                                <failOnNoGitDirectory>false</failOnNoGitDirectory>
+                                <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                                <generateGitPropertiesFilename>
+                                    ${project.build.directory}/git/git.properties
+                                </generateGitPropertiesFilename>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
 
                 <!-- JGIT FLOW PLUGIN -->
                 <plugin>
@@ -979,6 +1013,11 @@
             <plugin>
                 <groupId>external.atlassian.jgitflow</groupId>
                 <artifactId>jgitflow-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
             </plugin>
 
         </plugins>

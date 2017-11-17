@@ -28,7 +28,7 @@
     <parent>
         <artifactId>dcae-analytics</artifactId>
         <groupId>org.onap.dcaegen2.analytics.tca</groupId>
-        <version>2.0.0-SNAPSHOT</version>
+        <version>2.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>dcae-analytics-tca</artifactId>
@@ -48,19 +48,19 @@
         <dependency>
             <groupId>org.onap.dcaegen2.analytics.tca</groupId>
             <artifactId>dcae-analytics-common</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
+            <version>2.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.onap.dcaegen2.analytics.tca</groupId>
             <artifactId>dcae-analytics-dmaap</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
+            <version>2.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.onap.dcaegen2.analytics.tca</groupId>
             <artifactId>dcae-analytics-aai</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
+            <version>2.0.1-SNAPSHOT</version>
         </dependency>
 
         <!-- SCHEDULER -->
@@ -99,7 +99,7 @@
         <dependency>
             <groupId>org.onap.dcaegen2.analytics.tca</groupId>
             <artifactId>dcae-analytics-test</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
+            <version>2.0.1-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

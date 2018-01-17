@@ -7,20 +7,8 @@
   },
   "streams": {
     "subscribes": [
-      {
-        "config_key": "tca_handle_in",
-        "format": "VES_specification",
-        "version": "5.28.4",
-        "type": "message router"
-      }
     ],
     "publishes": [
-      {
-        "config_key": "tca_handle_out",
-        "format": "DCAE_CL_Output",
-        "version": "1.0.1",
-        "type": "message router"
-      }
     ]
   },
   "services": {
@@ -110,32 +98,22 @@
       {
         "name" :  "subscriberHostName",
         "description" :  "",
-        "value" : "HOSTNAME"
+        "sourced_at_deployment": true
       },
       {
         "name" :  "subscriberHostPort",
         "description" :  "",
-        "value" : 1234
+        "value" : 3904
       },
       {
         "name" :  "subscriberTopicName",
         "description" :  "",
-        "value" : "com.att.dcae.dmaap.mtnje2.DcaeTestVESSub"
+        "value" : "unauthenticated.SEC_MEASUREMENT_OUTPUT"
       },
       {
         "name" :  "subscriberProtocol",
         "description" :  "",
-        "value" : "https"
-      },
-      {
-        "name" :  "subscriberUserName",
-        "description" :  "",
-        "value" : "USERNAME"
-      },
-      {
-        "name" :  "subscriberUserPassword",
-        "description" :  "",
-        "value" : "PASSWORD"
+        "value" : "http"
       },
       {
         "name": "subscriberContentType",
@@ -170,32 +148,22 @@
       {
         "name" :  "publisherHostName",
         "description" :  "",
-        "value" : "HOSTNAME"
+        "sourced_at_deployment": true
       },
       {
         "name" :  "publisherHostPort",
         "description" :  "",
-        "value" : 1234
+        "value" : 3904
       },
       {
         "name" :  "publisherTopicName",
         "description" :  "",
-        "value" : "com.att.dcae.dmaap.mtnje2.DcaeTestVESPub"
+        "value" : "unauthenticated.DCAE_CL_OUTPUT"
       },
       {
         "name" :  "publisherProtocol",
         "description" :  "",
-        "value" : "https"
-      },
-      {
-        "name" :  "publisherUserName",
-        "description" :  "",
-        "value" : "USERNAME"
-      },
-      {
-        "name" :  "publisherUserPassword",
-        "description" :  "",
-        "value" : "PASSWORD"
+        "value" : "http"
       },
       {
         "name": "publisherContentType",
@@ -225,12 +193,13 @@
       {
         "name": "enableAAIEnrichment",
         "description": "Enable A&AI Enrichment of generated TCA Alerts",
-        "value": "true"
+        "value": true,
+        "sourced_at_deployment": true
       },
       {
         "name": "aaiEnrichmentHost",
         "description": "A&AI Enrichment API Host name",
-        "value": "123.123.123.123"
+        "sourced_at_deployment": true
       },
       {
         "name": "aaiEnrichmentPortNumber",
@@ -245,12 +214,12 @@
       {
         "name": "aaiEnrichmentUserName",
         "description": "A&AI Enrichment API username",
-        "value": "USERNAME"
+        "value": "DCAE"
       },
       {
         "name": "aaiEnrichmentUserPassword",
         "description": "A&AI Enrichment API password",
-        "value": "PASSWORD"
+        "value": "DCAE"
       },
       {
         "name": "aaiEnrichmentIgnoreSSLCertificateErrors",
@@ -267,11 +236,6 @@
         "description": "A&AI VM Enrichment API Path",
         "value": "/aai/v11/search/nodes-query"
       },
-      {
-        "name": "aaiEnrichmentProxyURL",
-        "description": "A&AI Enrichment API Proxy URL",
-        "value": "URL"
-      },      
       {
         "name": "tca_policy",
         "description": "TCA Policy JSON",

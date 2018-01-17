@@ -3,7 +3,7 @@ Repository DCAE Analytics Framework Platform
 
 Maven GroupId:
 --------------
-com.att.ecomp.dcae.analytics
+org.onap.dcaegen2.analytics.tca
 
 Maven Parent ArtifactId:
 ----------------

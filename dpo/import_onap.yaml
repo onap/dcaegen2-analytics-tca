@@ -1,0 +1,4 @@
+  - https://nexus.onap.org/service/local/repositories/raw/content/org.onap.dcaegen2.platform.plugins/releases/type_files/dockerplugin/2/dockerplugin_types.yaml
+  - https://nexus.onap.org/service/local/repositories/raw/content/org.onap.dcaegen2.platform.plugins/releases/type_files/cdapcloudify/14/cdapcloudify_types.yaml
+  - https://nexus.onap.org/service/local/repositories/raw/content/org.onap.dcaegen2.platform.plugins/releases/type_files/dcaepolicyplugin/1/dcaepolicyplugin_types.yaml
+  - https://nexus.onap.org/service/local/repositories/raw/content/org.onap.dcaegen2.platform.plugins/releases/type_files/relationshipplugin/1/relationshipplugin_types.yaml

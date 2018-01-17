@@ -49,7 +49,7 @@ public class DMaaPMRReceiver extends Receiver<StructuredRecord> {
     private static final long serialVersionUID = 1L;
 
     private final DMaaPMRSourcePluginConfig pluginConfig;
-    private final Metrics metrics;
+    private final transient Metrics metrics;
 
     public DMaaPMRReceiver(final StorageLevel storageLevel, final DMaaPMRSourcePluginConfig pluginConfig,
                            final Metrics metrics) {

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_69050779",
+        "filename": "dcae-analytics-cdap-plugins/src/main/java/org/openecomp/dcae/apod/analytics/cdap/plugins/utils/CDAPPluginUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2018-01-19T14:46:28Z",
+      "side": 1,
+      "message": "if schema is null, this call will fail.",
+      "revId": "0d56da29bda1451e525721a451707ff683a7d903",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}

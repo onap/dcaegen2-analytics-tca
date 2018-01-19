@@ -53,7 +53,7 @@ public abstract class CDAPPluginUtils extends AnalyticsModelJsonUtils {
 
     public static final Function<Schema, Schema.Type> SCHEMA_TO_TYPE_FUNCTION = new Function<Schema, Schema.Type>() {
         @Override
-        public Schema.Type apply(@Nonnull Schema schema) {
+        public Schema.Type apply(@Nullable Schema schema) {
             return schema.getType();
         }
     };

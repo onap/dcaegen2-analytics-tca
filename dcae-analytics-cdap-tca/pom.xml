@@ -40,7 +40,7 @@
 
     <properties>
         <main.basedir>${project.parent.basedir}</main.basedir>
-        <app.main.class>org.openecomp.dcae.apod.analytics.cdap.tca.TCAAnalyticsApplication</app.main.class>
+        <app.main.class>org.onap.dcae.apod.analytics.cdap.tca.TCAAnalyticsApplication</app.main.class>
     </properties>
 
     <dependencies>

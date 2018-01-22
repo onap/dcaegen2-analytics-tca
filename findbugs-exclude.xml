@@ -24,19 +24,19 @@
 
     <Match>
         <!-- Ignore warnings for DACE Models project -->
-        <Class name="org.openecomp.dcae.apod.analytics.model.domain.cef.MeasurementsForVfScaling"/>
+        <Class name="org.onap.dcae.apod.analytics.model.domain.cef.MeasurementsForVfScaling"/>
     </Match>
 
     <Match>
         <!-- TCA Application has unconfirmed cast which is provided by CDAP -->
-        <Class name="org.openecomp.dcae.apod.analytics.cdap.tca.TCAAnalyticsApplication"/>
+        <Class name="org.onap.dcae.apod.analytics.cdap.tca.TCAAnalyticsApplication"/>
         <Bug pattern="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE"/>
     </Match>
 
     <Match>
         <!-- Ignore Metrics not serializable in DMaaPMRReceiver as metrics is a CDAP interface which is
          not serializable -->
-        <Class name="org.openecomp.dcae.apod.analytics.cdap.plugins.streaming.dmaap.DMaaPMRReceiver"/>
+        <Class name="org.onap.dcae.apod.analytics.cdap.plugins.streaming.dmaap.DMaaPMRReceiver"/>
         <Bug pattern="SE_BAD_FIELD"/>
     </Match>
 

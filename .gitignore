@@ -48,3 +48,4 @@ dependency-reduced-pom.xml
 *_bdio.jsonld
 blackDuckHubProjectName.txt
 blackDuckHubProjectVersionName.txt
+/bin/

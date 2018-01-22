@@ -38,7 +38,7 @@
 
     <logger name="org.apache.twill" level="WARN"/>
     <logger name="co.cask.cdap" level="WARN"/>
-    <logger name="org.openecomp.dcae.apod.analytics" level="DEBUG"/>
+    <logger name="org.onap.dcae.apod.analytics" level="DEBUG"/>
 
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

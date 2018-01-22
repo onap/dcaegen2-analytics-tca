@@ -194,19 +194,19 @@
                     <instructions>
                         <!-- List of packages that are scanned for plugins -->
                         <_exportcontents>
-                            org.openecomp.dcae.apod.analytics.dmaap.domain.response.*,
-                            org.openecomp.dcae.apod.analytics.dmaap.domain.config.*;
-                            org.openecomp.dcae.apod.analytics.dmaap.service.subscriber.*;
-                            org.openecomp.dcae.apod.analytics.dmaap.service.*;
-                            org.openecomp.dcae.apod.analytics.cdap.common.settings.*;
-                            org.openecomp.dcae.apod.analytics.cdap.plugins.common.*;
-                            org.openecomp.dcae.apod.analytics.cdap.plugins.batch.sink.dmaap.*;
-                            org.openecomp.dcae.apod.analytics.cdap.plugins.domain.config.dmaap.*;
-                            org.openecomp.dcae.apod.analytics.cdap.plugins.domain.config.filter.*;
-                            org.openecomp.dcae.apod.analytics.cdap.plugins.domain.config.tca.*;
-                            org.openecomp.dcae.apod.analytics.cdap.plugins.sparkcompute.tca.*;
-                            org.openecomp.dcae.apod.analytics.cdap.plugins.streaming.dmaap.*;
-                            org.openecomp.dcae.apod.analytics.cdap.plugins.transform.filter.*;
+                            org.onap.dcae.apod.analytics.dmaap.domain.response.*,
+                            org.onap.dcae.apod.analytics.dmaap.domain.config.*;
+                            org.onap.dcae.apod.analytics.dmaap.service.subscriber.*;
+                            org.onap.dcae.apod.analytics.dmaap.service.*;
+                            org.onap.dcae.apod.analytics.cdap.common.settings.*;
+                            org.onap.dcae.apod.analytics.cdap.plugins.common.*;
+                            org.onap.dcae.apod.analytics.cdap.plugins.batch.sink.dmaap.*;
+                            org.onap.dcae.apod.analytics.cdap.plugins.domain.config.dmaap.*;
+                            org.onap.dcae.apod.analytics.cdap.plugins.domain.config.filter.*;
+                            org.onap.dcae.apod.analytics.cdap.plugins.domain.config.tca.*;
+                            org.onap.dcae.apod.analytics.cdap.plugins.sparkcompute.tca.*;
+                            org.onap.dcae.apod.analytics.cdap.plugins.streaming.dmaap.*;
+                            org.onap.dcae.apod.analytics.cdap.plugins.transform.filter.*;
                             com.google.common.base.*;
                             com.google.inject.*;
                             org.apache.http.*;

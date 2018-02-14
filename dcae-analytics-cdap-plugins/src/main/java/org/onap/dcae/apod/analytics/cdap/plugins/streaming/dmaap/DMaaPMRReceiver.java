@@ -79,6 +79,7 @@ public class DMaaPMRReceiver extends Receiver<StructuredRecord> {
                     } catch (InterruptedException e) {
                         final String errorMessage = String.format(
                                 "Interrupted Exception while DMaaP MR Receiver sleeping polling interval: %s", e);
+                        Thread.currentThread().interrupt();
                         throw new DCAEAnalyticsRuntimeException(errorMessage, LOG, e);
                     }
                 }

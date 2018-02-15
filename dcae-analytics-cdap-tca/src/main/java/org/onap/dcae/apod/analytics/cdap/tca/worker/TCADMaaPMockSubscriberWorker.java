@@ -120,6 +120,7 @@ public class TCADMaaPMockSubscriberWorker extends AbstractWorker {
                     Thread.sleep(subscriberPollingInterval);
                 } catch (InterruptedException e) {
                     LOG.error("Error while sleeping");
+                    Thread.currentThread().interrupt();
                     throw new DCAEAnalyticsRuntimeException("Error while sleeping", LOG, e);
                 }
             }

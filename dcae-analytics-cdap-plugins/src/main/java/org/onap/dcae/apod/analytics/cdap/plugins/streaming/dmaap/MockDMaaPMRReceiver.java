@@ -116,6 +116,7 @@ public class MockDMaaPMRReceiver extends Receiver<StructuredRecord> {
                     TimeUnit.MILLISECONDS.sleep(pluginConfig.getPollingInterval());
                 } catch (InterruptedException e) {
                     LOG.error("Error while sleeping");
+                    Thread.currentThread().interrupt();
                     throw new DCAEAnalyticsRuntimeException("Error while sleeping", LOG, e);
                 }
 

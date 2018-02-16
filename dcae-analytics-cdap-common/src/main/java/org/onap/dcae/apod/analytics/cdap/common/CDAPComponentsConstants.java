@@ -137,7 +137,7 @@ public abstract class CDAPComponentsConstants {
     /**
      * Fixed TCA VES Message Router Flowlet Output
      */
-    public static final String TCA_FIXED_VES_MESSAGE_ROUTER_OUTPUT = "TCAVESMessageRouterFlowlet";
+    public static final String TCA_FIXED_VES_MESSAGE_ROUTER_OUTPUT = "TCAVESMessageRouterOutput";
 
     /**
      * Fixed Name for TCA VES Message Policy Violated Threshold Calculator Flowlet

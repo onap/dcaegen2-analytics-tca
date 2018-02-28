@@ -83,6 +83,7 @@ public abstract class BaseTCADMaaPMRWorker extends AbstractWorker {
                 final String errorMessage =
                         format("Error while checking TCA DMaaP MR Scheduler worker status name: %s, error: %s",
                                 schedulerName, e);
+                Thread.currentThread().interrupt();
                 throw new DCAEAnalyticsRuntimeException(errorMessage, LOG, e);
             }
         }

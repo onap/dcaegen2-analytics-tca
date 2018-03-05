@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Tony Hansen <tony@att.com>
+Code-Review+2: Lusheng Ji <lji@research.att.com>
+Submitted-by: Lusheng Ji <lji@research.att.com>
+Submitted-at: Mon, 05 Mar 2018 17:25:20 +0000
+Reviewed-on: https://gerrit.onap.org/r/33347
+Project: dcaegen2/analytics/tca
+Branch: refs/heads/master

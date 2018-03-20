@@ -101,7 +101,7 @@ public class TCAAlertsAbatementPersisterTest extends BaseAnalyticsCDAPCommonUnit
     public void testPersist() throws Exception {
 
         TCAAlertsAbatementPersister.persist(eventListener, violatedMetricsPerEventName, tcavesResponse,
-                abatementTS, alertsAbatementTable);
+                abatementTS, alertsAbatementTable, null);
         verify(alertsAbatementTable, times(1)).write(anyString(),
                 any(TCAAlertsAbatementEntity.class));
 
@@ -109,7 +109,7 @@ public class TCAAlertsAbatementPersisterTest extends BaseAnalyticsCDAPCommonUnit
 
     @Test
     public void testLookUpByKey() throws Exception {
-        TCAAlertsAbatementPersister.lookUpByKey(eventListener, violatedMetricsPerEventName, alertsAbatementTable);
+        TCAAlertsAbatementPersister.lookUpByKey(eventListener, violatedMetricsPerEventName, alertsAbatementTable, null);
         verify(alertsAbatementTable, times(1)).read(eq(EXPECTED_LOOKUP_KEY));
     }
 

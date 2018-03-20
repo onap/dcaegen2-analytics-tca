@@ -108,6 +108,12 @@ public class TCAAppPreferences implements CDAPAppPreferences {
 
     protected String aaiEnrichmentProxyURL;
 
+
+    // Redis Distributed caching
+    protected Boolean enableRedisCaching;
+
+    protected String redisHosts;
+
     /**
      * Default constructor to setup default values for TCA App Preferences
      */
@@ -123,10 +129,14 @@ public class TCAAppPreferences implements CDAPAppPreferences {
 
         enableAlertCEFFormat = AnalyticsConstants.TCA_DEFAULT_ENABLE_CEF_FORMATTED_ALERT;
 
+        // aai
         enableAAIEnrichment = AnalyticsConstants.TCA_DEFAULT_ENABLE_AAI_ENRICHMENT;
         aaiEnrichmentIgnoreSSLCertificateErrors =
                 AnalyticsConstants.TCA_DEFAULT_AAI_ENRICHMENT_IGNORE_SSL_CERTIFICATE_ERRORS;
         aaiEnrichmentProxyURL = AnalyticsConstants.TCA_DEFAULT_AAI_ENRICHMENT_PROXY_URL;
+
+        // redis
+        enableRedisCaching = AnalyticsConstants.TCA_DEFAULT_ENABLE_REDIS_CACHING;
 
     }
 
@@ -311,6 +321,14 @@ public class TCAAppPreferences implements CDAPAppPreferences {
         return aaiEnrichmentProxyURL;
     }
 
+    public Boolean getEnableRedisCaching() {
+        return enableRedisCaching;
+    }
+
+    public String getRedisHosts() {
+        return redisHosts;
+    }
+
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
@@ -344,6 +362,8 @@ public class TCAAppPreferences implements CDAPAppPreferences {
                 .add("aaiVNFEnrichmentAPIPath", aaiVNFEnrichmentAPIPath)
                 .add("aaiVMEnrichmentAPIPath", aaiVMEnrichmentAPIPath)
                 .add("aaiEnrichmentProxyEnabled", aaiEnrichmentProxyURL == null ? "false" : "true")
+                .add("enableRedisCaching", enableRedisCaching)
+                .add("redisHosts", redisHosts)
                 .toString();
     }
 }

@@ -72,7 +72,7 @@
         <findbugs.jsr305.version>2.0.1</findbugs.jsr305.version>
         <findbugs.annotations.version>3.0.0</findbugs.annotations.version>
         <lombok.version>1.16.10</lombok.version>
-
+        <jedis.version>2.9.0</jedis.version>
         <json.path.version>2.2.0</json.path.version>
         <quartz.version>2.2.0</quartz.version>
         <httpclient.version>4.5.2</httpclient.version>
@@ -436,6 +436,12 @@
                 <scope>provided</scope>
             </dependency>
 
+            <!-- DISTRIBUTED CACHING -->
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis.version}</version>
+            </dependency>
 
             <!-- DEPENDENCY INJECTION -->
             <dependency>

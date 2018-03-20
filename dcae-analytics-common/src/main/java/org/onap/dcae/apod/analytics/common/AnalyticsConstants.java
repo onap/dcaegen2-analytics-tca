@@ -159,6 +159,9 @@ public abstract class AnalyticsConstants {
     public static final String TCA_DEFAULT_AAI_ENRICHMENT_PROXY_URL = null;
 
 
+    // TCA Redis Distributed Caching default
+    public static final Boolean TCA_DEFAULT_ENABLE_REDIS_CACHING = true;
+
 
     private AnalyticsConstants() {
 

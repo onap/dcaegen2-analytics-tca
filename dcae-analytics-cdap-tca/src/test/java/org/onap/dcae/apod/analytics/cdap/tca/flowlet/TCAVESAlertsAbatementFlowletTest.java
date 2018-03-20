@@ -20,11 +20,13 @@
 
 package org.onap.dcae.apod.analytics.cdap.tca.flowlet;
 
+import co.cask.cdap.api.app.ApplicationSpecification;
 import co.cask.cdap.api.dataset.lib.ObjectMappedTable;
 import co.cask.cdap.api.flow.flowlet.FlowletContext;
 import co.cask.cdap.api.flow.flowlet.OutputEmitter;
 import com.google.common.collect.ImmutableList;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.onap.dcae.apod.analytics.cdap.common.CDAPComponentsConstants;
 import org.onap.dcae.apod.analytics.cdap.common.domain.tca.ThresholdCalculatorOutput;
 import org.onap.dcae.apod.analytics.cdap.common.exception.CDAPSettingsException;
@@ -36,6 +38,7 @@ import org.onap.dcae.apod.analytics.model.domain.policy.tca.MetricsPerEventName;
 import org.onap.dcae.apod.analytics.model.domain.policy.tca.Threshold;
 import org.onap.dcae.apod.analytics.tca.utils.TCAUtils;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -99,6 +102,7 @@ public class TCAVESAlertsAbatementFlowletTest extends BaseAnalyticsCDAPTCAUnitTe
         final FlowletContext mockFlowletContext = mock(FlowletContext.class);
         final ObjectMappedTable<TCAAlertsAbatementEntity> mockObjectMappedTable = mock(ObjectMappedTable.class);
         when(mockFlowletContext.getDataset(eq(testTCAAlertsAbatementTableName))).thenReturn(mockObjectMappedTable);
+        configureFlowletContext(mockFlowletContext);
         tcaAlertsAbatementFlowlet.initialize(mockFlowletContext);
 
         doNothing().when(mockObjectMappedTable).write(any(String.class), any(TCAAlertsAbatementEntity.class));
@@ -125,6 +129,7 @@ public class TCAVESAlertsAbatementFlowletTest extends BaseAnalyticsCDAPTCAUnitTe
         final FlowletContext mockFlowletContext = mock(FlowletContext.class);
         final ObjectMappedTable<TCAAlertsAbatementEntity> mockObjectMappedTable = mock(ObjectMappedTable.class);
         when(mockFlowletContext.getDataset(eq(testTCAAlertsAbatementTableName))).thenReturn(mockObjectMappedTable);
+        configureFlowletContext(mockFlowletContext);
         tcaAlertsAbatementFlowlet.initialize(mockFlowletContext);
 
         doNothing().when(mockObjectMappedTable).write(any(String.class), any(TCAAlertsAbatementEntity.class));
@@ -154,6 +159,7 @@ public class TCAVESAlertsAbatementFlowletTest extends BaseAnalyticsCDAPTCAUnitTe
         final FlowletContext mockFlowletContext = mock(FlowletContext.class);
         final ObjectMappedTable<TCAAlertsAbatementEntity> mockObjectMappedTable = mock(ObjectMappedTable.class);
         when(mockFlowletContext.getDataset(eq(testTCAAlertsAbatementTableName))).thenReturn(mockObjectMappedTable);
+        configureFlowletContext(mockFlowletContext);
         tcaAlertsAbatementFlowlet.initialize(mockFlowletContext);
 
         doNothing().when(mockObjectMappedTable).write(any(String.class), any(TCAAlertsAbatementEntity.class));
@@ -185,8 +191,8 @@ public class TCAVESAlertsAbatementFlowletTest extends BaseAnalyticsCDAPTCAUnitTe
         final FlowletContext mockFlowletContext = mock(FlowletContext.class);
         final ObjectMappedTable<TCAAlertsAbatementEntity> mockObjectMappedTable = mock(ObjectMappedTable.class);
         when(mockFlowletContext.getDataset(eq(testTCAAlertsAbatementTableName))).thenReturn(mockObjectMappedTable);
+        configureFlowletContext(mockFlowletContext);
         tcaAlertsAbatementFlowlet.initialize(mockFlowletContext);
-
         doNothing().when(mockObjectMappedTable).write(any(String.class), any(TCAAlertsAbatementEntity.class));
         when(mockObjectMappedTable.read(any(String.class))).thenReturn(null);
 
@@ -246,6 +252,13 @@ public class TCAVESAlertsAbatementFlowletTest extends BaseAnalyticsCDAPTCAUnitTe
         when(thresholdCalculatorOutput.getViolatedMetricsPerEventName()).thenReturn(violatedMetricsPerEventName);
         when(thresholdCalculatorOutput.getAlertMessage()).thenReturn(alertMessage);
         return thresholdCalculatorOutput;
+    }
+
+    private void configureFlowletContext(final FlowletContext mockFlowletContext) throws IOException {
+        when(mockFlowletContext.getRuntimeArguments()).thenReturn(getPreferenceMap());
+        ApplicationSpecification mockApplicationSpecification = Mockito.mock(ApplicationSpecification.class);
+        when(mockApplicationSpecification.getConfiguration()).thenReturn(fromStream(TCA_APP_CONFIG_FILE_LOCATION));
+        when(mockFlowletContext.getApplicationSpecification()).thenReturn(mockApplicationSpecification);
     }
 
 }

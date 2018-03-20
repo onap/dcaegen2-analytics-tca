@@ -221,6 +221,9 @@ public abstract class BaseAnalyticsCDAPTCAUnitTest extends BaseDCAEAnalyticsUnit
         tcaTestAppPreferences.setAaiEnrichmentIgnoreSSLCertificateErrors(true);
         tcaTestAppPreferences.setAaiVMEnrichmentAPIPath("VM_ENRICHMENT_PATH");
         tcaTestAppPreferences.setAaiVNFEnrichmentAPIPath("VNF_ENRICHMENT_PATH");
+
+        tcaTestAppPreferences.setEnableRedisCaching(false);
+        tcaTestAppPreferences.setRedisHosts("127.0.0.1:6379");
         return tcaTestAppPreferences;
     }
 
@@ -248,6 +251,10 @@ public abstract class BaseAnalyticsCDAPTCAUnitTest extends BaseDCAEAnalyticsUnit
         preference.put("publisherMaxBatchSize", "1000");
         preference.put("publisherMaxRecoveryQueueSize", "100");
         preference.put("publisherPollingInterval", "6000");
+
+        preference.put("enableRedisCaching", "false");
+        preference.put("redisHosts", "127.0.0.1:6379");
+
         return preference;
     }
 

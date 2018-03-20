@@ -173,4 +173,14 @@ public class TCATestAppPreferences extends TCAAppPreferences {
     public void setAaiVMEnrichmentAPIPath(String aaiVMEnrichmentAPIPath) {
         this.aaiVMEnrichmentAPIPath = aaiVMEnrichmentAPIPath;
     }
+
+    public void setEnableRedisCaching(final Boolean enableRedisCaching) {
+        this.enableRedisCaching = enableRedisCaching;
+    }
+
+    public void setRedisHosts(final String redisHosts) {
+        this.redisHosts = redisHosts;
+    }
+
+
 }

@@ -75,7 +75,7 @@
         <jedis.version>2.9.0</jedis.version>
         <json.path.version>2.2.0</json.path.version>
         <quartz.version>2.2.0</quartz.version>
-        <httpclient.version>4.5.2</httpclient.version>
+        <httpclient.version>4.5.5</httpclient.version>
         <commons.lang3.version>3.5</commons.lang3.version>
 
 

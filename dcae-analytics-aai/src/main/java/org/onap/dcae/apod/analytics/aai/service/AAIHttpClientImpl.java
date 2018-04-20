@@ -22,7 +22,9 @@ package org.onap.dcae.apod.analytics.aai.service;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.Credentials;
@@ -34,6 +36,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.onap.dcae.apod.analytics.aai.domain.config.AAIHttpClientConfig;
 import org.onap.dcae.apod.analytics.aai.utils.ssl.AlwaysTrustingTrustStrategy;
@@ -42,9 +45,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 /**
  * <p>
@@ -108,13 +113,14 @@ public class AAIHttpClientImpl implements AAIHttpClient {
         final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
 
         if (aaiUserName != null) {
-            final String aaiHost = aaiHttpClientConfig.getAaiHost();
-            final Integer aaiHostPortNumber = aaiHttpClientConfig.getAaiHostPortNumber();
+            // add basic authentication header
+            LOG.info("Setting A&AI authentication headers with username: {}", aaiUserName);
             final String aaiUserPassword = aaiHttpClientConfig.getAaiUserPassword();
-            LOG.info("Setting A&AI host credentials for AAI Host: {}", aaiHost);
-            final AuthScope aaiHostPortAuthScope = new AuthScope(aaiHost, aaiHostPortNumber);
-            final Credentials aaiCredentials = new UsernamePasswordCredentials(aaiUserName, aaiUserPassword);
-            credentialsProvider.setCredentials(aaiHostPortAuthScope, aaiCredentials);
+            final String auth = aaiUserName + ":" + aaiUserPassword;
+            final byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
+            final String authHeader = "Basic " + new String(encodedAuth);
+            final BasicHeader basicAuthHeader = new BasicHeader(HttpHeaders.AUTHORIZATION, authHeader);
+            httpClientBuilder.setDefaultHeaders(Arrays.asList(basicAuthHeader));
         } else {
             LOG.warn("A&AI userName not present. No credentials set for A&AI authentication");
         }

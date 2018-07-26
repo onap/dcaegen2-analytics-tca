@@ -35,7 +35,7 @@ import java.util.Set;
  *
  * @author Rajiv Singla . Creation Date: 10/24/2016.
  */
-public class GenericValidationResponse<T> implements ValidationResponse<T> {
+public class GenericValidationResponse<T> implements ValidationResponse {
 
     private LinkedHashMap<String, String> errorMessageMap = new LinkedHashMap<>();
 

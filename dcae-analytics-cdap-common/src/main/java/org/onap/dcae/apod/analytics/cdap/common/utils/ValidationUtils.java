@@ -80,7 +80,7 @@ public abstract class ValidationUtils {
      * @param <R> Validation Response type
      * @param <V> Validator Type
      */
-    public static <T extends CDAPAppSettings, R extends ValidationResponse<T>,
+    public static <T extends CDAPAppSettings, R extends ValidationResponse,
             V extends CDAPAppSettingsValidator<T, R>> void validateSettings(@Nonnull final T appSettings,
                                                                             @Nonnull final V appSettingsValidator) {
         checkNotNull(appSettings, "App Settings must not be null");

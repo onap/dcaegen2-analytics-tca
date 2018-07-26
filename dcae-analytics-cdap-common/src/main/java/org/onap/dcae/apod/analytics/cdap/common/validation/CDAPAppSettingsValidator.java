@@ -34,7 +34,7 @@ import org.onap.dcae.apod.analytics.common.validation.ValidationResponse;
  *
  * @author Rajiv Singla . Creation Date: 11/2/2016.
  */
-public interface CDAPAppSettingsValidator<T extends CDAPAppSettings, R extends ValidationResponse<T>>
+public interface CDAPAppSettingsValidator<T extends CDAPAppSettings, R extends ValidationResponse>
         extends DCAEValidator {
 
     /**

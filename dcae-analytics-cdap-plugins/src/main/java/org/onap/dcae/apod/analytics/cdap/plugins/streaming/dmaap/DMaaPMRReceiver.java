@@ -22,6 +22,8 @@ package org.onap.dcae.apod.analytics.cdap.plugins.streaming.dmaap;
 
 import co.cask.cdap.api.data.format.StructuredRecord;
 import co.cask.cdap.api.metrics.Metrics;
+
+import com.esotericsoftware.minlog.Log;
 import com.google.common.base.Optional;
 import org.apache.spark.storage.StorageLevel;
 import org.apache.spark.streaming.receiver.Receiver;
@@ -63,29 +65,31 @@ public class DMaaPMRReceiver extends Receiver<StructuredRecord> {
     public void onStart() {
 
         // create DMaaP MR Subscriber
-        final DMaaPMRSubscriber subscriber =
-                DMaaPMRFactory.create().createSubscriber(DMaaPSourceConfigMapper.map(pluginConfig));
+        try(final DMaaPMRSubscriber subscriber =
+                DMaaPMRFactory.create().createSubscriber(DMaaPSourceConfigMapper.map(pluginConfig))){
 
-        // Start a new thread with indefinite loop until receiver is stopped
-        new Thread() {
-            @Override
-            public void run() {
-                while (!isStopped()) {
-                    storeStructuredRecords(subscriber);
-                    try {
-                        final Integer pollingInterval = pluginConfig.getPollingInterval();
-                        LOG.debug("DMaaP MR Receiver sleeping for polling interval: {}", pollingInterval);
-                        TimeUnit.MILLISECONDS.sleep(pollingInterval);
-                    } catch (InterruptedException e) {
-                        final String errorMessage = String.format(
-                                "Interrupted Exception while DMaaP MR Receiver sleeping polling interval: %s", e);
-                        Thread.currentThread().interrupt();
-                        throw new DCAEAnalyticsRuntimeException(errorMessage, LOG, e);
-                    }
-                }
-            }
-        }.start();
-
+            // Start a new thread with indefinite loop until receiver is stopped
+            new Thread() {
+                @Override
+                public void run() {
+                    while (!isStopped()) {
+                        storeStructuredRecords(subscriber);
+                        try {
+                            final Integer pollingInterval = pluginConfig.getPollingInterval();
+                            LOG.debug("DMaaP MR Receiver sleeping for polling interval: {}", pollingInterval);
+                            TimeUnit.MILLISECONDS.sleep(pollingInterval);
+                            } catch (InterruptedException e) {
+                                final String errorMessage = String.format(
+                                        "Interrupted Exception while DMaaP MR Receiver sleeping polling interval: %s", e);
+                                Thread.currentThread().interrupt();
+                                throw new DCAEAnalyticsRuntimeException(errorMessage, LOG, e);
+                         }
+                     }
+                 }
+            }.start();
+        } catch (Exception e) {
+            Log.error("Exception in DMaaPMRReceiver onStart",e);
+        }
     }
 
     @Override

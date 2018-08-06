@@ -27,11 +27,11 @@ import java.util.Set;
 /**
  * Validation Response contract
  *
- * @param <T> Entity class type which is being validated
+ *
  *
  * @author Rajiv Singla . Creation Date: 10/24/2016.
  */
-public interface ValidationResponse<T> {
+public interface ValidationResponse {
 
     /**
      * Returns true if validation resulted in one or more errors

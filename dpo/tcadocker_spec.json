@@ -1,0 +1,543 @@
+{
+  "self": {
+    "name": "tca-docker",
+    "version": "1.0.0",
+    "description": "docker cdap tca application",
+    "component_type": "docker"
+  },
+  "streams": {
+    "subscribes": [
+      {
+        "config_key": "tca_handle_in",
+        "format": "VES_specification",
+        "version": "5.28.4",
+        "type": "message router"
+      }
+    ],
+    "publishes": [
+      {
+        "config_key": "tca_handle_out",
+        "format": "TCA Alert Definition",
+        "version": "1.0.0",
+        "type": "message router"
+      }
+    ]
+  },
+  "services": {
+    "calls": [],
+    "provides": []
+  },
+  	"artifacts": [
+		{
+			"type": "docker image",
+			"uri": "nexus3.onap.org:10001/onap/org.onap.dcaegen2.deployments.tca-cdap-container:1.0.0"
+		}
+	],
+	"auxilary": {
+		"healthcheck": {
+			"type": "https",
+			"interval": "15s",
+			"timeout": "1s",
+			"endpoint": "/"
+		},
+		"ports": [
+			"11011:11011"
+		]
+	},
+  "parameters": {
+    "app_config": [
+     	{
+					"name": "appName",
+					"description": "CDAP Application Name for TCA App",
+					"value": "dcae-tca",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "appDescription",
+					"description": "CDAP Application Description for TCA App",
+					"value": "DCAE Analytics Threshold Crossing Alert Application",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "tcaSubscriberOutputStreamName",
+					"description": "Name of Stream where TCA DMaaP Subscriber pushes incoming messages to TCA App for processing",
+					"value": "TCASubscriberOutputStream",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "thresholdCalculatorFlowletInstances",
+					"description": "Number of instances for Threshold Calculator",
+					"value": 2,
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "tcaVESMessageStatusTableName",
+					"description": "TCA Message Status Table Name where status of each TCA message is stored",
+					"value": "TCAVESMessageStatusTable",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "tcaVESMessageStatusTableTTLSeconds",
+					"description": "Time to Live for entries in Message Status Table",
+					"value": 86400,
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "tcaVESAlertsTableName",
+					"description": "Table where TCA generated alerts are temporarily stored before published to DMaaP MR topic",
+					"value": "TCAVESAlertsTable",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "tcaVESAlertsTableTTLSeconds",
+					"description": "Time to Live for entries in Alerts Table",
+					"value": 1728000,
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "tcaAlertsAbatementTableName",
+					"description": "Table where information to determine sending of Abatement Alerts is stored",
+					"value": "TCAAlertsAbatementTable",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "tcaAlertsAbatementTableTTLSeconds",
+					"description": "Time to Live for entries in  Alerts Abatement Table",
+					"value": 1728000,
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				}
+    ],
+    "app_preferences": [
+     	{
+					"name": "subscriberHostName",
+					"description": "",
+					"value": "HOSTNAME",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "subscriberHostPort",
+					"description": "",
+					"value": 1234,
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "subscriberTopicName",
+					"description": "",
+					"value": "com.att.dcae.dmaap.mtnje2.DcaeTestVESSub",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "subscriberProtocol",
+					"description": "",
+					"value": "https",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "subscriberUserName",
+					"description": "",
+					"value": "USERNAME",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "subscriberUserPassword",
+					"description": "",
+					"value": "PASSWORD",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "subscriberContentType",
+					"description": "Subscriber Content Type",
+					"value": "application/json",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "subscriberConsumerId",
+					"description": "Subscriber Consumer Id",
+					"value": "c12",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "subscriberConsumerGroup",
+					"description": "Subscriber Group Id",
+					"value": "OpenDCAE-c12",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "subscriberTimeoutMS",
+					"description": "Subscriber timeout in milliseconds",
+					"value": -1,
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "subscriberMessageLimit",
+					"description": "Subscriber max message fetch limit",
+					"value": -1,
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "subscriberPollingInterval",
+					"description": "Subscriber Polling Interval in milliseconds",
+					"value": 30000,
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "publisherHostName",
+					"description": "",
+					"value": "HOSTNAME",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "publisherHostPort",
+					"description": "",
+					"value": 1234,
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "publisherTopicName",
+					"description": "",
+					"value": "com.att.dcae.dmaap.mtnje2.DcaeTestVESPub",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "publisherProtocol",
+					"description": "",
+					"value": "https",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "publisherUserName",
+					"description": "",
+					"value": "USERNAME",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "publisherUserPassword",
+					"description": "",
+					"value": "PASSWORD",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "publisherContentType",
+					"description": "Publisher Content Type",
+					"value": "application/json",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "publisherMaxBatchSize",
+					"description": "Publisher max batch size",
+					"value": 1,
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "publisherMaxRecoveryQueueSize",
+					"description": "Publisher Max Recovery Queue Size",
+					"value": 100000,
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "publisherPollingInterval",
+					"description": "Publisher Polling Interval in milliseconds",
+					"value": 20000,
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "enableAlertCEFFormat",
+					"description": "Enable output alert to be in CEF Format",
+					"value": "false",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "enableAAIEnrichment",
+					"description": "Enable A&AI Enrichment of generated TCA Alerts",
+					"value": "true",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "aaiEnrichmentHost",
+					"description": "A&AI Enrichment API Host name",
+					"value": "123.123.123.123",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "aaiEnrichmentPortNumber",
+					"description": "A&AI Enrichment API Host port number",
+					"value": 8443,
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "aaiEnrichmentProtocol",
+					"description": "A&AI Enrichment API protocol",
+					"value": "https",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "aaiEnrichmentUserName",
+					"description": "A&AI Enrichment API username",
+					"value": "USERNAME",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "aaiEnrichmentUserPassword",
+					"description": "A&AI Enrichment API password",
+					"value": "PASSWORD",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "aaiEnrichmentIgnoreSSLCertificateErrors",
+					"description": "A&AI Ignore SSL Certification Errors",
+					"value": "true",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "aaiVNFEnrichmentAPIPath",
+					"description": "A&AI VNF Enrichment API Path",
+					"value": "/aai/v11/network/generic-vnfs/generic-vnf",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "aaiVMEnrichmentAPIPath",
+					"description": "A&AI VM Enrichment API Path",
+					"value": "/aai/v11/search/nodes-query",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "aaiEnrichmentProxyURL",
+					"description": "A&AI Enrichment API Proxy URL",
+					"value": "URL",
+					"sourced_at_deployment": false,
+					"policy_editable": false,
+					"designer_editable": false
+				},
+				{
+					"name": "tca_policy",
+					"description": "TCA Policy JSON",
+					"value": "{\"domain\":\"measurementsForVfScaling\",\"metricsPerEventName\":[{\"eventName\":\"vFirewallBroadcastPackets\",\"controlLoopSchemaType\":\"VNF\",\"policyScope\":\"DCAE\",\"policyName\":\"DCAE.Config_tca-hi-lo\",\"policyVersion\":\"v0.0.1\",\"thresholds\":[{\"closedLoopControlName\":\"ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicUsageArray[*].receivedTotalPacketsDelta\",\"thresholdValue\":300,\"direction\":\"LESS_OR_EQUAL\",\"severity\":\"MAJOR\",\"closedLoopEventStatus\":\"ONSET\"},{\"closedLoopControlName\":\"ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicUsageArray[*].receivedTotalPacketsDelta\",\"thresholdValue\":700,\"direction\":\"GREATER_OR_EQUAL\",\"severity\":\"CRITICAL\",\"closedLoopEventStatus\":\"ONSET\"}]},{\"eventName\":\"vLoadBalancer\",\"controlLoopSchemaType\":\"VM\",\"policyScope\":\"DCAE\",\"policyName\":\"DCAE.Config_tca-hi-lo\",\"policyVersion\":\"v0.0.1\",\"thresholds\":[{\"closedLoopControlName\":\"ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.vNicUsageArray[*].receivedTotalPacketsDelta\",\"thresholdValue\":300,\"direction\":\"GREATER_OR_EQUAL\",\"severity\":\"CRITICAL\",\"closedLoopEventStatus\":\"ONSET\"}]},{\"eventName\":\"Measurement_vGMUX\",\"controlLoopSchemaType\":\"VNF\",\"policyScope\":\"DCAE\",\"policyName\":\"DCAE.Config_tca-hi-lo\",\"policyVersion\":\"v0.0.1\",\"thresholds\":[{\"closedLoopControlName\":\"ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.additionalMeasurements[*].arrayOfFields[0].value\",\"thresholdValue\":0,\"direction\":\"EQUAL\",\"severity\":\"MAJOR\",\"closedLoopEventStatus\":\"ABATED\"},{\"closedLoopControlName\":\"ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e\",\"version\":\"1.0.2\",\"fieldPath\":\"$.event.measurementsForVfScalingFields.additionalMeasurements[*].arrayOfFields[0].value\",\"thresholdValue\":0,\"direction\":\"GREATER\",\"severity\":\"CRITICAL\",\"closedLoopEventStatus\":\"ONSET\"}]}]}",
+					"sourced_at_deployment": false,
+					"designer_editable": false,
+					"policy_editable": true,
+					"policy_schema": [
+						{
+							"name": "domain",
+							"description": "Domain name to which TCA needs to be applied",
+							"type": "string",
+							"value": "measurementsForVfScaling",
+							"constraints": [
+								{
+									"equal": "measurementsForVfScaling"
+								}
+							]
+						},
+						{
+							"name": "metricsPerEventName",
+							"description": "Contains eventName and threshold details that need to be applied to given eventName",
+							"type": "list",
+							"entry_schema": [
+								{
+									"name": "eventName",
+									"description": "Event name to which thresholds need to be applied",
+									"type": "string",
+									"value": ""
+								},
+								{
+									"name": "controlLoopSchemaType",
+									"description": "Specifies Control Loop Schema Type for the event Name e.g. VNF, VM",
+									"type": "string",
+									"value": "",
+									"constraints": [
+										{
+											"valid_values": [
+												"VM",
+												"VNF"
+											]
+										}
+									]
+								},
+								{
+									"name": "policyScope",
+									"description": "TCA Policy Scope",
+									"type": "string",
+									"value": ""
+								},
+								{
+									"name": "policyName",
+									"description": "TCA Policy Scope Name",
+									"type": "string",
+									"value": ""
+								},
+								{
+									"name": "policyVersion",
+									"description": "TCA Policy Scope Version",
+									"type": "string",
+									"value": ""
+								},
+								{
+									"name": "thresholds",
+									"description": "Thresholds associated with eventName",
+									"type": "list",
+									"entry_schema": [
+										{
+											"name": "closedLoopControlName",
+											"description": "Closed Loop Control Name associated with the threshold",
+											"type": "string",
+											"value": ""
+										},
+										{
+											"name": "version",
+											"description": "Version number associated with the threshold",
+											"type": "string",
+											"value": ""
+										},
+										{
+											"name": "fieldPath",
+											"description": "Json field Path as per CEF message which needs to be analyzed for TCA",
+											"type": "string",
+											"value": ""
+										},
+										{
+											"name": "thresholdValue",
+											"description": "Threshold value for the field Path inside CEF message",
+											"type": "number",
+											"value": ""
+										},
+										{
+											"name": "direction",
+											"description": "Direction of the threshold",
+											"type": "string",
+											"value": "",
+											"constraints": [
+												{
+													"valid_values": [
+														"LESS",
+														"LESS_OR_EQUAL",
+														"GREATER",
+														"GREATER_OR_EQUAL",
+														"EQUAL"
+													]
+												}
+											]
+										},
+										{
+											"name": "closedLoopEventStatus",
+											"description": "Closed Loop Event Status of the threshold",
+											"type": "string",
+											"value": "",
+											"constraints": [
+												{
+													"valid_values": [
+														"ONSET",
+														"ABATED"
+													]
+												}
+											]
+										},
+										{
+											"name": "severity",
+											"description": "Threshold Event Severity",
+											"value": "",
+											"type": "string",
+											"constraints": [
+												{
+													"valid_values": [
+														"CRITICAL",
+														"MAJOR",
+														"MINOR",
+														"WARNING",
+														"NORMAL"
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	
+}

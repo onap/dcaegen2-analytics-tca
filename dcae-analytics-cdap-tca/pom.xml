@@ -3,7 +3,7 @@
   ~ ===============================LICENSE_START======================================
   ~  dcae-analytics
   ~ ================================================================================
-  ~    Copyright © 2017 AT&T Intellectual Property. All rights reserved.
+  ~    Copyright © 2017-2019 AT&T Intellectual Property. All rights reserved.
   ~ ================================================================================
   ~  Licensed under the Apache License, Version 2.0 (the "License");
   ~  you may not use this file except in compliance with the License.
@@ -121,6 +121,16 @@
 
     </dependencies>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.10</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
     <build>
         <plugins>
             <plugin>

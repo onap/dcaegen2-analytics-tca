@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5742292_d6e95e90",
+        "filename": "dcae-analytics-cdap-tca/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2019-03-19T20:39:20Z",
+      "side": 1,
+      "message": "2017-2019",
+      "revId": "e1a739e9ee0c320c075d7995825fdf729537589c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}

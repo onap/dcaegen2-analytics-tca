@@ -106,8 +106,9 @@ public abstract class TCAMessageStatusPersister {
         final String domain = domainAndEventName.getLeft();
         final String eventName = domainAndEventName.getRight();
 
-        final TCAMessageStatusEntity tcaMessageStatusEntity = new TCAMessageStatusEntity(currentTS,
-                instanceId, calculatorMessageType.name(), vesMessage, domain, eventName);
+        final TCAMessageStatusEntity tcaMessageStatusEntity = new TCAMessageStatusEntity.TCAMessageStatusEntityBuilder()
+                .setCreationTS(currentTS).setInstanceId(instanceId).setMessageType(calculatorMessageType.name())
+                .setVesMessage(vesMessage).setDomain(domain).setEventName(eventName).createTCAMessageStatusEntity();
 
         // add threshold violation fields
         addViolatedThreshold(tcaMessageStatusEntity, processorContext);

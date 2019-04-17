@@ -82,62 +82,166 @@ public class TCAMessageStatusEntity implements Writable, Serializable {
      */
     public TCAMessageStatusEntity(final long creationTS, final int instanceId, final String messageType,
                                   final String vesMessage, final String domain, final String eventName) {
-        this(creationTS, instanceId, messageType, vesMessage, domain, eventName, null, null, null, null,
-                null, null, null, null, null, null, null, null, null);
+
+        this(new TCAMessageStatusEntity.TCAMessageStatusEntityBuilder().setCreationTS(creationTS)
+                .setInstanceId(instanceId).setMessageType(messageType).setVesMessage(vesMessage).setDomain(domain)
+                .setEventName(eventName).setThresholdPath(null).setThresholdSeverity(null).setThresholdDirection(null)
+                .setThresholdValue(null).setJsonProcessorStatus(null).setJsonProcessorMessage(null)
+                .setDomainFilterStatus(null)
+                .setDomainFilterMessage(null).setEventNameFilterStatus(null).setEventNameFilterMessage(null)
+                .setThresholdCalculatorStatus(null)
+                .setThresholdCalculatorMessage(null).setAlertMessage(null));
     }
 
 
     /**
      * Create new Instance of {@link TCAMessageStatusEntity}
      *
-     * @param creationTS creation Timestamp
-     * @param instanceId CDAP flowlet instance ID
-     * @param messageType {@link TCACalculatorMessageType}
-     * @param vesMessage incoming VES message from collector
-     * @param domain VES message domain if present
-     * @param eventName VES message event name if present
-     * @param thresholdPath Violated threshold path
-     * @param thresholdSeverity Violated threshold Severity if any
-     * @param thresholdDirection Violated threshold Direction if any
-     * @param thresholdValue Violated threshold value if any
-     * @param jsonProcessorStatus {@link TCACEFJsonProcessor} status
-     * @param jsonProcessorMessage {@link TCACEFJsonProcessor} message
-     * @param domainFilterStatus {@link TCACEFPolicyDomainFilter} status
-     * @param domainFilterMessage {@link TCACEFPolicyDomainFilter} message
-     * @param eventNameFilterStatus {@link TCACEFPolicyEventNameFilter} status
-     * @param eventNameFilterMessage {@link TCACEFPolicyEventNameFilter} message
-     * @param thresholdCalculatorStatus {@link TCACEFPolicyThresholdsProcessor} status
-     * @param thresholdCalculatorMessage {@link TCACEFPolicyThresholdsProcessor} message
-     * @param alertMessage alert message that will be sent out in case of threshold violation
+     * @param builder {@link TCAMessageStatusEntityBuilder}
      */
-    public TCAMessageStatusEntity(long creationTS, int instanceId, String messageType, String vesMessage,
-                                  String domain, String eventName,
-                                  String thresholdPath, String thresholdSeverity, String thresholdDirection,
-                                  Long thresholdValue,
-                                  String jsonProcessorStatus, String jsonProcessorMessage,
-                                  String domainFilterStatus, String domainFilterMessage,
-                                  String eventNameFilterStatus, String eventNameFilterMessage,
-                                  String thresholdCalculatorStatus, String thresholdCalculatorMessage,
-                                  String alertMessage) {
-        this.creationTS = creationTS;
-        this.instanceId = instanceId;
-        this.messageType = messageType;
-        this.vesMessage = vesMessage;
-        this.domain = domain;
-        this.eventName = eventName;
-        this.thresholdPath = thresholdPath;
-        this.thresholdSeverity = thresholdSeverity;
-        this.thresholdDirection = thresholdDirection;
-        this.thresholdValue = thresholdValue;
-        this.jsonProcessorStatus = jsonProcessorStatus;
-        this.jsonProcessorMessage = jsonProcessorMessage;
-        this.domainFilterStatus = domainFilterStatus;
-        this.domainFilterMessage = domainFilterMessage;
-        this.eventNameFilterStatus = eventNameFilterStatus;
-        this.eventNameFilterMessage = eventNameFilterMessage;
-        this.thresholdCalculatorStatus = thresholdCalculatorStatus;
-        this.thresholdCalculatorMessage = thresholdCalculatorMessage;
-        this.alertMessage = alertMessage;
+
+    public TCAMessageStatusEntity(TCAMessageStatusEntityBuilder builder) {
+        this.creationTS = builder.creationTS;
+        this.instanceId = builder.instanceId;
+        this.messageType = builder.messageType;
+        this.vesMessage = builder.vesMessage;
+        this.domain = builder.domain;
+        this.eventName = builder.eventName;
+        this.thresholdPath = builder.thresholdPath;
+        this.thresholdSeverity = builder.thresholdSeverity;
+        this.thresholdDirection = builder.thresholdDirection;
+        this.thresholdValue = builder.thresholdValue;
+        this.jsonProcessorStatus = builder.jsonProcessorStatus;
+        this.jsonProcessorMessage = builder.jsonProcessorMessage;
+        this.domainFilterStatus = builder.domainFilterStatus;
+        this.domainFilterMessage = builder.domainFilterMessage;
+        this.eventNameFilterStatus = builder.eventNameFilterStatus;
+        this.eventNameFilterMessage = builder.eventNameFilterMessage;
+        this.thresholdCalculatorStatus = builder.thresholdCalculatorStatus;
+        this.thresholdCalculatorMessage = builder.thresholdCalculatorMessage;
+        this.alertMessage = builder.alertMessage;
+
+    }
+
+    public static class TCAMessageStatusEntityBuilder {
+        private long creationTS;
+        private int instanceId;
+        private String messageType;
+        private String vesMessage;
+        private String domain;
+        private String eventName;
+        private String thresholdPath = null;
+        private String thresholdSeverity = null;
+        private String thresholdDirection = null;
+        private Long thresholdValue = null;
+        private String jsonProcessorStatus = null;
+        private String jsonProcessorMessage = null;
+        private String domainFilterStatus = null;
+        private String domainFilterMessage = null;
+        private String eventNameFilterStatus = null;
+        private String eventNameFilterMessage = null;
+        private String thresholdCalculatorStatus = null;
+        private String thresholdCalculatorMessage = null;
+        private String alertMessage = null;
+
+        public TCAMessageStatusEntityBuilder setCreationTS(long creationTS) {
+            this.creationTS = creationTS;
+            return this;
+        }
+
+        public TCAMessageStatusEntityBuilder setInstanceId(int instanceId) {
+            this.instanceId = instanceId;
+            return this;
+        }
+
+        public TCAMessageStatusEntityBuilder setMessageType(String messageType) {
+            this.messageType = messageType;
+            return this;
+        }
+
+        public TCAMessageStatusEntityBuilder setVesMessage(String vesMessage) {
+            this.vesMessage = vesMessage;
+            return this;
+        }
+
+        public TCAMessageStatusEntityBuilder setDomain(String domain) {
+            this.domain = domain;
+            return this;
+        }
+
+        public TCAMessageStatusEntityBuilder setEventName(String eventName) {
+            this.eventName = eventName;
+            return this;
+        }
+
+        public TCAMessageStatusEntityBuilder setThresholdPath(String thresholdPath) {
+            this.thresholdPath = thresholdPath;
+            return this;
+        }
+
+        public TCAMessageStatusEntityBuilder setThresholdSeverity(String thresholdSeverity) {
+            this.thresholdSeverity = thresholdSeverity;
+            return this;
+        }
+
+        public TCAMessageStatusEntityBuilder setThresholdDirection(String thresholdDirection) {
+            this.thresholdDirection = thresholdDirection;
+            return this;
+        }
+
+        public TCAMessageStatusEntityBuilder setThresholdValue(Long thresholdValue) {
+            this.thresholdValue = thresholdValue;
+            return this;
+        }
+
+        public TCAMessageStatusEntityBuilder setJsonProcessorStatus(String jsonProcessorStatus) {
+            this.jsonProcessorStatus = jsonProcessorStatus;
+            return this;
+        }
+
+        public TCAMessageStatusEntityBuilder setJsonProcessorMessage(String jsonProcessorMessage) {
+            this.jsonProcessorMessage = jsonProcessorMessage;
+            return this;
+        }
+
+        public TCAMessageStatusEntityBuilder setDomainFilterStatus(String domainFilterStatus) {
+            this.domainFilterStatus = domainFilterStatus;
+            return this;
+        }
+
+        public TCAMessageStatusEntityBuilder setDomainFilterMessage(String domainFilterMessage) {
+            this.domainFilterMessage = domainFilterMessage;
+            return this;
+        }
+
+        public TCAMessageStatusEntityBuilder setEventNameFilterStatus(String eventNameFilterStatus) {
+            this.eventNameFilterStatus = eventNameFilterStatus;
+            return this;
+        }
+
+        public TCAMessageStatusEntityBuilder setEventNameFilterMessage(String eventNameFilterMessage) {
+            this.eventNameFilterMessage = eventNameFilterMessage;
+            return this;
+        }
+
+        public TCAMessageStatusEntityBuilder setThresholdCalculatorStatus(String thresholdCalculatorStatus) {
+            this.thresholdCalculatorStatus = thresholdCalculatorStatus;
+            return this;
+        }
+
+        public TCAMessageStatusEntityBuilder setThresholdCalculatorMessage(String thresholdCalculatorMessage) {
+            this.thresholdCalculatorMessage = thresholdCalculatorMessage;
+            return this;
+        }
+
+        public TCAMessageStatusEntityBuilder setAlertMessage(String alertMessage) {
+            this.alertMessage = alertMessage;
+            return this;
+        }
+
+        public TCAMessageStatusEntity createTCAMessageStatusEntity() {
+            return new TCAMessageStatusEntity(this);
+        }
     }
 
     /**

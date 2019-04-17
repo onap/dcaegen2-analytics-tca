@@ -3,6 +3,7 @@
  *  dcae-analytics
  * ================================================================================
  *    Copyright © 2017 AT&T Intellectual Property. All rights reserved.
+ *    Modifications Copyright (C) 2019 Samsung. All rights reserved.
  * ================================================================================
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -106,8 +107,9 @@ public abstract class TCAMessageStatusPersister {
         final String domain = domainAndEventName.getLeft();
         final String eventName = domainAndEventName.getRight();
 
-        final TCAMessageStatusEntity tcaMessageStatusEntity = new TCAMessageStatusEntity(currentTS,
-                instanceId, calculatorMessageType.name(), vesMessage, domain, eventName);
+        final TCAMessageStatusEntity tcaMessageStatusEntity = new TCAMessageStatusEntity.TCAMessageStatusEntityBuilder()
+                .setCreationTS(currentTS).setInstanceId(instanceId).setMessageType(calculatorMessageType.name())
+                .setVesMessage(vesMessage).setDomain(domain).setEventName(eventName).createTCAMessageStatusEntity();
 
         // add threshold violation fields
         addViolatedThreshold(tcaMessageStatusEntity, processorContext);

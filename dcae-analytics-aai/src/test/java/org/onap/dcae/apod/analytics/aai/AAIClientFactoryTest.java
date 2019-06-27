@@ -7,13 +7,11 @@ import org.junit.Test;
 
 public class AAIClientFactoryTest {
 
-	
 
-	@Test
-	public void testCreate_shouldReturn_NotNull() {
-		AAIClientFactory result = AAIClientFactory.create();
-		assertNotNull(result);
 
-	}
-
+@Test
+public void testCreate_shouldReturn_NotNull() {
+    AAIClientFactory result = AAIClientFactory.create();
+    assertNotNull(result);
+    }
 }

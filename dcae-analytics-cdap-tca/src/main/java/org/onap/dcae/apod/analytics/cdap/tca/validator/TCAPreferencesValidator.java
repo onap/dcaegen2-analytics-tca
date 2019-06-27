@@ -82,9 +82,9 @@ public class TCAPreferencesValidator implements CDAPAppSettingsValidator<TCAAppP
         final Boolean enableRedisCaching = appPreferences.getEnableRedisCaching();
 
         // if redis distributed caching is enabled then redis Hosts must be provided
-        if(enableRedisCaching) {
+        if(enableRedisCaching){
             final String redisHosts = appPreferences.getRedisHosts();
-            if(isEmpty(redisHosts)) {
+            if(isEmpty(redisHosts)){
                 validationResponse.addErrorMessage("redisHosts",
                         "Redis Caching is enabled but no redis hosts are provided");
             }

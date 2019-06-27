@@ -90,7 +90,7 @@ public class TCAVESAlertsAbatementFlowlet extends AbstractFlowlet {
         tcaAlertsAbatementTable = getContext().getDataset(tcaAlertsAbatementTableName);
         // Parse runtime arguments
         final TCAAppPreferences tcaAppPreferences = CDAPTCAUtils.getValidatedTCAAppPreferences(flowletContext);
-        if(tcaAppPreferences.getEnableRedisCaching()) {
+        if(tcaAppPreferences.getEnableRedisCaching()){
             final String redisHosts = tcaAppPreferences.getRedisHosts();
             LOG.info("Redis Distributed Caching is enabled for abated alerts with Redis Hosts: {}", redisHosts);
             redisHostAndPorts = getRedisHostsAndPorts(redisHosts);

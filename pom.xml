@@ -2,9 +2,9 @@
 <!--
   ~ ===============================LICENSE_START======================================
   ~  dcae-analytics
-  ~ ================================================================================
-  ~    Copyright © 2017 AT&T Intellectual Property. All rights reserved.
-  ~ ================================================================================
+  ~ ==================================================================================
+  ~    Copyright (c) 2017-2019 AT&T Intellectual Property. All rights reserved.
+  ~ ==================================================================================
   ~  Licensed under the Apache License, Version 2.0 (the "License");
   ~  you may not use this file except in compliance with the License.
   ~   You may obtain a copy of the License at
@@ -27,13 +27,13 @@
     <parent>
       <groupId>org.onap.oparent</groupId>
       <artifactId>oparent</artifactId>
-      <version>0.1.1</version>
+      <version>2.0.0</version>
       <relativePath/>
     </parent>
 
     <groupId>org.onap.dcaegen2.analytics.tca</groupId>
     <artifactId>dcae-analytics</artifactId>
-    <version>2.2.1-SNAPSHOT</version>
+    <version>2.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>dcaegen2-analytics-tca</name>
@@ -97,7 +97,7 @@
         <findbugs.plugin.version>3.0.2</findbugs.plugin.version>
         <pmd.plugin.version>3.5</pmd.plugin.version>
         <surefire.report.plugin.version>2.19.1</surefire.report.plugin.version>
-        <checkstyle.plugin.version>2.16</checkstyle.plugin.version>
+        <checkstyle.plugin.version>2.17</checkstyle.plugin.version>
         <javadoc.plugin.version>2.10.4</javadoc.plugin.version>
         <source.plugin.version>2.4</source.plugin.version>
         <jar.plugin.version>2.4</jar.plugin.version>
@@ -117,9 +117,9 @@
         <skip.integration.tests>true</skip.integration.tests>
         <pmd.violation.buildfail>true</pmd.violation.buildfail>
         <findbugs.failOnError>true</findbugs.failOnError>
-        <checkstyle.failOnViolation>true</checkstyle.failOnViolation>
+        <checkstyle.failOnViolation>false</checkstyle.failOnViolation>
         <checkstyle.file.name>checkstyle.xml</checkstyle.file.name>
-        <checkstyle.suppression.file.name>suppressions.xml</checkstyle.suppression.file.name>       
+        <checkstyle.suppression.file.name>suppressions.xml</checkstyle.suppression.file.name>
         <dependency.locations.enabled>false</dependency.locations.enabled>
         <nexusproxy>https://nexus.onap.org</nexusproxy>
         <snapshots.path>content/repositories/snapshots/</snapshots.path>
@@ -553,7 +553,7 @@
             </dependency>
 
         </dependencies>
-        
+
     </dependencyManagement>
 
 

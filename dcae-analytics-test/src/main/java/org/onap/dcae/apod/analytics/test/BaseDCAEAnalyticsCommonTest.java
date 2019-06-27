@@ -55,7 +55,7 @@ abstract class BaseDCAEAnalyticsCommonTest {
 protected static final Logger LOG = LoggerFactory.getLogger(BaseDCAEAnalyticsCommonTest.class);
 protected BaseDCAEAnalyticsCommonTest() {
 }
-	/**
+    /**
      * Asserts if expected Json String and actual Json String contain the same properties ignoring
      * property order. Simple String assertion might fail as property order during serialization and deserialization
      * is generally non-deterministic. Also proper error message are generated more missing or unexpected

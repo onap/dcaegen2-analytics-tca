@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "68f80ecf_7c6c1b68",
+        "filename": "dcae-analytics-aai/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-06-27T19:55:29Z",
+      "side": 1,
+      "message": "2.3.0 is correct; no change req",
+      "parentUuid": "54152a38_b9a0ba46",
+      "range": {
+        "startLine": 31,
+        "startChar": 19,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "d44ac5518e5844355740aa809e910b097d850405",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73bc87da_3cb40bca",
         "filename": "pom.xml",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2019-06-27T19:46:32Z",
       "side": 1,
       "message": "2.2.2",
+      "range": {
+        "startLine": 36,
+        "startChar": 13,
+        "endLine": 36,
+        "endChar": 18
+      },
+      "revId": "d44ac5518e5844355740aa809e910b097d850405",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "990a672a_fe21a2c4",
+        "filename": "pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-06-27T19:55:29Z",
+      "side": 1,
+      "message": "Take it back.. just noticed Dublin was also on 2.2.1; so minor version update here is okay.",
+      "parentUuid": "73bc87da_3cb40bca",
       "range": {
         "startLine": 36,
         "startChar": 13,
@@ -82,6 +130,30 @@
       "writtenOn": "2019-06-27T19:46:32Z",
       "side": 1,
       "message": "2.2.2",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 7
+      },
+      "revId": "d44ac5518e5844355740aa809e910b097d850405",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32156451_b4b87deb",
+        "filename": "version.properties",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-06-27T19:55:29Z",
+      "side": 1,
+      "message": "pls ignore",
+      "parentUuid": "dc86b563_1332fa7f",
       "range": {
         "startLine": 2,
         "startChar": 0,

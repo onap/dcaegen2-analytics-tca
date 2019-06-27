@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54152a38_b9a0ba46",
+        "filename": "dcae-analytics-aai/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-06-27T19:46:32Z",
+      "side": 1,
+      "message": "2.2.2",
+      "range": {
+        "startLine": 31,
+        "startChar": 19,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "d44ac5518e5844355740aa809e910b097d850405",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73bc87da_3cb40bca",
+        "filename": "pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-06-27T19:46:32Z",
+      "side": 1,
+      "message": "2.2.2",
+      "range": {
+        "startLine": 36,
+        "startChar": 13,
+        "endLine": 36,
+        "endChar": 18
+      },
+      "revId": "d44ac5518e5844355740aa809e910b097d850405",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dd25c92_77ad7bc9",
+        "filename": "pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-06-27T19:46:32Z",
+      "side": 1,
+      "message": "Not the best choice esp when the reported violation are few and fixable. I noticed earlier patchset addressed these only to be reverted back?",
+      "range": {
+        "startLine": 120,
+        "startChar": 36,
+        "endLine": 120,
+        "endChar": 41
+      },
+      "revId": "d44ac5518e5844355740aa809e910b097d850405",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc86b563_1332fa7f",
+        "filename": "version.properties",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-06-27T19:46:32Z",
+      "side": 1,
+      "message": "2.2.2",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 7
+      },
+      "revId": "d44ac5518e5844355740aa809e910b097d850405",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}

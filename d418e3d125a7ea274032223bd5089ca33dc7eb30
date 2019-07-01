@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f1aa9d8_152d7bfd",
+        "filename": "dcae-analytics-aai/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2019-07-01T12:36:13Z",
+      "side": 1,
+      "message": "each of the copyright notices should be updated to say\nCopyright (c) 2017-2019 AT\u0026T Intellectual Property\nCopyright (c) 2019 Ericsonn",
+      "revId": "d418e3d125a7ea274032223bd5089ca33dc7eb30",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}

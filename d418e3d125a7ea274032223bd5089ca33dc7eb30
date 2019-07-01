@@ -16,6 +16,24 @@
       "revId": "d418e3d125a7ea274032223bd5089ca33dc7eb30",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67d6b1fe_0e632e6b",
+        "filename": "dcae-analytics-aai/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 4719
+      },
+      "writtenOn": "2019-07-01T14:40:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f1aa9d8_152d7bfd",
+      "revId": "d418e3d125a7ea274032223bd5089ca33dc7eb30",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }

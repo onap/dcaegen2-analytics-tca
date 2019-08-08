@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c69b7405_70f394d9",
+        "filename": "dcae-analytics-cdap-common/src/main/java/org/onap/dcae/apod/analytics/cdap/common/persistance/tca/TCAMessageStatusEntity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2019-08-08T14:17:40Z",
+      "side": 1,
+      "message": "add\nCopyright (c) 2019 Samsung ....",
+      "revId": "b9aea6c170a3e266487f99faae9e2b0a0039d575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d1d73124_6ac60f40",
+        "filename": "dcae-analytics-cdap-common/src/main/java/org/onap/dcae/apod/analytics/cdap/common/persistance/tca/TCAMessageStatusEntity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2019-08-08T14:17:40Z",
+      "side": 1,
+      "message": "Since the values for thresholdPath, thresholdSeverity, etc are initialized by the builder with null, they don\u0027t need to be then reset with nulls using setThresholdPath(), setThresholdSeverity(), etc",
+      "revId": "b9aea6c170a3e266487f99faae9e2b0a0039d575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "956a6c10_d6f245ee",
+        "filename": "dcae-analytics-cdap-common/src/main/java/org/onap/dcae/apod/analytics/cdap/common/persistance/tca/TCAMessageStatusPersister.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2019-08-08T14:17:40Z",
+      "side": 1,
+      "message": "add\nCopyright (c) 2019 Samsung ....",
+      "revId": "b9aea6c170a3e266487f99faae9e2b0a0039d575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}

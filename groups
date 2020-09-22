@@ -2,4 +2,3 @@
 #
 4155a5af68ffae829703da70dea57a14368f182a                                               	saml/onap-gerrit-dcaegen2-analytics-tca-committers
 daebbf523be390041a1a9c0e340a6d833aae5043                                               	GitHub Replication
-ldap:cn=onap-gerrit-dcaegen2-analytics-tca-committers,ou=Groups,dc=freestandards,dc=org	ldap/onap-gerrit-dcaegen2-analytics-tca-committers
